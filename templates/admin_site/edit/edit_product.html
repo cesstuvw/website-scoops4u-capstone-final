@@ -1,0 +1,43 @@
+<div class="modal-header border-0">
+    <h1 class="modal-title" id="exampleModalLabel">Edit Product</h1>
+    <button type="button" class="ri-close-fill" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<form action="{% url 'admin_site:update_product' list_product.id  %}" method="POST">
+    {% csrf_token %}
+    <div class="modal-body pt-2 mt-0">
+        <label for="Product Name">Product Name</label>
+        <input type="text" placeholder="Update Product Name" name="product_name" class="form-control" value="{{ list_product.product_name }}">
+
+        <label for="Product Category">Product Category</label>
+        <input type="text" placeholder="Update Product Category" name="product_category" class="form-control" value="{{ list_product.product_category }}">
+
+        <label for="Product Unit">Product Unit</label>
+        <input type="text" placeholder="Update Product Unit" name="product_unit" class="form-control" value="{{ list_product.product_unit }}">
+
+        <label for="Product Unit">Reseller Price</label>
+        <input type="number" placeholder="Update Reseller Price" name="reseller_price" class="form-control" value="{{ list_product.product_ResellerPrice}}">
+
+        <label for="Product Unit">POS Price</label>
+        <input type="number" placeholder="Update Pos Price" name="pos_price" class="form-control" value="{{ list_product.product_price }}">
+        
+        <label for="status">Status</label>
+        <select name="status" class="form-select form-control" id="gender" required >
+            <option value="available"{% if list_product.product_status == 'available' %}selected{% endif %}>available</option>
+            <option value="low stock"{% if list_product.product_status == 'low stock' %}selected{% endif %}>low stock</option>
+            <option value="not available"{% if list_product.product_status == 'not available' %}selected{% endif %}>not available</option>
+        </select>
+    </div>
+
+    <div class="modal-footer border-0">
+        <!-- <button type="submit" class="btn btn-primary" value="Add Product"><i class="ri-check-fill"></i>Add Product</button> -->
+        <button type="submit" id="submit" name="submit" class="btn btn-primary me-2"><i class="ri-arrow-up-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Update</span></button>
+        <a href="{% url 'admin_site:list_product' %}" type="submit" id="close-modal" class="btn btn-secondary" data-bs-dismiss="modal" style="font-size: 15px; padding: 5px 13px;"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></a>
+        <!-- <button type="submit" id="close-modal" class="btn btn-secondary" data-bs-dismiss="modal"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></button> -->
+    </div>
+</form>
+
+
+<script>
+    $('.modal-body select').addClass('form-select');
+</script>

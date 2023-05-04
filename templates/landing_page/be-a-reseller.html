@@ -1,0 +1,332 @@
+{% extends 'landing_page/base.html' %}
+{% load static %}
+
+{% block title %}
+<title>BE A RESELLER - SCOOPS 4 U</title>
+{% endblock %}
+
+{% block content %}
+<!-- Main CSS -->
+<link href="{% static '/css/promotional/reseller.css' %}" rel="stylesheet">
+
+
+<section class="header">
+    <div class="container header-container">
+            <div class="col-12 col-lg-12 header-top">
+                    <div class="row">
+                            <div class="col-12 col-lg-12 mb-4 d-flex justify-content-center align-items-center">
+                                    <div class="row">
+                                            <a href="{% url 'landing_page:contact' %}" class="logo-display">
+                                                    <img src="./../static/img/reseller.svg" alt="">
+                                            </a>
+                                    </div>
+                            </div>
+                            <div class="col-12 col-lg-12 my-5 main-display d-flex justify-content-center align-items-center">
+                                    <h1 class="line-1"><span class="display-4" id="typing"></span></h1>
+                                    <h1 class="line-2"><span class="display-4" id="typed"></span></h1>
+                            </div>
+                            <div class="col-12 d-flex justify-content-center align-items-center">
+                                    <p>Welcome! Please complete the form below and await our confirmation.</p>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</section>
+
+<section class="request-form" id="requestForm">
+    <div class="container form-container">
+        <div class="col-12 col-lg-12">
+            <form action="{% url 'admin_site:process_inquiry' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-12 request-title">
+                        <h1 class="mb-4 mt-3">Request Form</h1>
+                        <p class="mb-5">We will ensure the safety of your data.</p>
+                    </div>
+
+                    <div class="col main-request">
+
+                        <div class="row d-flex justify-content-center align-items-center mb-3">
+                            <div class="col-12 col-md-3 ">
+                                <label for="">First Name</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" class="form-control" name="fname" id="" aria-describedby="" required>
+                                
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-center align-items-center mb-3">
+                            <div class="col-12 col-md-3">
+                                <label for="">Middle Name</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" class="form-control" name="mname" id="" aria-describedby="" required>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-center align-items-center mb-3">
+                            <div class="col-12 col-md-3">
+                                <label for="">Last Name</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" class="form-control" name="lname" id="" aria-describedby="" required>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-center align-items-center mb-3">
+                            <div class="col-12 col-md-3">
+                                <label for="">Sex</label>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <select class="form-select" aria-label="Default select example" name="gender" id="gender">
+                                    <option selected></option>
+                                    <option value="2">Male</option>
+                                    <option value="1">Female</option>
+                                </select>  
+                            </div>
+
+                            <div class="col-12 col-md-3 contact">
+                                <label for="">Contact No.</label>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <input type="number" class="form-control" name="cnum" id=""  min="0"  maxlength="11" 
+                                oninput="this.value=this.value.slice(0,this.maxLength)" required>                          
+                            </div>
+
+                        </div>
+
+                        <div class="row d-flex justify-content-center mb-3">
+                            <div class="col-12 col-md-3">
+                                <label for="">Address</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <textarea class="form-control mb-1" name="address" id="" rows="4" required></textarea> 
+                                <!-- <button type="submit" class="btn btn-send w-100">Send Message</button>  -->
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="row d-flex justify-content-center align-items-center mb-3 main-display">
+                            <div class="col-12 col-md-3">
+                                <label for="" class="line-1 d-block d-sm-none">Email Address</label>
+                                <label for="" class="line-2 d-none d-sm-none d-md-block">Email</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="email" class="form-control" name="email"  required>                          
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-center align-items-center mb-3">
+                            <div class="col-12 col-md-3">
+                                <label for="">Valid ID</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="file" class="form-control custom" name="valid-ID" accept=".jpg, .jpeg, .png"  required>                          
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-center mb-3">
+                            <div class="col-12 col-md-3">
+                                <label for="">Business Permit</label>
+                            </div>
+                            <div class="col-12 col-md-9 checkbox-label">
+                                <input type="file" class="form-control mb-5 custom" name="business_permit" accept=".jpg, .jpeg, .png, .pdf" required>
+                                <div class="row agreement">
+                                    <div class="col-1 col-md-1"><input type="checkbox" id="checkbox required"></div>
+                                    <div class="col-11" col-md-11><label for="checkbox"><span style="text-decoration: none;">I agree&nbsp;&nbsp;</span> to abide by the&nbsp;&nbsp;<span data-bs-toggle="modal" data-bs-target="#staticBackdrop">Terms and Conditions</span>.</label></div>
+                                </div>
+                                <div class="btn-container">
+                                    <!-- <input type="submit" class="btn btn-send d-none" name="submit" value="Submit Request"> -->
+                                    <button type="submit" class="btn btn-send d-none" name="submit" id="submit-btn">Submit Request</button> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form> 
+        </div>
+    </div>
+</section>
+
+<section class="footer-reseller">
+    <div class="container footer-container">
+        <div class="col-12 d-flex justify-content-center align-items-center">
+            <div class="row flex-column ">
+                <div class="col-12 smiley d-flex justify-content-center align-items-center">
+                    <img src="../../static/img/logo-page.svg" alt="smiley logo">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Modal -->
+<div class="modal fade border-0" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 p-4">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Terms and Conditions</h5>
+                <button type="button" class="ri-close-fill" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body mt-3 ">
+                <div class="modal-split ">
+                    <p>This <span>Business Agreement</span> between <span>“Scoops 4 U”</span> and the <span>Reseller</span>, organized under the laws of 
+                        Republic of the Philippines, with its principal place of business located at <span>Teresa, Rizal</span>.
+                    </p>
+                    <p class="bullet-main"><span class="bullet">Purpose:</span> The purpose of this Agreement is to set forth the terms and conditions of the relationship 
+                        between the Shop Owner and the Reseller for the sale of ice cream products produced by the Shop Owner.
+                    </p>
+                    <p class="bullet-main"><span class="bullet">Reseller Relationship:</span> The Shop Owner agrees to sell its 
+                        Products to the Reseller at a discounted rate (for bulk orders) of the regular retail price. 
+                        The Reseller agrees to purchase and resell the Products in its own retail establishment.
+                    </p>
+                    <p class="bullet-main"><span class="bullet">Product Orders:</span> The Reseller shall place orders 
+                        for Products with the Shop Owner at least 0-2 days in advance of the desired delivery date. 
+                        The Shop Owner shall use commercially reasonable efforts to fulfill the Reseller’s orders on a timely basis.
+                    </p>
+                    <p class="bullet-main"><span class="bullet">Product Delivery:</span> The Shop Owner shall deliver the Products to the Reseller’s 
+                        establishment at the Reseller’s expense, unless otherwise agreed by the parties. The Reseller shall inspect the 
+                        Products upon delivery and promptly notify the Shop Owner of any defects or discrepancies.
+                    </p>
+                    <p class="bullet-main"><span class="bullet">Payment:</span> The Reseller shall pay the Shop Owner for the Products 
+                        the same day of delivery. Payment shall be made by cash or e-wallet (G-cash).
+                    </p>
+                </div>
+                <div class="modal-split">
+                    
+                    <p class="bullet-main"><span class="bullet">Inactivity:</span> The Reseller’s account will be frozen automatically if the account 
+                        is detected as inactive for (6) months. You can request to unfreeze your account by contacting The Administrator.
+                    </p>
+                    <p class="bullet-main"><span class="bullet">Intellectual Property:</span> The Shop Owner retains all rights, title, and interest in and 
+                        to its trademarks, trade names, and other intellectual property associated with the Products. The Reseller shall not use any of 
+                        the Shop Owner’s intellectual property without the Shop Owner’s prior written consent.
+                    </p>
+                    <p class="bullet-main"><span class="bullet">Confidentiality:</span> The Reseller agrees to keep all confidential 
+                        information about the Products and the Shop Owner’s operations confidential and not to disclose such information 
+                        to any third party without the Shop Owner’s prior written consent.
+                    </p>
+                    <p class="bullet-main"><span class="bullet">Limitation of Liability:</span> The Shop Owner’s liability to the Reseller for 
+                        any claims arising out of or related to this Agreement shall be limited to the amount paid by the Reseller to the 
+                        Shop Owner for the Products.
+                    </p>
+                    <p class="bullet-main"><span class="bullet">Governing Law:</span> This Agreement shall be governed by and construed in 
+                        accordance with the laws of the Republic of the Philippines, without giving effect to any choice of law or conflict 
+                        of law provisions.
+                    </p>
+                </div>
+                <div class="modal-split">
+                    <p class="bullet-main"><span class="bullet">Entire Agreement:</span> This Agreement constitutes the entire agreement between the parties 
+                        and supersedes all prior agreements and understandings, whether written or oral, relating to the subject matter of this Agreement.
+                    </p>
+                    <p class="bullet-main"><span class="bullet">Amendments:</span> This Agreement may be amended or modified only by a written 
+                        instrument executed by both parties.
+                    </p>
+                    <p class="bullet-main"><span class="bullet">Notices:</span> Any notice required or permitted under this 
+                        Agreement shall be in writing and shall be deemed to have been duly given <span>(i)</span> when delivered by hand, 
+                        <span>(ii)</span>  when sent by confirmed facsimile or email, <span>(iii)</span>  one business day after being sent by overnight courier, 
+                        or <span>(iv)</span> three business days after being sent by registered or certified mail, postage prepaid, return 
+                        receipt requested, to the addresses set forth below:
+                    </p>
+                    <div class="address">
+                        <p class="bullet-main"><span class="bullet">Teresa, Rizal</span><br>0936-467-1062<br>scoops4uteresa@gmail.com
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-0">
+                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Next</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+{% for message in messages  %}
+    {% if 'success' in message.tags %}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        var m = "{{message}}"
+        swal({
+            
+        title: m,
+        text: "Please wait for our response to your inquiry via email.",
+        icon: "success",
+        timer: 3000,
+        // content: {
+        //     element: 'h1',
+        //     attributes: {
+        //         innerHTML: m,
+        //     }
+        // },
+        
+        // icon: "warning",
+        buttons: false,
+        className: 'swal-wide',
+        // dangerMode: true,
+        // allowOutsideClick: false,
+    })
+    </script>
+    <!-- <p class='alert alert-success mt-3'>{{messsage}}</p> -->
+    {% else %}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        var m = "{{message}}"
+        swal({
+            
+        title: m,
+        text: "Please enter your credentials again.",
+        icon: "error",
+        timer: 3000,
+        // content: {
+        //     element: 'h1',
+        //     attributes: {
+        //         innerHTML: m,
+        //     }
+        // },
+        
+        // icon: "warning",
+        buttons: false,
+        className: 'swal-wide',
+        // dangerMode: true,
+        // allowOutsideClick: false,
+    })
+    </script>
+    <!-- <p class='alert alert-success mt-3'>{{messsage}}</p> -->
+    {% endif %}
+{% endfor %}
+
+
+<script>
+
+    $(document).ready(function() {
+            var options = {
+                    strings: ["<span class='title-main'>hello, <br> reseller</span>"],
+                    typeSpeed: 80,
+                    // fadeOut: true,
+                    backSpeed: 80,
+                    loop: false,
+                    startDelay: 300,
+            }
+
+            var options1 = {
+                    strings: ["<span class='title-main'>hi, reseller</span>"],
+                    typeSpeed: 80,
+                    // fadeOut: true,
+                    backSpeed: 80,
+                    loop: true,
+            }
+
+            var typed = new Typed("#typing", options);
+            var typed1 = new Typed("#typed", options1);
+    });
+</script>
+
+
+
+<script src="{% static 'js/registration.js' %}"></script>
+<script src="{% static 'js/modal-split.js' %}"></script>
+{% endblock %}
+

@@ -1,0 +1,86 @@
+{% extends 'admin_site/base.html' %}
+
+
+{% block content %}
+{% load humanize %}
+{% if list_orderitem %}
+
+<main id="main" class="main mt-5">
+    <div class="text-end">
+    <a href="{% url 'reseller_site:transaction_orders' %}" class="btn btn-dark">Back</a>
+</div>
+       
+    
+<table class="table table-hover text-center">
+    
+    <p class="fw-bolder">Order Details</p>
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Product Category</th>
+            <th>Product Unit</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+        {% for list in list_orderitem %}
+        <tr>
+            <td>{{ list.OrderItem_name }}</td>
+            <td>{{ list.OrderItem_category }}</td>
+            <td>{{ list.OrderItem_unit}}</td>
+            <td>{{ list.OrderItem_quantity}}</td>
+            <td>&#8369;{{ list.OrderItem_amount|floatformat:2|intcomma }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+    <div class="text-end px-5">
+        <label style="font-weight: bolder;" > Grand Total:    &#8369;{{ list_total|floatformat:2|intcomma }} </label><br>
+        <label style="font-weight: bolder;" > Transaction Number:    {{ list_transaction.transaction_no }} </label>
+ 
+        
+       
+    </div>
+    <br>
+    <br>
+   
+
+   
+        
+        <div class="container-fluid">
+        <h1 class="text-center">Shipping Details</h1>
+
+        <label for="">First Name</label>
+        <input type="text"class="form-control" value="{{ list_transaction.transaction_fname }}" disabled>
+        <br> 
+
+        <label for="">Last Name</label>
+        <input type="text"  value="{{ list_transaction.transaction_lname }}" class="form-control" disabled>
+        <br> 
+        <label for="">Address</label>
+        <input type="text"  value="{{ list_transaction.transaction_address }}" class="form-control" disabled>
+   
+        <br>
+        <label for="">contact No</label>
+        <input type="text"   value="{{ list_transaction.transaction_contactno }}"class="form-control" disabled>
+
+        <br> 
+        <label for="">Delivery option</label>
+        <input type="text" value="{{ list_transaction.transaction_doption }}" class="form-control" disabled>
+        <br>
+        
+        {% if list_transaction.transaction_doption == "pickup" %}
+        <label for="">Pickup Date</label>
+        <input type="text" value="{{ list_transaction.transaction_preferred_date }}" class="form-control" disabled>
+        {% endif %}
+        
+
+    </div>
+</main>
+
+{% endif %}    
+
+{% endblock content %}
+    

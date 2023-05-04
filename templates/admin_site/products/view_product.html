@@ -1,0 +1,84 @@
+<div class="modal-header border-0">
+    <h1 class="modal-title" id="viewModalLabel">{{ list_product.product_code }}</h1>
+    <button type="button" class="ri-close-fill" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body pt-2 mt-0">
+    <div class="product-code mb-4">
+        <div class="row">
+            <div class="col-lg-4 text-start">
+                <div style="text-transform: capitalize;"><span>Category:</span> {{ list_product.product_category }} </div>
+                <div><span>Unit:</span> {{ list_product.product_unit }}</div>
+            </div>
+            <div class="col-lg-4">
+                <div class="row flex-column">
+                    <!-- <div class="col">
+                        <div class="card-product-name text-center"> {{ list_product.product_code }} </div>
+                    </div> -->
+
+                    <div class="col">
+                        <div class="card-product-name text-center" style="text-transform: capitalize;"> {{ list_product.product_name }} </div>
+                    </div>
+
+                    <div class="col">
+                        {% if list_product.product_status == "available" %}
+                        <div class="card-product-name text-center"> <span class="badge rounded-pill bg-primary">{{ list_product.product_status }}</span></div>
+                        {% elif list_product.product_status == "low stock" %}
+                        <div class="card-product-name text-center"> <span class="badge rounded-pill bg-pending">{{ list_product.product_status }}</span></div>
+                        {% else %}
+                        <div class="card-product-name text-center"> <span class="badge rounded-pill bg-danger">{{ list_product.product_status }}</span></div>
+                        {% endif %}
+                        <td>
+                    </div>
+
+                    <div class="col card-batch-no">
+                        <div class="card-batch text-center">Latest Batch Number: <span>{{latest_bnumber}}</span></div>
+                    </div>
+                    
+                </div>
+                <!-- <h5 class="card-title feature text-center mt-0 mb-0">Product</h5> -->
+                
+            </div>
+            <div class="col-lg-4 text-end">
+                <div><span>POS Price:</span> Php {{ list_product.product_price|floatformat:2 }}</div>
+                <div><span>Available Stock:</span> {{ list_product.product_stock }}</div>
+            </div>
+        </div>
+        <!-- <a href="{% url 'admin_site:add_product' %}" class="btn btn-add" data-bs-toggle="modal" data-bs-target="#addProductModal"><i class="ri-add-line align-middle me-2 text-end" style="font-size:17px; font-weight: 500;"></i><span class="align-middle pe-1">Add a New Product</span></a>
+        <form class="search-tab" action="{% url 'admin_site:search_product' %}" method="GET"  class="text-end px-4">
+            {% csrf_token %}
+            <input type="text" class="form-control p-2 ps-3" name="search" placeholder="Search">
+            <button class="btn btn-search btn-sm" type="submit"><i class="ri-search-line"></i></button>
+        </form>   -->
+    </div> 
+
+    <div class="table-responsive">
+        <!-- <label for="">Latest Batch Number: {{latest_bnumber}}</label> -->
+        {% if list_batch %}
+        <table class="table table-hover text-center">
+            <thead class="view-product-t">
+                <tr class="align-middle">
+                    <th >Batch Number</th>
+                    <th>Quantity</th>
+                    <th>Expiration Date</th>
+                </tr>
+                <tbody>
+                    
+                    {% for list in list_batch %}
+                    <tr class="align-middle">
+                        <td>{{ list.product_batch }}</td>
+                        <td>{{ list.product_quantity }}</td>
+                        <td>{{ list.product_expired }}</td>
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </thead>
+        </table>
+        {% endif %}
+    </div>
+</div>
+<div class="modal-footer border-0">
+    <!-- <button type="submit" class="btn btn-primary" value="Add Product"><i class="ri-check-fill"></i>Add Product</button> -->
+    <!-- <button type="submit" class="btn btn-primary me-2"><i class="ri-check-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Add</span></button>
+    <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></button> -->
+</div>

@@ -1,0 +1,177 @@
+{% extends 'admin_site/base.html' %}
+
+{% block title %}
+    REPORTS - RESELLERS LIST
+{% endblock title %}
+
+{% load static %}
+{% block content %}
+
+<style>
+    @media print{
+        tr {
+            page-break-inside: avoid;
+        }
+    }
+</style>
+
+<main id="main" class="main mt-5">
+    <div class="pagetitle">
+        <h1>Resellers List</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'admin_site:dashboard'%}">Home</a></li>
+                <li class="breadcrumb-item">Reports</li>
+                <li class="breadcrumb-item active">Resellers List</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="empty-screenRes d-none">
+            <img src="../../../../static/img/noreports.svg" alt="haha">
+            <h5>No Records to Report</h5>
+            <p>There are currently no product records available to generate a report.</p>
+        </div>
+
+        <div id="resID" class="row d-none">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body mt-3">
+                        <div class="report-u act-d">
+                            <!-- <div class="row">
+                                <div class="col-7">
+                                    <h5 class="card-title feature">Resellers</h5>
+                                    <div id="btn-place"></div>
+                                    <div class="show-entries mb-4">
+                                        <div id="showEntries"></div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-5  d-flex flex-column justify-content-end">
+                                    <div class="d-flex flex-row align-items-center mb-1 input-daterange">
+
+                                        <input type="type" id="min" name="min" class="form-control date-range-filter" placeholder="mm/dd/yyyy">
+                                        
+                                        <span class="px-2 date-to">to</span>
+                                        <input type="type" id="max" name="max" class="form-control date-range-filter"  placeholder="mm/dd/yyyy">
+
+                                        <button class="btn btn-edit btn-filterRes ms-3 pe-0"><i class="ri-close-circle-fill"></i></button>
+                                        <button class="btn-placeRes btn btn-edit" data-toggle="tooltip" data-placement="bottom" title="Save/Export"></button>
+
+                                    </div>
+                                    <form class="search-tab mb-4" action="{% url 'admin_site:search_reseller' %}" method="GET"  class="text-end px-4">
+                                        {% csrf_token %}
+                                        <input type="text" id="tableM" class="form-control p-2 ps-3" name="search" placeholder="Search">
+                                        <button class="btn btn-search btn-sm nope" type="submit"><i class="ri-search-line"></i></button>
+                                    </form>  
+                                </div>
+                            </div> -->
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="row ">
+                                        <div class="col-4">
+                                            <h5 class="card-title feature">Resellers</h5>
+                                        </div>
+                                        <div class="col-8 right-sdie">
+                                            <div class="row">
+                                                <div class="col-4 main-sdie filter-wrapper pe-3">
+                                                    <input type="checkbox" class="filter-checkbox"  id="male" value="male"/>
+                                                    <label for="male">Male</label>
+                                                    <input type="checkbox" class="filter-checkbox"  id="female" value="female"/>
+                                                    <label for="female">Female</label>
+                                                    <!-- <div class="filter-wrapper">
+                                                    </div> -->
+                                                </div>
+                                                <div class="col-7 main-sdie  pe-4">
+                                                    <label for="role" class="pe-3 role-main">Status</label>
+                                                    <select class="form-control form-select status-dropdown p-2 ps-3 " name="role">
+                                                        <option value="">All</option>
+                                                        <option value="active">Active</option>
+                                                        <option value="inactive">Inactive</option>
+                                                        <option value="pending">Pending</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-1 main-sdie">
+                                                    <button class="btn-placeRes btn btn-edit" data-toggle="tooltip" data-placement="bottom" title="Save/Export"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <div class="show-entries mb-4">
+                                                <div id="showEntries"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-2 main-sdie-right">
+                                            <form class="search-tab mb-4" method="GET"  class="text-end px-4">
+                                                {% csrf_token %}
+                                                <input type="text" id="tableM" class="form-control p-2 ps-3" name="search" placeholder="Search">
+                                                <button class="btn btn-search btn-sm nope" type="submit"><i class="ri-search-line"></i></button>
+                                            </form>  
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                            <!-- Table with hoverable rows -->
+                        {% if list_reseller %}  
+                        <div class="table-responsive">
+                            
+                            <table id="tableRepRes" class="table table-hover ">
+                                <thead>
+                                    <tr class="align-middle">
+                                        <th scope="col">#</th>
+                                        <th scope="col">First Name</th>
+                                        <th scope="col">Middle Name</th>
+                                        <th scope="col">Last Name</th>
+                                        <th scope="col">Sex</th>
+                                        <th scope="col">Contact No</th>
+                                        <th scope="col" >Address</th>
+                                        <th scope="col" >Email</th>
+                                        <!-- <th scope="col" >Valid ID</th> -->
+                                        <!-- <th scope="col" >Business Permit</th> -->
+                                        <th scope="col" >Status</th>
+                                    </tr>
+                                </thead>
+                            
+                                <tbody id="tableRow">
+                                    {% for list in list_reseller %}   
+                                    <tr class="align-middle">
+                                        <td class="num-row"></td>
+                                        <td style="text-transform: capitalize;">{{ list.reseller_fname }}</td>
+                                        <td style="text-transform: capitalize;">{{ list.reseller_mname }}</td>
+                                        <td style="text-transform: capitalize;">{{ list.reseller_lname }}</td>
+                                        <td>{{ list.reseller_gender }}</td>
+                                        <td>{{ list.reseller_contact }}</td>
+                                        <td style="text-transform: capitalize;" class="pe-5">{{ list.reseller_address }}</td>
+                                        <td>{{ list.reseller_email }}</td>
+                                        
+                                        <!-- <td><i class="ri-eye-fill btn-edit" data-bs-toggle="modal" data-bs-target="#viewPic"></i></a></td> -->
+                                        <td><span class="badge badge-status rounded-pill bg-primary">{{ list.reseller_status }}</span></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
+                        <!-- End Table with hoverable rows -->
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+{% endblock content %}
+    

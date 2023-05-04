@@ -1,0 +1,233 @@
+{% extends 'landing_page/base.html' %}
+{% load static %}
+
+{% block title %}
+<title>CONTACT US - SCOOPS 4 U</title>
+{% endblock %}
+
+{% block content %}
+<!-- Main CSS -->
+<link href="{% static '/css/promotional/contact.css' %}" rel="stylesheet">
+
+
+<section class="header">
+    <div class="container header-container">
+            <div class="col-12 col-lg-12 header-top">
+                    <div class="row">
+                            <div class="col-12 col-lg-12 mb-4 d-flex justify-content-center align-items-center">
+                                    <div class="row">
+                                            <a href="{% url 'landing_page:contact' %}" class="logo-display">
+                                                    <img src="./../static/img/contact.svg" alt="">
+                                            </a>
+                                    </div>
+                            </div>
+                            <div class="col-12 col-lg-12 my-5 main-display d-flex justify-content-center align-items-center">
+                                    <h1 class="line-1"><span class="display-4" id="typing"></span></h1>
+                                    <h1 class="line-2"><span class="display-4" id="typed"></span></h1>
+                            </div>
+                            <div class="col-12 d-flex justify-content-center align-items-center">
+                                    <p>If you wish to contact or reach us, you’re on the right page.</p>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</section>
+
+<section class="question" id="question">
+    <div class="container ques-container">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 question-title">
+                    <div class="mb-4"><i class="ri-question-line"></i></div>
+                    <h1 class="mb-5">Have some questions?</h1>
+                </div>
+
+                <div class="col main-question">
+                    <form  method="post">
+                        {% csrf_token %}
+                        <div class="row d-flex justify-content-center align-items-center mb-3">
+                            <div class="col-12 col-md-3 ">
+                                <label for="">First Name</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <span>{{form.first_name}}</span>
+                                <!-- <input type="text" class="form-control" id="" aria-describedby="" required> -->
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-center align-items-center mb-3">
+                            <div class="col-12 col-md-3">
+                                <label for="">Last Name</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <span>{{form.last_name}}</span>
+                                <!-- <input type="text" class="form-control" id="" aria-describedby="" required> -->
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-center align-items-center mb-3">
+                            <div class="col-12 col-md-3">
+                                <label for="">Email</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <span>{{form.email_address}}</span>
+                                <!-- <input type="email" class="form-control" id="" aria-describedby="emailHelp" required>                           -->
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-center mb-3">
+                            <div class="col-12 col-md-3">
+                                <label for="">Message</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <span class="mb-1">{{form.message}}</span>
+                                <!-- <textarea class="form-control mb-1" id="" rows="4" required></textarea>  -->
+                                <button type="submit" class="btn btn-send w-100">Send Message</button> 
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="reach">
+    <div class="container reach-container">
+        <div class="col-12 col-lg-12">
+            <div class="row flex-column">
+
+                <div class="col">
+                    <div class="row">
+                        <div class="col-3 col-md-2"></div>
+                        <div class="col-9 col-md-10 reach-main-title">
+                            <h1>Reach Us</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="row main-reach d-flex justify-content-start align-items-center">
+                        <div class="col-3 col-md-2">
+                            <i class="ri-mail-line"></i>
+                        </div>
+                        <div class="col-md-3 reach-title">
+                            <p>Email</p>
+                        </div>
+                        <div class="col-6 col-md-7 reach-email">
+                            <p class="email">scoops4uteresa</p>
+                            <p class="email-1">scoops4uteresa@gmail.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row main-reach-1 d-flex justify-content-start align-items-center">
+                        <div class="col-3 col-md-2">
+                            <i class="ri-phone-line"></i>
+                        </div>
+                        <div class="col-md-3 reach-title">
+                            <p>Phone</p>
+                        </div>
+                        <div class="col-6 col-md-7">
+                            <p>+639364671062</p>
+                        </div>
+                    </div>
+
+                    <div class="row main-reach-1 d-flex justify-content-start ">
+                        <div class="col-3 col-md-2">
+                            <i class="ri-store-line"></i>
+                        </div>
+                        <div class="col-md-3 reach-title">
+                            <p>Address</p>
+                        </div>
+                        <div class="col-6 col-md-7 reach-address">
+                            <p>#12 Filipinas Avenue Brgy. Dulumbayan Teresa, Rizal, 1880</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% for messsage in messages  %}
+    {% if 'success' in message.tags %}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        var m = "{{messsage}}"
+        swal({
+            
+        title: m,
+        text: "We'll get back to you sooner",
+        icon: "success",
+        timer: 3000,
+        // content: {
+        //     element: 'h1',
+        //     attributes: {
+        //         innerHTML: m,
+        //     }
+        // },
+        
+        // icon: "warning",
+        buttons: false,
+        className: 'swal-wide',
+        // dangerMode: true,
+        // allowOutsideClick: false,
+    })
+    </script>
+    <!-- <p class='alert alert-success mt-3'>{{messsage}}</p> -->
+    {% else %}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        var m = "{{messsage}}"
+        swal({
+            
+        // title: "Archive",
+        // text: "Do you really want to <span>archive</span> this reseller?",
+        // icon: "error",
+        timer: 3000,
+        content: {
+            element: 'h1',
+            attributes: {
+                innerHTML: m,
+            }
+        },
+        
+        // icon: "warning",
+        buttons: false,
+        className: 'swal-wide',
+        // dangerMode: true,
+        // allowOutsideClick: false,
+    })
+    </script>
+    <!-- <p class='alert alert-success mt-3'>{{messsage}}</p> -->
+    {% endif %}
+
+
+{% endfor %}
+
+<script>
+    $(document).ready(function() {
+            var options = {
+                    strings: ["<span class='title-main'>contact <br> us</span>"],
+                    typeSpeed: 80,
+                    // fadeOut: true,
+                    backSpeed: 80,
+                    loop: false,
+                    startDelay: 300,
+            }
+
+            var options1 = {
+                    strings: ["<span class='title-main'>contact us</span>"],
+                    typeSpeed: 80,
+                    // fadeOut: true,
+                    backSpeed: 80,
+                    loop: true,
+            }
+
+            var typed = new Typed("#typing", options);
+            var typed1 = new Typed("#typed", options1);
+    });
+</script>
+
+
+{% endblock content %}  

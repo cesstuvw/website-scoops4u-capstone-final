@@ -1,0 +1,138 @@
+{% extends 'admin_site/base.html' %}
+
+{% block title %}
+    MY ORDERS
+{% endblock title %}
+
+{% block content %}
+{% load humanize %}
+<!-- {% load static %} -->
+
+
+<main id="main" class="main mt-5">
+    <!-- {% if list_transaction %}  -->
+
+    <div class="pagetitle">
+        <h1>Orders</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'reseller_site:dashboard'%}">Home</a></li>
+                <!-- <li class="breadcrumb-item">Order</li> -->
+                <li class="breadcrumb-item active">Orders</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    {% for message in messages  %}
+    {% if 'success' in message.tags %}
+    <p class='alert alert-success mt-3'>{{message}}</p>
+    {% elif 'error' in message.tags %}
+    <p class='alert alert-danger mt-3'>{{message}}</p>
+    {% else %}
+    <p class='alert alert-info mt-3'>{{message}}</p>
+    {% endif %}
+    {% endfor %}
+
+    <section class="section">
+
+        <div class="empty-screens">
+            <img src="../../../../static/img/nopendingorders.svg" alt="haha">
+            <h5>No Orders</h5>
+            <p>There are currently no orders made by you.</p>
+        </div>
+    
+    
+        <div id="ordersID" class="row d-none">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body mt-3">
+                        <div class="add-product order-d mb-4">
+                            <h5 class="card-title feature">Orders</h5>
+                            <div class="show-entries">
+                                <div id="showEntries"></div>
+                            </div>
+                            <!-- <div class="modal-add-prod">
+                                <a href="{% url 'admin_site:add_product' %}" class="btn btn-add-product" data-bs-toggle="modal" data-bs-target="#addProductModal"><i class="ri-add-line align-middle me-2 text-end" style="font-size:17px; font-weight: 500;"></i><span class="align-middle pe-1">Add a New Product</span></a>
+                            </div> -->
+                            <form class="search-tab" action="{% url 'admin_site:search_transaction' %}" method="GET"  class="text-end px-4">
+                                {% csrf_token %}
+                                <input type="text" id="tableM" class="form-control p-2 ps-3" name="search" placeholder="Search">
+                                <button class="btn btn-search btn-sm nope" type="submit"><i class="ri-search-line"></i></button>
+                            </form>  
+                        </div> 
+    
+                        {% if list_transaction %} 
+                        <!-- <form action="{% url 'admin_site:search_transaction' %}" method="GET" class="my-3 ">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="search" placeholder="search" required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-success" type="submit">Search</button>
+                                    
+                                </div>
+                            </div>
+                        </form> -->
+    
+    
+                        <div class="table-responsive">
+                            <table id="tableOrder" class="table table-hover d-none" >
+                                <thead>
+                                    <tr class="align-middle">
+                                        <th scope="col">#</th>
+                                        <th scope="col">Order Date</th>
+                                        <th scope="col">Transaction Number</th>
+                                        <th scope="col">Total Price</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col" class="sort-no">Action</th>
+                                    </tr>
+                                </thead>
+                                
+                            
+                                <tbody id="tableRow">
+                                    {% for list in list_transaction %}
+                                    <tr class="align-middle">
+                                        <td class="num-row"></td>
+                                        <td>{{ list.created_at}}</td>
+                                        <td>{{ list.transaction_no }}</td>
+                                        <td>Php {{ list.transaction_totalprice|floatformat:2|intcomma}}</td>
+    
+                                        
+                                        <td><span class="badge badge-stat-res rounded-pill bg-pending">{{ list.transaction_orderstatus }}</span></td>
+                                        <td class="modal-view-order">
+                                            <a href="{% url 'reseller_site:transaction_view' list.id %}" 
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#viewOrderModal" 
+                                                class="text-decoration-none">
+                                                <i class="ri-eye-fill btn-edit"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
+                        
+                        <!-- End Table with hoverable rows -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- {% endif %}  -->
+    
+    <!-- VIEW ORDER -->
+    <div class="modal fade border-0"  id="viewOrderModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen modal-dialog-scrollable">
+            <div class="modal-content border-0 p-4">
+                
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- <script src="{% static '/js/status.js' %}" alt=""></script> -->
+
+
+{% endblock content %}

@@ -1,0 +1,61 @@
+<div class="modal-header border-0">
+    <h1 class="modal-title" id="exampleModalLabel">New Reseller</h1>
+    <button type="button" class="ri-close-fill" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<form action="{% url 'admin_site:add_reseller' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="modal-body pt-2 mt-0">
+            <!-- {% for message in  messages %}
+                <p class="alert alert-success  mt-1">{{ message }}</p>
+            {% endfor %}
+            <form action="{% url 'admin_site:add_product' %}" method="POST">
+                    {% csrf_token %} -->
+                <label for="first name">First Name</label>
+                <input type="text" placeholder="" name="fname" class="form-control" required>
+
+                <label for="middle name">Middle Name</label>
+                <input type="text" placeholder="" name="mname" class="form-control" required>
+
+                <label for="last name">Last Name</label>
+                <input type="text" placeholder="" name="lname" class="form-control" required>
+
+                <!-- this should be sex not gender -->
+                <label for="sex">Sex</label>
+                <select name="gender" class="form-control form-select" id="gender" required >
+                    <option ></option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+
+                <label for="contact">Contact No.</label>
+                <input type="number" 
+                placeholder="" 
+                name="cnum" 
+                min="0" 
+                maxlength="11" 
+                class="form-control" 
+                oninput="this.value=this.value.slice(0,this.maxLength)"
+                required>
+
+                <label for="address">Address</label>
+                <input type="text" placeholder="" name="address" class="form-control" required>
+                <!-- <textarea type="text" placeholder="" name="address" class="form-control" required></textarea> -->
+
+                <label for="last name">Email</label>
+                <input type="email" placeholder="" name="email" class="form-control" required>
+
+                <label for="valid-ID">Valid ID</label>
+                <input type="file" placeholder="" name="valid-ID" accept=".jpg, .jpeg, .png" class="form-control custom" required>
+                
+                <label for="bus-Permit">Business Permit</label>
+                <input type="file" placeholder="" name="Business-permit" accept=".jpg, .jpeg, .png" class="form-control custom" required>
+            <!-- </form> -->
+        </div>
+        <div class="modal-footer border-0">
+            <!-- <button type="submit" class="btn btn-primary" value="Add Product"><i class="ri-check-fill"></i>Add Product</button> -->
+            <button type="submit" name="submit" class="btn btn-primary me-2"><i class="ri-check-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Add</span></button>
+            <a href="{% url 'admin_site:list_reseller' %}" type="submit" id="close-modal" class="btn btn-secondary" data-bs-dismiss="modal" style="font-size: 15px; padding: 5px 13px;"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></a>
+            <!-- <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></button> -->
+        </div>
+</form>    

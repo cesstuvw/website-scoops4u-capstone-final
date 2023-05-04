@@ -1,0 +1,203 @@
+{% extends 'admin_site/base.html' %}
+
+{% block title %}
+    REPORTS - PRODUCTS LIST
+{% endblock title %}
+
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<style>
+    @media print{
+        tr {
+            page-break-inside: avoid;
+        }
+    }
+</style>
+
+<main id="main" class="main mt-5">
+    <div class="pagetitle">
+        <h1>Products List</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'admin_site:dashboard'%}">Home</a></li>
+                <li class="breadcrumb-item">Reports</li>
+                <li class="breadcrumb-item active">Products List</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="empty-screenPro d-none">
+            <img src="../../../../static/img/noreports.svg" alt="haha">
+            <h5>No Records to Report</h5>
+            <p>There are currently no product records available to generate a report.</p>
+        </div>
+
+        <div id="proID" class="row d-none">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body mt-3">
+                        <div class="report-u act-d">
+                            <!-- <div class="row">
+                                <div class="col-7">
+                                    <h5 class="card-title feature">Products</h5>
+                                    <div id="btn-place"></div>
+                                    <div class="show-entries mb-4">
+                                        <div id="showEntries"></div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-5  d-flex flex-column justify-content-end">
+                                    <div class="d-flex flex-row align-items-center mb-1 input-daterange">
+
+                                        <input type="type" id="min" name="min" class="form-control date-range-filter" placeholder="mm/dd/yyyy">
+                                        
+                                        <span class="px-2 date-to">to</span>
+                                        <input type="type" id="max" name="max" class="form-control date-range-filter"  placeholder="mm/dd/yyyy">
+
+                                        <button class="btn btn-edit btn-filter ms-3 pe-0"><i class="ri-close-circle-fill"></i></button>
+                                        <button class="btn-place btn btn-edit" data-toggle="tooltip" data-placement="bottom" title="Save/Export"></button>
+
+                                    </div>
+                                    <form class="search-tab mb-4" action="{% url 'admin_site:search_reseller' %}" method="GET"  class="text-end px-4">
+                                        {% csrf_token %}
+                                        <input type="text" id="tableM" class="form-control p-2 ps-3" name="search" placeholder="Search">
+                                        <button class="btn btn-search btn-sm nope" type="submit"><i class="ri-search-line"></i></button>
+                                    </form>  
+                                </div>
+                            </div> -->
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="row ">
+                                        <div class="col-5">
+                                            <h5 class="card-title feature">Products</h5>
+                                        </div>
+                                        <div class="col-7 right-sdie">
+                                            <div class="row">
+                                                <div class="col-4 main-sdie filter-wrapper pe-4">
+                                                    <input type="checkbox" class="filter-checkbox"  id="active" value="available"/>
+                                                    <label for="available">Available</label>
+                                                    <input type="checkbox" class="filter-checkbox"  id="inactive" value="not available"/>
+                                                    <label for="not available">N/A</label>
+                                                    <input type="checkbox" class="filter-checkbox"  id="lowstock" value="low stock"/>
+                                                    <label for="low stock">Low</label>
+                                                    <!-- <div class="filter-wrapper">
+                                                    </div> -->
+                                                </div>
+
+                                                <div class="col-7 main-sdie  pe-4">
+                                                    <label for="category" class="pe-3 role-main">Category</label>
+                                                    <select class="form-control form-select status-dropdown p-2 ps-3 " name="category">
+                                                        <option value="">All</option>
+                                                        <!-- <option value="admin">Admin</option>
+                                                        <option value="si_staff">SI Staff</option>
+                                                        <option value="delivery_staff">Delivery Staff</option>
+                                                        <option value="reseller">Reseller</option> -->
+                                                        {% for list in list_category  %}
+                                                        <option value="{{ list.settings_category }}">{{ list.settings_category }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="col-1 main-sdie">
+                                                    <button class="btn-placePro btn btn-edit" data-toggle="tooltip" data-placement="bottom" title="Save/Export"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <div class="show-entries mb-4">
+                                                <div id="showEntriesPro"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-2 main-sdie-right">
+                                            <form class="search-tab mb-4"   class="text-end px-4">
+                                                {% csrf_token %}
+                                                <input type="text" id="tableMPro" class="form-control p-2 ps-3" name="search" placeholder="Search">
+                                                <button class="btn btn-search btn-sm nope" type="submit"><i class="ri-search-line"></i></button>
+                                            </form>  
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                            <!-- Table with hoverable rows -->
+                        {% if list_products %}  
+                        <div class="table-responsive">
+                            
+                            <table id="tableRepPro" class="table table-hover ">
+                                <thead>
+                                    <tr class="align-middle">
+                                        <th scope="col">#</th>
+                                        <th scope="col">Product Code</th>
+                                        <th scope="col">Product Name</th>
+                                        <th scope="col">Product Flavor</th>
+                                        <th scope="col">Product Category</th>
+                                        <th scope="col">Unit</th>
+                                        <th scope="col">Reseller Price</th>
+                                        <th scope="col" >POS Price</th>
+                                        <th scope="col" >Available Stock</th>
+                                        <th scope="col" >Status</th>
+                                    </tr>
+                                </thead>
+                            
+                                <tbody id="tableRow">
+                                    {% for list in list_products %}   
+                                    <tr class="align-middle">
+                                        <td class="num-row"></td>
+                                        <td class="modal-view-product">
+                                            <a href="{% url 'admin_site:view_product' list.id %}" data-bs-toggle="modal" data-bs-target="#viewProductModal" class="text-decoration-none"><span >{{ list.product_code }}</span></a>
+                                        </td>
+                                        <td style="text-transform: capitalize;">{{ list.product_name }}</td>
+                                        <td style="text-transform: capitalize;">{{ list.product_flavor }}</td>
+                                        <td style="text-transform: capitalize;">{{ list.product_category }}</td>
+                                        <td>{{ list.product_unit }}</td>
+                                        <td>Php {{ list.product_ResellerPrice|floatformat:2|intcomma }}</td>
+                                        <td>Php {{ list.product_price|floatformat:2|intcomma }}</td>
+                                        <td class="stock-status">{{ list.product_stock }}</td>
+
+
+                                        <!-- <td><span class="badge badge-stat-prod rounded-pill bg-primary">{{ list.product_status }}</span></td> -->
+                                        {% if list.product_status == "available" %}
+                                        <td><span class="badge status rounded-pill bg-primary">{{ list.product_status }}</span></td>
+                                        {% elif list.product_status == "low stock" %}
+                                        <td><span class="badge status rounded-pill bg-pending">{{ list.product_status }}</span></td>
+                                        {% else %}
+                                        <td><span class="badge status rounded-pill bg-danger">{{ list.product_status }}</span></td>
+                                        {% endif %}
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
+                        <!-- End Table with hoverable rows -->
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- VIEW PRODUCT -->
+<div class="modal fade border-0"  id="viewProductModal" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg moda">
+        <div class="modal-content border-0 p-4">
+            
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+    

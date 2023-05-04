@@ -1,0 +1,112 @@
+{% extends 'admin_site/base.html' %}
+
+{% block title %}
+    INVENTORY
+{% endblock title %}
+
+{% block content %}
+
+<main id="main" class="main mt-5">
+    <div class="pagetitle">
+        <h1>Inventory</h1>
+        <nav>
+            {% if user.role == "admin"%}
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'admin_site:dashboard'%}">Home</a></li>
+                <li class="breadcrumb-item">Inventory</li>
+                <li class="breadcrumb-item active">View Stock</li>
+            </ol>
+            {% endif %}
+
+            {% if user.role == "staff"%}
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'staff_site:dashboard'%}">Home</a></li>
+                <li class="breadcrumb-item">Inventory</li>
+                <li class="breadcrumb-item active">View Stock</li>
+            </ol>
+            {% endif %}
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body mt-3">
+                        <div class="report-u act-d">
+                            <div class="row">
+                                <div class="col-7">
+                                    <h5 class="card-title feature">Stocks</h5>
+                                    <div id="btn-place"></div>
+                                    <div class="show-entries mb-4">
+                                        <div id="showEntries"></div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-5  d-flex flex-column justify-content-end">
+                                    <div class="d-flex flex-row align-items-center mb-1 input-daterange">
+
+                                        <input type="type" id="minV" name="min" class="form-control date-range-filter" placeholder="mm/dd/yyyy">
+                                        
+                                        <span class="px-2 date-to">to</span>
+                                        <input type="type" id="maxV" name="max" class="form-control date-range-filter"  placeholder="mm/dd/yyyy">
+
+                                        <button class="btn btn-edit btn-filterV ms-3 pe-0"><i class="ri-close-circle-fill"></i></button>
+                                        <button class="btn-placeV btn btn-edit" data-toggle="tooltip" data-placement="bottom" title="Save/Export"></button>
+
+                                    </div>
+                                    <form class="search-tab mb-4" action="" method="GET"  class="text-end px-4">
+                                        {% csrf_token %}
+                                        <input type="text" id="tableM" class="form-control p-2 ps-3" name="search" placeholder="Search">
+                                        <button class="btn btn-search btn-sm nope" type="submit"><i class="ri-search-line"></i></button>
+                                    </form>  
+                                </div>
+                            </div>
+                        </div>
+
+                            <!-- Table with hoverable rows -->
+                            {% if list_inventory %}
+                            <div class="table-responsive">
+                                <table id="tableView" class="table table-hover" style="width: 100%">
+                                    
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Product Code</th>
+                                            <th scope="col">Product Name</th>
+                                            <th scope="col">Product Flavor</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">Date-Time Added</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                        {% for list in  list_inventory %}  
+                                    
+                                        <tr>
+                                            <!-- <td>{{ list.product_code }}</td> -->
+                                            
+                                            <td class="num-row"></td>
+                                            <td class="text-decoration-none">{{ list.product_code }}</td>
+                                            <td style="text-transform: capitalize;">{{ list.product_name }}</td>
+                                            <td style="text-transform: capitalize;">{{ list.product_flavor }}</td>
+                                            <td>{{ list.product_quantity }}</td>
+                                            <td>{{ list.created_at|date:"m/d/Y h:i A" }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+    
+{% endblock content %}

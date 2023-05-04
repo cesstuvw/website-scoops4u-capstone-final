@@ -1,0 +1,53 @@
+{% extends 'admin_site/base.html' %}
+
+
+{% block content %}
+   
+    <form action="" method="POST" class="text-center">
+        <h1>Sending Email</h1>
+        {% csrf_token %}
+        <br>
+        <!-- <input type="text" name="name" class="form-control" placeholder="Title of the Email" required>
+        <br> -->
+
+        <input type="email" name="email" class="form-control"placeholder="The reseller Email"  required>
+        <br>
+        <textarea name="message"  cols="30" rows="10" class="form-control" placeholder="Message to deliver"  required>
+            Mr/Mrs/Ms, {{ user }}
+
+            Your request for being a reseller is approved. You can now login as a Reseller
+
+            Here's your account
+    
+            Username:
+            Password:
+         
+           Thanks, Admin
+
+
+        </textarea>
+        <br>
+        <input type="submit" name="submit" class="btn btn-dark">
+    </form>
+{% endblock content %}
+
+                        <!-- <p>Dear <span>{{ user }}</span>,</p>  -->
+                                    <!-- <p>Dear <span>Reseller</span>,</p> 
+
+                                    <p>We are delighted to inform you that your request to become a reseller with us has been <span>approved</span>. You are now a part of our exclusive reseller network, and we are thrilled to have you onboard.</p> 
+
+                                    <p>As a reseller, you can take advantage of a range of benefits, including discounted prices, exclusive promotions, and early access to new products. We are confident that you will find our products to be of the highest quality, and we look forward to working with you to meet the needs of your customers.</p>
+
+                                    <p>To access your Reseller account, please find your <span>account details</span> below:</p>
+
+                                    <p><span>Username:</span> <br>
+                                    <span>Password:</span></p>
+
+                                    <p>Please ensure that you keep your login details safe and secure, as they will be required every time you access your account. You can log in at any time to view our product catalog, place orders, and track shipments.                                   </p>  
+
+                                    <p>Should you have any questions or concerns, please do not hesitate to contact our support team. We are always here to help you in any way we can.                                    </p>
+                                    <p>Thank you for choosing to work with us as a reseller. We value your business and look forward to a long and fruitful partnership.</p>
+                                    
+                                    <br>
+                                    <p>Best regards, <br>
+                                    Owner</p> -->

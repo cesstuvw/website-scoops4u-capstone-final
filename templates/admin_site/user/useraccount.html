@@ -1,0 +1,258 @@
+{% extends 'admin_site/base.html' %}
+
+{% block title %}
+    USERS LIST
+{% endblock title %}
+
+{% block template %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+
+
+<main id="main" class="main mt-5">
+    <div class="pagetitle">
+        <h1>Users List</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'admin_site:dashboard'%}">Home</a></li>
+                <li class="breadcrumb-item">User Accounts</li>
+                <li class="breadcrumb-item active">Users List</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <!-- {% for messsage in messages  %}
+    <div class="message-update">
+        <p class='alert alert-success mt-3'>{{messsage}}</p>
+    </div>
+    {% endfor %} -->
+    {% for message in messages  %}
+        {% if 'success' in message.tags %}
+        <p class='alert alert-success mt-3'>{{message}}</p>
+        {% elif 'error' in message.tags %}
+        <p class='alert alert-danger mt-3'>{{message}}</p>
+        {% else %}
+        <p class='alert alert-info mt-3'>{{message}}</p>
+        {% endif %}
+    {% endfor %}
+
+    <section class="section">
+        <div class="row">
+            <div id="btn-place bg-primary"></div>
+            <div class="col-lg-12">
+                <div class="card">
+
+                    <div class="card-body mt-3">
+                        <div class="add-user res-d mb-4">
+                            <h5 class="card-title feature">Users</h5>
+                            <div class="show-entries">
+                                <div id="showEntries"></div>
+                            </div>
+                            
+                            <a href="{% url 'admin_site:add_useraccount' %}" class="btn btn-add "><i class="ri-add-line align-middle me-2 text-end" style="font-size:17px; font-weight: 500;"></i><span class="align-middle pe-1">Add a New User</span></a>
+                            <!-- <a href="{% url 'admin_site:add_useraccount' %}" class="btn btn-add modal-add"><i class="ri-add-line align-middle me-2 text-end" style="font-size:17px; font-weight: 500;"></i><span class="align-middle pe-1">Add a New User</span></a> -->
+                            <!-- <a href="{% url 'admin_site:add_reseller' %}" class="btn btn-add" data-add="addRes" data-bs-toggle="modal" data-bs-target="#addReseller"><i class="ri-add-line align-middle me-2 text-end" style="font-size:17px; font-weight: 500;"></i><span class="align-middle pe-1">Add a New Reseller</span></a> -->
+                            <form class="search-tab" method="GET"  class="text-end px-4">
+                                {% csrf_token %}
+                                <input type="text" id="tableM" class="form-control p-2 ps-3" name="search" placeholder="Search">
+                                <button class="btn btn-search btn-sm nope" type="submit"><i class="ri-search-line"></i></button>
+                            </form>  
+                        </div> 
+
+                        <!-- <button class="btn-edit d-none" id="btnAddModal" data-bs-toggle="modal" data-bs-target="#addReseller">Haha</button>                         -->
+
+                        <!-- Add User -->
+                        <!-- <div class="modal fade border-0" id="addUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered ">
+                                <div class="modal-content border-0 p-4">
+                                    
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <!-- Edit User -->
+                        <div class="modal fade border-0" id="editUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered ">
+                                <div class="modal-content border-0 p-4">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Table with hoverable rows -->
+                        {% if users %}
+                        <div class="table-responsive">
+                            <table id="tableMain" class="table table-hover ">
+                                <thead>
+                                <tr class="align-middle">
+                                    <th scope="col">#</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Role</th>
+                                    <th scope="col" >Status</th>
+                                    <th class="sort-no" scope="col" >Action</th>
+                                </tr>
+                                </thead>
+                            
+                                <tbody id="tableRow">
+                                    {% for list in users %}
+                                    <tr class="align-middle">
+                                        <td class="num-row"></td>
+                                        <td>{{ list.username }}</td>
+                                        <td>{{ list.email }}</td>
+                                        <td class="role">
+                                            {{ list.role|title }}
+
+
+                                        </td>
+                                        
+                                        <td><span class="badge badge-status rounded-pill bg-primary">{{ list.status }}</span></td>
+                                        
+                                        <!-- <form method="POST" action="{% url 'admin_site:archive_reseller'  list.id %}" onsubmit="return submitForm(this);">
+                                            {% csrf_token %} -->
+                                        <td> 
+                                            <a href="{% url 'admin_site:edit_user_account' list.id %}"class="btn btn-edit modal-edit" data-toggle="tooltip" data-placement="top" title="Edit"><i class="ri-edit-fill"></i></a>
+                                            <a href="{% url 'admin_site:send_email' list.id %}" class="btn btn-edit"  data-toggle="tooltip" data-placement="top" title="Send Email"><i class="ri-mail-send-fill"></i></a>
+                                            <!-- <button type="submit" class="btn btn-archive"><i class="ri-archive-fill"></i></button> -->
+                                            <!-- <input type="submit" class="btn btn-archive"><i class="ri-archive-fill"></i> -->
+                                        </td>
+                                        <!-- </form> -->
+
+                                        <script>
+                                            function submitForm(form) {
+                                                var message = "Do you really want to <b>archive</b> this user?";
+                                                
+                                                swal({
+                                                    title: "Archive",
+                                                    // text: "Do you really want to <span>archive</span> this reseller?",
+                                                    content: {
+                                                        element: 'p',
+                                                        attributes: {
+                                                            innerHTML: message,
+                                                        }
+                                                    },
+                                                    
+                                                    // icon: "warning",
+                                                    buttons: {
+                                                        // confirm: "Yes",
+                                                        confirm: {
+                                                            text: "Yes",
+                                                        },
+                                                        cancel: true,
+                                                    },
+                                                    className: 'swal-wide',
+                                                    dangerMode: true,
+                                                    // allowOutsideClick: false,
+                                                    closeOnClickOutside: false
+
+                                                    
+                                                    
+                                                })
+                                                .then(function (isConfirm) {
+                                                    if (isConfirm) {
+                                                        form.submit();
+                                                    }
+                                                });
+                                                return false;
+                                            }
+                                        </script>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
+                        <!-- End Table with hoverable rows -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VALID ID -->
+        <!-- <button class="btn-edit d-none" id="btnModal" data-bs-toggle="modal" data-bs-target="#viewPic">Haha</button> -->
+
+        <div class="modal fade border-0" id="viewPic" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-content border-0 p-4">
+                    <div class="modal-header border-0">
+                        <h1 class="modal-title" id="exampleModalLabel">Valid ID</h1>
+                        <button type="button" class="ri-close-fill" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                        {% if list_reseller %}
+                        <div class="modal-body pt-2 mt-0">
+                            <img id="imgModal" src="" alt="Valid-ID" >
+                        </div>
+                        {% endif %}
+                        <div class="modal-footer border-0">
+                            <!-- <button type="submit" class="btn btn-primary" value="Add Product"><i class="ri-check-fill"></i>Add Product</button> -->
+                            <!-- <button type="submit" class="btn btn-primary me-2"><i class="ri-check-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Add</span></button>
+                            <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></button> -->
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View File Modal -->
+        <div class="modal fade border-0" id="viewFileModal" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                <div class="modal-content border-0 p-4">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- BUSINESS PERMIT -->
+        <button class="btn-edit d-none" id="btnModal1" data-bs-toggle="modal" data-bs-target="#viewBP">Haha</button>
+
+        <div class="modal fade border-0" id="viewBP" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-content border-0 p-4">
+                    <div class="modal-header border-0">
+                        <h1 class="modal-title" id="exampleModalLabel">Business Permit</h1>
+                        <button type="button" class="ri-close-fill" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                        <!-- {% if list_reseller %} -->
+                        <div class="modal-body pt-2 mt-0">
+                            <img id="imgModal1" src="" alt="Business Permit" >
+                        </div>
+                        <!-- {% endif %} -->
+                        <div class="modal-footer border-0">
+                            <!-- <button type="submit" class="btn btn-primary" value="Add Product"><i class="ri-check-fill"></i>Add Product</button> -->
+                            <!-- <button type="submit" class="btn btn-primary me-2"><i class="ri-check-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Add</span></button>
+                            <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></button> -->
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade border-0" id="archiveUser" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-archive modal-dialog-centered ">
+                <div class="modal-content border-0 p-4">
+                    <div class="modal-header border-0">
+                        <h1 class="modal-title" id="exampleModalLabel">Archive</h1>
+                        <button type="button" class="ri-close-fill" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <!-- <form action="{% url 'admin_site:add_reseller' %}" method="POST"> -->
+                            <!-- {% csrf_token %} -->
+                            <div class="modal-body pt-2 mt-0">
+                                <p>Do you really want to <span>archive</span> this reseller?</p>
+                            </div>
+                            <div class="modal-footer border-0 d-flex justify-content-start">
+                                <!-- <button type="submit" class="btn btn-primary" value="Add Product"><i class="ri-check-fill"></i>Add Product</button> -->
+                                <button type="submit" class="btn btn-primary me-2"><i class="ri-check-line align-middle me-2 text-start" style="font-size:17px;"></i><span class="align-middle pe-1">Yes</span></button>
+                                <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal"><i class="ri-close-line align-middle me-2 text-start" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></button>
+                            </div>
+                    <!-- </form>     -->
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+{% endblock template %}
+
+    

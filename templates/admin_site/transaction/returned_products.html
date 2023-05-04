@@ -1,0 +1,228 @@
+
+
+{% extends 'admin_site/base.html' %}
+
+
+{% block title %}
+    RETURNED
+{% endblock title %}
+
+{% block content %}
+{% load humanize %}
+
+<main id="main" class="main mt-5">
+    <div class="pagetitle">
+        <h1>Returned</h1>
+        <nav>
+            {% if user.role == "admin"%}
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'admin_site:dashboard'%}">Home</a></li>
+                <li class="breadcrumb-item">Order</li>
+                <li class="breadcrumb-item active">Returned</li>
+            </ol>
+            {% endif %}
+        </nav>
+    </div><!-- End Page Title -->
+
+    {% for message in messages  %}
+    {% if 'success' in message.tags %}
+    <p class='alert alert-success mt-3'>{{message}}</p>
+    {% elif 'error' in message.tags %}
+    <p class='alert alert-danger mt-3'>{{message}}</p>
+    {% else %}
+    <p class='alert alert-info mt-3'>{{message}}</p>
+    {% endif %}
+    {% endfor %}
+
+    <section class="section ">
+        <div class="empty-screenRetu d-none modal-add-res">
+            <img src="../../../../static/img/noreturns.svg" alt="">
+            <h5>No Returned Items</h5>
+            <p>There are currently no records of returned items on the system.
+                <a href="{% url 'admin_site:add_returnproduct' %}" data-bs-toggle="modal" data-bs-target="#addResellerEmpty">Return item</a> here.
+                <!-- <div class="modal-add-res">
+                </div> -->
+            </p>
+        </div>
+
+            <!-- ADD PRODUCT -->
+        <div class="modal fade border-0"  id="addResellerEmpty">
+            <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-content border-0 p-4">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div id="unreturnID" class="row d-none">
+        <!-- <div class="row"> -->
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body mt-3">
+                        <div class="add-product product-d mb-4">
+                            <h5 class="card-title feature">Returns</h5>
+                            <div class="show-entries">
+                                <div id="showEntries"></div>
+                            </div>
+                            <!-- <div class="modal-add-ret">
+                                <a href="{% url 'admin_site:add_returnproduct' %}" class="btn btn-add-product" data-bs-toggle="modal" data-bs-target="#addReturnModal"><i class="ri-add-line align-middle me-2 text-end" style="font-size:17px; font-weight: 500;"></i><span class="align-middle pe-1">Return A Product</span></a>
+                            </div> -->
+                            <form class="search-tab" method="GET"  class="text-end px-4">
+                                {% csrf_token %}
+                                <input type="text" id="tableM" class="form-control p-2 ps-3" name="search" placeholder="Search">
+                                <button class="btn btn-search btn-sm nope" type="submit"><i class="ri-search-line"></i></button>
+                            </form>  
+                        </div> 
+                        
+                        <!-- Table with hoverable rows -->
+                        <div class="table-responsive">
+                            <table id="tableMainRetu" class="table table-hover">
+                                <thead>
+                                <tr class="align-middle">
+                                    <th scope="col">#</th>
+                                    <th scope="col">Product Code</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Reseller</th>
+                                    <th scope="col">Reason</th>
+                                    <th scope="col">Return Request Date</th>
+                                    <th scope="col">Return Completion Date</th>
+                                    <th scope="col">Status</th>
+                                    <!-- <th scope="col" class="sort-no">Action</th> -->
+                                </tr>
+                                </thead>
+                            
+                                <tbody id="tableRow">
+                                    {% for list in return_product %}
+                                    <tr class="align-middle">
+                                        <td class="num-row"></td>
+                                        <!-- <td class="modal-view-product">
+                                            <a href="{% url 'admin_site:view_product' list.id %}" data-bs-toggle="modal" data-bs-target="#viewProductModal" class="text-decoration-none"><span >{{ list.product_code }}</span></a>
+                                        </td> -->
+                                        <td class="modal-view-reason">
+                                            <a href="{% url 'admin_site:view_unreturned' list.id %}" data-bs-toggle="modal" data-bs-target="#viewReasonModal" class="text-decoration-none"><span >{{ list.product_code }}</span></a>
+                                        </td>
+                                        <!-- <td style="text-transform: capitalize;">{{ list.product_code }}</td> -->
+                                        <td style="text-transform: capitalize;">{{ list.product_qty }}</td>
+                                        <td style="text-transform: capitalize;">{{ list.reseller_name }}</td>
+                                        <td style="  max-width: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ list.reason }}</td>
+                                        <td>{{ list.return_date }}</td>
+                                        <td>{{ list.return_completed_date}}</td>
+                                        <td><span class="badge badge-status rounded-pill bg-primary">{{ list.return_status }}</span></td>
+                                        <!-- <td>
+                                            <a href="{% url 'admin_site:edit_returnproduct' list.id %}"class="btn btn-edit modal-edit"><i class="ri-edit-fill"></i></a>
+                                            <button type="submit" class="btn btn-archive"><i class="ri-checkbox-circle-fill"></i></button>
+                                        </td> -->
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- End Table with hoverable rows -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ADD RETURN -->
+    <div class="modal fade border-0"  id="addReturnModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content border-0 p-4">
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- EDIT PRODUCT -->
+    <div class="modal fade border-0" id="editReturn" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content border-0 p-4">
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW REASON -->
+    <div class="modal fade border-0" id="viewReasonModal" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content border-0 p-4">
+                
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+
+        // returns
+    var tableRetu = $('#tableMainRetu').DataTable({
+
+    "fnDrawCallback": function(oSettings) {
+        if (oSettings._iDisplayLength > oSettings.fnRecordsDisplay()) {
+            $(oSettings.nTableWrapper).find('.dataTables_paginate').hide();
+        } else {
+            $(oSettings.nTableWrapper).find('.dataTables_paginate').show();
+        }
+    },
+    "lengthChange": true,
+
+    initComplete: (settings, json)=>{
+        $('.dataTables_length').appendTo('#showEntries');
+    },
+
+    "oLanguage": {
+        // &nbsp; is a blank text ---- used for spacing
+        "sLengthMenu": "_MENU_ &nbsp;&nbsp;Entries per page",
+        "oPaginate": {
+            sNext: '<i class="ri-arrow-right-s-line"></i>',
+            sPrevious: '<i class="ri-arrow-left-s-line"></i>',
+            // sFirst: '<i class="ri-arrow-left-s-fill"></i>',
+            // sLast: '<i class="ri-arrow-right-s-fill"></i>'
+        }
+    },
+
+    columnDefs: [
+        {
+            searchable: false,
+            orderable: false,
+            targets: 0, 
+        },
+    ],
+    // order: [[1, 'asc']],
+
+    // order: [[1, 'asc']],
+    order: [] 
+    });
+
+    // $('#btn-place').html(tableRetu.buttons().container()); 
+
+
+    // for row numbers
+    tableRetu.on('order.dt search.dt', function () {
+    let i = 1;
+
+    tableRetu.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
+        this.data(i++);
+    });
+    }).draw();
+
+
+    // for most tables search bar
+    $('#tableM').keyup(function(){
+    tableRetu.search($(this).val()).draw();
+    });    
+
+
+
+    if ($('#tableMainRetu').DataTable().rows().count() === 0) {
+        $("#tableMainRetu").addClass("d-none");
+        $("#unreturnID").addClass("d-none");
+        $(".empty-screenRetu").removeClass("d-none");
+    } else {
+        $("#tableMainRetu").removeClass("d-none");
+        $("#unreturnID").removeClass("d-none");
+        $(".empty-screenRetu").addClass("d-none");
+    }
+</script>
+{% endblock content %}
+    

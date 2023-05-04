@@ -1,0 +1,163 @@
+{% load static %}
+
+<div class="modal-header border-0">
+    <h1 class="modal-title" id="exampleModalLabel">Edit Profile</h1>
+    <button type="button" class="ri-close-fill" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+{% if list_profile %}
+{% for list in list_profile %}
+<form action="{% url 'admin_site:update_profile' list.id %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="modal-body pt-2 mt-0">
+        <div class="row d-flex-justify-content-center align-items-center text-center">
+                <div class="col-lg-5"> 
+                    <div class="row">
+                        <div class="col-lg-12 edit-profile ">
+                            <div class="profile-pic-ed ">
+                                <!-- <img id="output" src="/media/{{ list.profile_pic}}" alt="Profile-pic" class="image-cropper"> -->
+                                {% if list.profile_pic %}
+                                <img id="output" src="/media/{{ list.profile_pic}}" alt="Profile-pic" class="image-cropper">
+                                {% else %}
+                                <img id="output" src="{% static 'img/default_profile.jpg' %}" alt="Profile-pic" class="image-cropper">
+                                {% endif %}
+                            </div>
+                            
+                            <!-- <input type="file"  name="profile_pic" class="mt-3" > -->
+                        </div>
+                        
+                        <div class="col-lg-12 mt-3 edit-file">
+                            <label for="file-upload" class="btn btn-print custom-file-upload me-2">
+                                <i class="ri-upload-2-line"></i>
+                            </label>
+                            <input id="file-upload"  name="profile_pic" type="file" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])"/>
+                            <!-- <button class="btn btn-trash-pic"><i class="ri-delete-bin-line"></i></button> -->
+                        </div>
+                    </div>
+                    
+                </div>
+            
+
+            <div class="col-lg-3">
+                <div class="first-input">
+                    <label for="">First Name</label>
+                    <input type="text"  name="first" class="form-control" value="{{ list.profile_fname}}" required>
+                    
+                    <label for="">Middle Name</label>
+                    <input type="text"  name="middle" class="form-control" value="{{ list.profile_mname}}">
+                    
+                    <label for="">Last Name</label>
+                    <input type="text"  name="last" class="form-control" value="{{ list.profile_lname}}" required>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="first-input">
+                    <label for="">Contact No</label>
+                    <input type="number"  name="contact_no" class="form-control" min="0" value="{{ list.profile_cnumber}}" 
+                    maxlength="11" 
+                    oninput="this.value=this.value.slice(0,this.maxLength)"
+                    required>
+                    
+                    <label for="">Address</label>
+                    <input type="text"  name="address" class="form-control"value="{{ list.profile_address}}" required>
+                    
+                    <label for="">Email Address</label>
+                    <input type="text"  name="email" class="form-control" value="{{ list.profile_email}}" required>
+                    <!-- <br> -->
+                    <!-- <input type="submit"  class="btn btn-dark"  value="Update" required> -->
+                </div>
+                
+                <!-- <button type="submit"  class="btn btn-profile-up">Update</button> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer border-0">
+        <!-- <button type="submit" class="btn btn-primary" value="Add Product"><i class="ri-check-fill"></i>Add Product</button> -->
+        <button type="submit" id="submit" name="submit" class="btn btn-primary me-2"><i class="ri-arrow-up-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Update</span></button>
+        <a href="{% url 'admin_site:my_profile' %}" type="submit" id="close-modal" class="btn btn-secondary" data-bs-dismiss="modal" style="font-size: 15px; padding: 5px 13px;"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></a>
+        <!-- <button type="submit" id="close-modal" class="btn btn-secondary" data-bs-dismiss="modal"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></button> -->
+    </div>
+</form>
+{% endfor %}
+{% else %}
+<form action="{% url 'admin_site:add_profile' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="modal-body pt-2 mt-0">
+        <div class="row d-flex-justify-content-center align-items-center text-center">
+
+            <div class="col-lg-5"> 
+                <div class="row">
+                    <div class="col-lg-12 edit-profile ">
+                        <div class="profile-pic-ed ">
+                            <!-- <img id="output" src="/media/{{ list.profile_pic}}" alt="Profile-pic" class="image-cropper">
+                            <img src="{% if list.profile_pic %}{{ list.profile_pic.url }}{% else %}{% static 'img/default_profile.jpg' %}{% endif %}" alt="Profile-pic" class="image-cropper"> -->
+
+                            {% if list.profile_pic %}
+                            <img id="output" src="/media/{{ list.profile_pic}}" alt="Profile-pic" class="image-cropper">
+                            {% else %}
+                            <img id="output" src="{% static 'img/default_profile.jpg' %}" alt="Profile-pic" class="image-cropper">
+                            {% endif %}
+                        </div>
+                        
+                        <!-- <input type="file"  name="profile_pic" class="mt-3" > -->
+                    </div>
+                    
+                    <div class="col-lg-12 mt-3 edit-file">
+                        <label for="file-upload" class="btn btn-print custom-file-upload me-2">
+                            <i class="ri-upload-2-line"></i>
+                        </label>
+                        <input id="file-upload"  name="profile_pic" type="file" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])"/>
+                        <!-- <button class="btn btn-trash-pic"><i class="ri-delete-bin-line"></i></button> -->
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-3">
+                <div class="first-input">
+                    <label for="">First Name</label>
+                    <input type="text"  name="first" class="form-control" required>
+                    
+                    <label for="">Middle Name</label>
+                    <input type="text"  name="middle" class="form-control">
+                    
+                    <label for="">Last Name</label>
+                    <input type="text"  name="last" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="first-input">
+                    <label for="">Contact No</label>
+                    <input type="number"  name="contact_no" class="form-control" min="0" 
+                    maxlength="11" 
+                    oninput="this.value=this.value.slice(0,this.maxLength)"
+                    required>
+                    
+                    <label for="">Address</label>
+                    <input type="text"  name="address" class="form-control" required>
+                    
+                    <label for="">Email Address</label>
+                    <input type="text"  name="email" class="form-control" required>
+                    <!-- <br> -->
+                    <!-- <input type="submit"  class="btn btn-dark"  value="Update" required> -->
+                </div>
+                
+                <!-- <button type="submit"  class="btn btn-profile-up">Update</button> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer border-0">
+        <!-- <button type="submit" class="btn btn-primary" value="Add Product"><i class="ri-check-fill"></i>Add Product</button> -->
+        <button type="submit" id="submit" name="submit" class="btn btn-primary me-2"><i class="ri-arrow-up-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Update</span></button>
+        <a href="{% url 'admin_site:my_profile' %}" type="submit" id="close-modal" class="btn btn-secondary" data-bs-dismiss="modal" style="font-size: 15px; padding: 5px 13px;"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></a>
+        <!-- <button type="submit" id="close-modal" class="btn btn-secondary" data-bs-dismiss="modal"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></button> -->
+    </div>
+    
+</form>
+{% endif %}
+

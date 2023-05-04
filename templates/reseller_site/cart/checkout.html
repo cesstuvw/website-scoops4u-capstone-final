@@ -1,0 +1,396 @@
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <title>Document</title> -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" >
+
+
+    <!-- Vendors -->
+    <!-- <link href="../../static/css/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="{% static '/css/assets/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{% static '/css/assets/simple-datatables/style.css'%}" rel="stylesheet">
+    <link href="{% static '/css/assets/remixicon/remixicon.css'%}" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/autofill/2.5.3/css/autoFill.dataTables.min.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/autofill/2.5.3/js/dataTables.autoFill.min.js"></script>
+    
+
+    <link href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/b-2.3.6/b-colvis-2.3.6/b-html5-2.3.6/b-print-2.3.6/date-1.4.0/sp-2.1.2/datatables.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/b-2.3.6/b-colvis-2.3.6/b-html5-2.3.6/b-print-2.3.6/date-1.4.0/sp-2.1.2/datatables.min.js"></script>
+
+    <!-- Main CSS -->
+    <!-- <link href="../../static/css/sandi.css" rel="stylesheet"> -->
+    <link href="{% static '/css/sandi.css'%}" rel="stylesheet">
+
+    <title>
+        {% block title %}
+            POS - SCOOPS 4 U
+        {% endblock title %}
+    </title>
+
+    <link rel="icon" href="{% static '/img/icon.ico'%}">
+
+    <style>
+        .dataTables_info{
+            display: none;
+        }
+
+        .dataTables_length{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+
+    <header id="header" class="header fixed-top d-flex align-items-center">
+
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="{% url 'reseller_site:dashboard'%}" class="logo d-flex align-items-center">
+                <img src="{% static '/img/logo-header.svg'%}" alt="">
+                <span class="d-none d-lg-block">SCOOPS 4 U</span>
+            </a>
+    
+            
+            
+            </div><!-- End Logo -->
+            
+            <div class="search-bar mx-auto">
+            
+            </div><!-- End Search Bar -->
+            
+            <div class="POS POS-header">
+                <i class="fa-solid fa-cart-shopping" style="color: #001BDE !important"></i>
+                <a class="active" href="{%url 'reseller_site:add_cart' %}">Order</a>
+            </div>
+            <!-- End POS -->
+            
+            <nav class="header-nav ms-auto">
+                <ul class="d-flex align-items-center">
+                    <li class="nav-item d-block d-lg-none">
+                    <a class="nav-link nav-icon search-bar-toggle " href="#">
+                        <i class="ri-search-line"></i>
+                    </a>
+                    </li><!-- End Search Icon-->
+                
+                    <li class="nav-item dropdown pe-3 header-icon">
+                
+                    <a class="nav-link nav-profile d-flex align-items-center me-3" href="#" data-bs-toggle="dropdown">
+                        <!-- {% if list.profile_pic %}
+                        <img id="output" src="/media/{{ list.profile_pic}}" alt="Profile-pic" width="30" height="30" class="rounded-circle">
+                        {% else %}
+                        <img src="{% static 'img/default_profile.jpg' %}" alt="Profile-pic" width="30" height="30" class="rounded-circle">
+                        {% endif %} -->
+            
+            
+                        {% if list_profile %}
+                        {% for list in list_profile %}
+                        {% if list.profile_pic %}
+                            <img id="output" src="/media/{{ list.profile_pic}}" alt="Profile-pic" width="30" height="30" class="rounded-circle me-2">
+                        {% else %}
+                            <img src="{% static 'img/default_profile.jpg' %}" alt="Profile-pic" width="30" height="30" class="rounded-circle me-2">
+                        {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <img src="{% static 'img/default_profile.jpg' %}" alt="Profile-pic" width="30" height="30" class="rounded-circle me-2">
+                    {% endif %}
+                        <i alt="Profile" class="ri-checkbox-blank-circle-fill"></i>
+                        <span class="d-none d-md-block dropdown-toggle ps-2" style="text-transform: capitalize;">
+                        {{ user }}
+                        </span>
+                    </a><!-- End Profile Image Icon -->
+                
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile p-2">
+                        <li class="dropdown-header mt-3">
+                        {% if list_profile %}
+                        {% for list in list_profile %}
+                            {% if list.profile_pic %}
+                            <img id="output" src="/media/{{ list.profile_pic}}" alt="Profile-pic"  class="rounded-circle me-2 mb-3 image-cropper">
+                            {% else %}
+                            <img src="{% static 'img/default_profile.jpg' %}" alt="Profile-pic"  class="rounded-circle me-2 mb-3 image-cropper">
+                            {% endif %}
+                        {% endfor %}
+                        {% else %}
+                        <img src="{% static 'img/default_profile.jpg' %}" alt="Profile-pic"  class="rounded-circle me-2 mb-3 image-cropper">
+                        {% endif %}
+            
+            
+                        {% if current_profile %}
+                        {% for profile in current_profile %}
+                            {% if profile.profile_fname and profile.profile_lname %}
+                            <h6 style="text-transform: capitalize;">{{ profile.profile_fname }} {{ profile.profile_lname }}</h6>
+                            {% endif %}
+                        {% endfor %}
+                        {% else %}
+                        <h6>{{ user.role|title }}</h6>
+                        {% endif %}
+                        <!-- <h6>{{ user|title }}</h6> -->
+                        <span>{{ user.role|title }}</span>
+                        </li>
+                        <!-- <li>
+                        <hr class="dropdown-divider">
+                        </li> -->
+                
+                        <li class="mt-3 ms-4">
+                        <a class="dropdown-item d-flex align-items-center" href="{% url 'admin_site:my_profile' %}">
+                            <div class="row">
+                            <div class="col d-flex justify-content-center align-items-center" ><i class="ri-user-line"></i></div>
+                            <div class="col d-flex justify-content-center align-items-center"><span class="align-middle">My Profile</span></div>
+                            </div>
+                        </a>
+                        </li>
+                
+                        <li class="mb-3  ms-4">
+                        <a class="dropdown-item d-flex align-items-center" href="{%  url 'landing_page:logout' %}" >
+                            <div class="row">
+                            <div class="col d-flex justify-content-center align-items-center"><i class="ri-logout-box-r-line"></i> </div>
+                            <div class="col d-flex justify-content-center align-items-center"><span>Sign Out</span></div>
+                            </div>
+                            <!-- <i class="ri-logout-box-r-line"></i>              
+                            <span>Sign Out</span> -->
+                        </a>
+                        </li>
+            
+                    </ul><!-- End Profile Dropdown Items -->
+                    </li><!-- End Profile Nav -->
+                
+                </ul>
+                </nav><!-- End Icons Navigation -->
+        
+    </header><!-- End Header -->
+
+    {% if list_cart %}
+    <main id="main-pos" class="main mt-5">
+        <div class="pagetitle pos mb-4">
+            <h1 class="align-middle">
+                <a href="{% url 'reseller_site:add_cart'%}">
+                    <i class="ri-arrow-left-s-line align-middle me-2"></i>
+                    <!-- <i class="ri-arrow-left-s-line"></i> -->
+                </a>
+                <!-- <span class="line-ver me-3"></span> -->
+                Order Details
+            </h1>
+        </div>
+        <!-- End Page Title -->  
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-8 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="add-product mb-0">
+                            <!-- <div class="add-product mb-4"> -->
+                                <h5 class="card-title feature">Items ({{ total_item }})</h5>
+                                <!-- <a data-bs-toggle="modal" data-bs-target="#addToCart" class="btn btn-select"><i class="ri-add-line align-middle me-2 text-end" style="font-size:17px"></i><span class="align-middle">Select Product</span></a> -->
+                            </div> 
+                            
+
+                                <div class="table-res">
+                                    <table id="tableMain" class="table table-hover" >
+                                        <thead>
+                                            <tr class="align-middle">
+                                                <th scope="col">#</th>
+                                                <!-- <th scope="col">Product ID</th> -->
+                                                <th scope="col">Product Name</th>
+                                                <th scope="col">Category</th>
+                                                <!-- <th scope="col">Unit</th> -->
+                                                <!-- <th scope="col">Price</th> -->
+                                                <th scope="col">Quantity</th>
+                                                <th scope="col">Amount</th>
+                                                <!-- <th scope="col" class="sort-no">Action</th> -->
+                                            </tr>
+                                
+                                            <tbody>
+                                                {% for list in list_cart %}       
+                                                <tr class="align-middle">
+                                                    <td class="num-row"></td>
+                                                    <!-- <td>{{ list.cart_pcode }}</td> -->
+                                                    <td style="text-transform: capitalize;">{{ list.cart_name }}</td>
+                                                    <td style="text-transform: capitalize;">{{ list.cart_category }}</td>
+                                                    <!-- <td>{{ list.cart_unit }}</td> -->
+                                                    <!-- <td>Php {{ list.cart_reseller_price|floatformat:2|intcomma  }}</td> -->
+                                                    <td>{{ list.cart_quantity }}</td>
+                                                    <td class="product-code"><span>Php {{ list.cart_ResellerAmount|floatformat:2|intcomma }}</span> </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </thead>
+                                    </table>
+                                </div>
+
+                                
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="col-xl-4 col-lg-12 col-md-12"> -->
+                <div class="col-lg-4 col-md-12">
+                    <!-- <div class="card p-4" style="background-color: #E5E9F9"> -->
+                   
+                    
+                    <div class="card p-4" style="background-color: #E5E9F9">
+                        <div class="card-body">
+                            <div class="add-product">
+                                <h5 class="card-title feature pt-3 mb-3">Order Summary</h5>
+                            </div> 
+
+                            <div class="row">
+                                <div class="col total total-amount align-middle"  style="display:flex; flex-direction: row; justify-content: space-between; align-items: center;">
+                                    <label class="label-co">Amount</label>
+                                    <input type="text" style="text-align: right;" class="form-control text-end input-co" value="Php {{sum_amount|floatformat:2|intcomma}}"  readonly="readonly">        
+                                    <input type="hidden" id="amount" value="{{sum_amount}}" >
+                                    <input type="hidden" id="discount" value="{{promo}}">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col total total-amount align-middle"  style="display:flex; flex-direction: row; justify-content: space-between; align-items: center;">
+                                    <label class="label-co" for="">Discount</label>
+                                    <input type="text" style="text-align: right;" class="form-control text-end input-ds" value="- {{ promo|floatformat:2|intcomma  }}" readonly="readonly"> 
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col total total-amount align-middle"  style="display:flex; flex-direction: row; justify-content: space-between; align-items: center;">
+                                    <!-- <label class="label-co text" for="">Grand Total</label>
+                                    <input type="text" style="text-align: right;" class="form-control text-end input-co" name="grand_total"  id="gtotal" readonly="readonly">  -->
+                                    <label class="label-co text" > Grand Total</label>
+                                    <input type="text" style="text-align: right;" name="vgrand_total" class="form-control text-end input-co" id="vgtotal" readonly="readonly" >   
+                                    <input type="hidden"style="text-align: right;" name="grand_total"  id="gtotal"  readonly > 
+                                </div>
+                            </div>
+
+                            <!-- <div class="row">
+                                <input type="submit" class="btn btn-success" value="Place Order">
+                                <div class="col mt-4">
+                                    <button id="btn_compute" class="btn btn-comp mb-3" >place order</button>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <div class="card p-4" style="background-color: #d6dbf4">
+                        <div class="card-body">
+                            <div class="add-product">
+                                <h5 class="card-title feature pt-3 mb-3">Reseller Details</h5>
+                            </div> 
+                            <div>
+                                <form action="{% url 'reseller_site:checkout' %}" method="POST">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <input type="hidden" name="total_amount" id="stotal">
+                                            <label for="" id="fname" class="mb-1">First Name</label>
+                                            <input type="text"class="form-control" name="fname" required>
+                                        </div>
+                                        <div class="col">
+                                            <label for="" class="mb-1">Last Name</label>
+                                            <input type="text"  class="form-control" name="lname" required>
+                                        </div>
+                                    </div>  
+
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <label for="" class="mb-1">Address</label>
+                                            <input type="text"  class="form-control" name="address" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <label for="contact" class="mb-1">Contact No.</label>
+                                            <input type="number" 
+                                            placeholder="" 
+                                            name="contact_no" 
+                                            min="0" 
+                                            maxlength="11" 
+                                            class="form-control" 
+                                            oninput="this.value=this.value.slice(0,this.maxLength)"
+                                            required>
+                                        </div>
+                                    </div>
+
+                                    <label for="" id="doption" class="mb-1">Delivery Option</label>
+                                    <select  class="form-control mb-3" id="option" name="option"  required>
+                                        <option></option>
+                                        <option value="pickup">Pickup</option>
+                                        <option value="delivery">Delivery</option>
+                                    </select>
+                            
+                                    <!-- wag tatangglim yung div! nakakamamatay -->
+                                    <div class="row">
+                                        <div class="col" id="pdate" style="display: none;">
+                                            <div id="date_deliver">
+                                                <label id="h3_date" class="mb-1">Preferred Delivery date</label>
+                                                <input type="date" id="input_date" name="prefer_date" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <!-- <input type="submit" class="btn btn-success" value="Place Order"> -->
+                                        <div class="col mt-3">
+                                            <button type="submit" class="btn btn-comp mb-3" >place order</button>
+                                        </div>
+                                    </div>
+                            
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+    {% endif %}
+
+
+
+
+
+    
+
+
+    
+    <!-- Vendors -->
+    <!-- <script src="../../static/css/assets/apexcharts/apexcharts.min.js"></script> -->
+    <script src="{% static '/css/assets/apexcharts/apexcharts.min.js' %}" alt=""></script>
+
+    <!-- <script src="../../static/css/assets/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+    <script src="{% static '/css/assets/bootstrap/js/bootstrap.bundle.min.js' %}" alt=""></script>
+
+    <!-- <script src="../../static/css/assets/simple-datatables/simple-datatables.js"></script> -->
+    <script src="{% static '/css/assets/simple-datatables/simple-datatables.js' %}" alt=""></script>
+
+    <!-- Template Main JS File -->
+    <!-- <script src="../../static/css/assets/js/main.js"></script> -->
+    <script src="https://kit.fontawesome.com/ef60a252be.js" crossorigin="anonymous"></script>
+
+    <script src="{% static '/css/assets/js/main.js' %}" alt=""></script>
+    <script src="{% static '/js/modal.js' %}" alt=""></script>
+    <script src="{% static '/js/table.js' %}" alt=""></script>
+    <script src="{% static '/js/status.js' %}" alt=""></script>
+    <script src="{% static '/js/messages.js' %}" alt=""></script>
+    <script src="{% static '/js/dashboard.js' %}" alt=""></script>
+    <script src="{% static '/js/pos.js' %}"></script>
+    <script src="{% static '/js/checkout_reseller.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{% if list_inventory %}
+                            <div class="table-responsive">
+                                <table id="tableView" class="table table-hover" style="width: 100%">
+                                    
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Product Code</th>
+                                            <th scope="col">Product Name</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">Date-Time Added</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                        {% for list in  list_inventory %}  
+                                    
+                                        <tr>
+                                            <!-- <td>{{ list.product_code }}</td> -->
+                                            
+                                            <td class="num-row"></td>
+                                            <td class="text-decoration-none">{{ list.product_code }}</td>
+                                            <td style="text-transform: capitalize;">{{ list.product_name }}</td>
+                                            <td>{{ list.product_quantity }}</td>
+                                            <td>{{ list.created_at|date:"m/d/Y h:i A" }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}

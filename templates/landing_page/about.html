@@ -1,0 +1,125 @@
+{% extends 'landing_page/base.html' %}
+{% load static %}
+
+{% block title %}
+<title>ABOUT US - SCOOPS 4 U</title>
+{% endblock %}
+
+{% block content %}
+<!-- Main CSS -->
+<link href="{% static '/css/promotional/about.css' %}" rel="stylesheet">
+
+<section class="header">
+        <div class="container header-container">
+                <div class="col-12 col-lg-12 header-top">
+                        <div class="row">
+                                <div class="col-12 col-lg-12 mb-4 d-flex justify-content-center align-items-center">
+                                        <div class="row">
+                                                <a href="{% url 'landing_page:landing_site' %}" class="logo-display">
+                                                        <img src="./../static/img/logo-withname.svg" alt="">
+                                                </a>
+                                        </div>
+                                </div>
+                                <div class="col-12 col-lg-12 my-5 main-display d-flex justify-content-center align-items-center">
+                                        <h1 class="line-1"><span class="display-4" id="typing"></span></h1>
+                                        <h1 class="line-2"><span class="display-4" id="typed"></span></h1>
+                                </div>
+                                <div class="col-12 d-flex justify-content-center align-items-center">
+                                        <p>Know more about us—when we started and how we keep going.</p>
+                                </div>
+                        </div>
+                </div>
+        </div>
+</section>
+
+<section class="paragraphs">
+        <div class="container paragraph-container">
+                <div class="col-12 col-lg-12">
+                        <div class="row">
+                                <div class="col-12 d-flex justify-content-center align-items-center flex-column">
+                                        <p>We established <span> Scoops 4 U </span> on May 21, 2021, with a vision to bring the same level of quality and indulgence to our customers in Teresa, Rizal that Big Scoop Ice Cream is known for in Metro Manila. As a result, we set up two resellers in the area, and the response from our customers has been overwhelming.</p>
+                                        <p>To us, our ice cream shop is more than just a business; it's a passion that we pour our hearts into. We take immense pride in offering a diverse range of flavors, allowing our customers to enjoy an experience with every scoop. We believe in empowering our customers by giving them the freedom to choose their own flavors, which is why we continuously innovate and expand our menu to cater to everyone's tastes.</p>
+                                        <p>Moreover, we always value our customers' feedback and opinions on our ice cream. We understand that everyone has their unique taste preferences, and we encourage our customers to share their thoughts with us. We strive to deliver the best quality products and services, and your opinions are invaluable to us. Therefore, we remain open to constructive criticism and suggestions on how we can enhance our offerings further.</p>
+                                </div>
+                        </div>
+                </div>
+        </div>
+</section>
+
+<section class="tagline">
+        <div class="container tagline-container">
+                <div class="col-12">
+                        <div class="row flex-column">
+                                <div class="col">
+                                        <i class="ri-double-quotes-l"></i>
+                                </div>
+
+                                <div class="col main-tagline">
+                                        <h1 class="mb-5">Happy <span>scoops</span> for everyone!</h1>
+                                </div>
+
+                                <div class="col d-flex justify-content-center align-items-center">
+                                        <div class="line-tagline"></div>
+                                </div>
+                        </div>
+                </div>
+        </div>
+</section>
+
+<section class="gallery">
+        <div class="container gallery-container">
+                <div class="col-12">
+                        <div class="col-12 title-gallery">Gallery</div>
+                        <div class="row">
+                                <div class="col-6">
+                                        <!-- <img src="./../static/img/about/1.png" alt=""> -->
+                                        <a href="./../static/img/about/1_1.png" data-toggle="lightbox" class="img-fluid">
+                                                <img src="./../static/img/about/1.png"  >
+                                        </a>
+                                </div>
+                                <div class="col-6">
+                                        <a href="./../static/img/about/3_3.png" data-toggle="lightbox" class="img-fluid">
+                                                <img src="./../static/img/about/2.png" >
+                                        </a>
+                                </div>
+                                <div class="col-12 mt-4">
+                                        <a href="./../static/img/about/2_2.png" data-toggle="lightbox" class="img-fluid">
+                                                <img src="./../static/img/about/3.png" >
+                                        </a>
+                                </div>
+                                <div class="col-12 smiley">
+                                        <img src="../../static/img/logo-page.svg" alt="smiley logo">
+                                </div>
+                        </div>
+                </div>
+        </div>
+</section>
+
+
+<script>
+        $(document).ready(function() {
+                var options = {
+                        strings: ["<span class='title-main'>about <br> us</span>"],
+                        typeSpeed: 80,
+                        // fadeOut: true,
+                        backSpeed: 80,
+                        loop: false,
+                        startDelay: 300,
+                }
+
+                var options1 = {
+                        strings: ["<span class='title-main'>about us</span>"],
+                        typeSpeed: 80,
+                        // fadeOut: true,
+                        backSpeed: 80,
+                        loop: true,
+                }
+
+                var typed = new Typed("#typing", options);
+                var typed1 = new Typed("#typed", options1);
+        });
+</script>
+
+
+
+{% endblock content %}  

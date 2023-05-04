@@ -1,0 +1,79 @@
+{% extends 'landing_page/base.html' %}
+{% load static %}
+
+{% block title %}
+<title>SCOOPS 4 U</title>
+{% endblock %}
+
+{% block content %}
+   <!-- Main CSS -->
+   <link href="{% static '/css/signin.css'%}" rel="stylesheet">
+
+   <section class="signin">
+      <div class="container sign-container">
+         <div class="row">
+            <div class="col-12 col-lg-6 one header">
+               <div class="header-main">
+                  <img src="./../static/img/logo-login.svg" class="logo-header" alt="">
+                  <h1 class="line-1"><span class="display-6" id="typing"></span></h1>
+                  <a href="{% url 'landing_page:landing_site' %}"><img src="./../static/img/name.svg" class="name-header" alt=""></a>
+               </div>
+            </div>
+            <div class="col-12 p-0 col-lg-6 col-md-12 d-flex justify-content-center two">
+               <div class="door col-md-9 col-lg-9 col-xl-10">
+                  <div class="row">
+                     <div class="col-12 col-lg-12 title-main">
+                        <h1>sign in</h1>
+                        <p>Hello! Please <span>sign in</span> with your account.</p>
+                     </div>
+                     <div class="col-12 col-lg-12 form-main ">
+                        <form action="{% url 'landing_page:login' %}" method="POST" class="col-lg-6">
+                           {% csrf_token %}
+                           <div class="user my-3">
+                              <input type="text" name="username" placeholder="Username" class="form-control" required>
+                           </div>
+                           <div class="pass mb-3">
+                              <input type="password" name="password" placeholder="Password" id="password" class="form-control" required>
+                              <i class="ri-eye-fill" id="eye"></i>  
+                           </div>
+                           <button  class="signin-btn mt-3 mb-5" type="submit" name="submit">sign in</button>
+
+                           <div>
+                              {% for message in messages %}
+                              <p class="alert alert-{{ message.tags }} mt-3">{{ message }}</p>
+                              {% endfor %}
+                           </div>
+                        </form>
+                      
+                        
+
+                     </div>
+                     
+                     <div class="col-12 forgot d-none">
+                        <p>Forgot your sign in details? <span><a href="">Get help signing in.</a></span></p>
+                     </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+   </section>
+
+
+
+<script>
+      $(document).ready(function() {
+            var options = {
+                     strings: ["<span class='header-main-title'>Happy <span>scoops</span> for everyone!</span>"],
+                     typeSpeed: 80,
+                     // fadeOut: true,
+                     backSpeed: 80,
+                     loop: true,
+                     startDelay: 300,
+            }
+
+            var typed = new Typed("#typing", options);
+   });
+</script>
+
+{% endblock %}

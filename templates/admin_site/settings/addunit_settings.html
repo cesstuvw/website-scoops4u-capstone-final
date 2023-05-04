@@ -1,0 +1,18 @@
+<div class="modal-header border-0">
+    <h1 class="modal-title" id="exampleModalLabel">{% block modal-title %} New Unit {% endblock modal-title %}</h1>
+    <button type="button" class="ri-close-fill" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<form action="{% url 'admin_site:settings_addunit' %}" method="post">
+        {% csrf_token %}
+        <div class="modal-body pt-2 mt-0">
+
+                <label for="unit">Product Unit</label>
+                <input type="text" placeholder="" name="unit" class="form-control" required>
+        </div>
+        <div class="modal-footer border-0">
+            <!-- <button type="submit" class="btn btn-primary" value="Add Product"><i class="ri-check-fill"></i>Add Product</button> -->
+            <button type="submit" class="btn btn-primary me-2"><i class="ri-check-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Add</span></button>
+            <a href="{% url 'admin_site:settings_product' %}" type="submit" id="close-modal" class="btn btn-secondary" data-bs-dismiss="modal" style="font-size: 15px; padding: 5px 13px;"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></a>
+        </div>
+</form> 

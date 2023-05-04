@@ -1,0 +1,312 @@
+{% extends 'admin_site/base.html' %}
+
+{% block title %}
+    RESELLERS LIST
+{% endblock title %}
+
+{% block template %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+
+
+
+<main id="main" class="main mt-5">
+    <div class="pagetitle">
+        <h1>Resellers</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'admin_site:dashboard'%}">Home</a></li>
+                <li class="breadcrumb-item">User Accounts</li>
+                <li class="breadcrumb-item active">Resellers List</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <!-- {% for messsage in messages  %}
+    <p class='alert alert-success mt-3'>{{messsage}}</p>
+    {% endfor %} -->
+    {% for message in messages %}
+        {% if 'success' in message.tags %}
+        <p class='alert alert-success mt-3'>{{message}}</p>
+        {% elif 'error' in message.tags %}
+        <p class='alert alert-danger mt-3'>{{message}}</p>
+            {% if 'Register this reseller first on the Users List.' in message %}
+                <p class='alert alert-danger mt-3'>{{message}}</p>
+            {% endif %}
+        {% else %}
+        <p class='alert alert-info mt-3'>{{message}}</p>
+        {% endif %}
+    {% endfor %}
+
+    {% for message in messages %}
+    {% if 'Register this reseller first on the Users List.' in message %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endif %}
+{% endfor %}
+
+    
+
+    <section class="section">
+        <div class="empty-screen1 d-none modal-add-res">
+            <img src="../../../../static/img/noresellers.svg" alt="">
+            <h5>No Resellers</h5>
+            <p>There are currently no records of resellers registered on the system. 
+                <a href="{% url 'admin_site:add_reseller' %}" data-bs-toggle="modal" data-bs-target="#addResellerEmpty">Add</a> Now.
+                <!-- <div class="modal-add-res">
+                </div> -->
+            </p>
+        </div>
+
+            <!-- ADD PRODUCT -->
+        <div class="modal fade border-0"  id="addResellerEmpty">
+            <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-content border-0 p-4">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div id="resliID" class="row d-none">
+            <div class="col-lg-12">
+                <div class="card">
+
+                    <div class="card-body mt-3">
+                        <div class="add-user res-d mb-4">
+                            <h5 class="card-title feature">Resellers</h5>
+                            <div class="show-entries">
+                                <div id="showEntries"></div>
+                            </div>
+                            
+                            <a href="{% url 'admin_site:add_reseller' %}" class="btn btn-add modal-add" data-bs-toggle="modal" data-bs-target="#addReseller"><i class="ri-add-line align-middle me-2 text-end" style="font-size:17px; font-weight: 500;"></i><span class="align-middle pe-1">Add a New Reseller</span></a>
+                            <!-- <a href="{% url 'admin_site:add_reseller' %}" class="btn btn-add" data-add="addRes" data-bs-toggle="modal" data-bs-target="#addReseller"><i class="ri-add-line align-middle me-2 text-end" style="font-size:17px; font-weight: 500;"></i><span class="align-middle pe-1">Add a New Reseller</span></a> -->
+                            <form class="search-tab"  method="GET"  class="text-end px-4">
+                                {% csrf_token %}
+                                <input type="text" id="tableM" class="form-control p-2 ps-3" name="search" placeholder="Search">
+                                <button class="btn btn-search btn-sm nope" type="submit"><i class="ri-search-line"></i></button>
+                            </form>  
+                        </div> 
+
+                        <!-- <button class="btn-edit d-none" id="btnAddModal" data-bs-toggle="modal" data-bs-target="#addReseller">Haha</button>                         -->
+
+                        <!-- add reseller -->
+                        <div class="modal fade border-0" id="addReseller" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered ">
+                                <div class="modal-content border-0 p-4">
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Edit User -->
+                        <div class="modal fade border-0" id="editUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered ">
+                                <div class="modal-content border-0 p-4">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Table with hoverable rows -->
+                        {% if list_reseller %}
+                        <div class="table-responsive">
+                            <table id="tableMain" class="table table-hover ">
+                                <thead>
+                                <tr class="align-middle">
+                                    <th scope="col">#</th>
+                                    <th scope="col">First Name</th>
+                                    <th scope="col">Middle Name</th>
+                                    <th scope="col">Last Name</th>
+                                    <th scope="col">Sex</th>
+                                    <th scope="col">Contact No</th>
+                                    <th scope="col" >Address</th>
+                                    <th scope="col" >Email</th>
+                                    <th scope="col" >Valid ID</th>
+                                    <th scope="col" >Business Permit</th>
+                                    <th scope="col" >Status</th>
+                                    <th class="sort-no" scope="col" >Action</th>
+                                </tr>
+                                </thead>
+                            
+                                <tbody id="tableRow">
+                                    {% for list in list_reseller %}
+                                    <tr class="align-middle">
+                                        <td class="num-row"></td>
+                                        <td style="text-transform: capitalize;">{{ list.reseller_fname }}</td>
+                                        <td style="text-transform: capitalize;">{{ list.reseller_mname }}</td>
+                                        <td style="text-transform: capitalize;">{{ list.reseller_lname }}</td>
+                                        <td>{{ list.reseller_gender }}</td>
+                                        <td>{{ list.reseller_contact }}</td>
+                                        <td style="text-transform: capitalize;" class="pe-5">{{ list.reseller_address }}</td>
+                                        <td>{{ list.reseller_email }}</td>
+                                      
+                                        <td class="modal-view-file-VID">
+                                            <a href="{% url 'admin_site:viewingpic_vid' list.id %}"><i class="ri-eye-fill btn-edit" data-toggle="tooltip" data-placement="top" title="View" data-bs-toggle="modal" data-bs-target="#viewFileModal"></i></a>
+                                        </td>
+
+                                      
+
+                                        <td class="modal-view-file-BP">
+                                            <a href="{% url 'admin_site:viewingpic_bpermit' list.id %}"><i class="ri-eye-fill btn-edit" data-toggle="tooltip" data-placement="top" title="View"  data-bs-toggle="modal" data-bs-target="#viewFileModal"></i></a>
+                                        </td>
+                                        
+                                        <!-- <td><i class="ri-eye-fill btn-edit" data-bs-toggle="modal" data-bs-target="#viewPic"></i></a></td> -->
+                                        <td><span class="badge rounded-pill bg-primary">{{ list.reseller_status }}</span></td>
+                                        <!-- <td>
+                                            <button name="submit" data-bs-toggle="modal" data-bs-target="#archiveUser" class="btn btn-archive"><i class="ri-archive-fill"></i>ccc</button>
+
+                                        </td> -->
+                                        <!-- <form method="POST" action="{% url 'admin_site:archive_reseller'  list.id %}" onsubmit="return submitForm(this);"> -->
+                                            <!-- <td> -->
+                                                {% csrf_token %}
+                                                <!-- <button name="submit" data-bs-toggle="modal" data-bs-target="#archiveUser" class="btn btn-archive"><i class="ri-archive-fill"></i></button> -->
+                                                <!-- <button name="submit" data-bs-toggle="modal" data-bs-target="#archiveUser" class="btn btn-archive"><i class="ri-archive-fill"></i></button> -->
+                                                
+                                                <!-- <a href="" type="submit" class="btn btn-archive"><i class="ri-archive-fill"></i></a> -->
+                                            <!-- </td> -->
+                                        <!-- </form> -->
+
+                                        <form method="POST" action="{% url 'admin_site:archive_reseller'  list.id %}" onsubmit="return submitForm(this);">
+                                            {% csrf_token %}
+                                            <td> 
+                                                <a href="{% url 'admin_site:edit_reseller' list.id %}"class="btn btn-edit modal-edit me-1" data-toggle="tooltip" data-placement="top" title="Edit"><i class="ri-edit-fill"></i></a>
+                                                <button type="submit" class="btn btn-archive me-1"><i class="ri-archive-fill" data-toggle="tooltip" data-placement="top" title="Archive"></i></button>
+                                                <a href="{% url 'admin_site:send_email_reseller' list.id %}" class="btn btn-edit me-0 ms-0 ps-0" data-toggle="tooltip" data-placement="top" title="Send Email"><i class="ri-mail-send-fill"></i></a>
+                                                <!-- <input type="submit" class="btn btn-archive"><i class="ri-archive-fill"></i> -->
+                                            </td>
+                                        </form>
+
+                                        <script>
+                                            function submitForm(form) {
+                                                var message = "Do you really want to <b>archive</b> this reseller?";
+                                                
+                                                swal({
+                                                    title: "Archive",
+                                                    // text: "Do you really want to <span>archive</span> this reseller?",
+                                                    content: {
+                                                        element: 'p',
+                                                        attributes: {
+                                                            innerHTML: message,
+                                                        }
+                                                    },
+                                                    
+                                                    // icon: "warning",
+                                                    buttons: {
+                                                        // confirm: "Yes",
+                                                        confirm: {
+                                                            text: "Yes",
+                                                        },
+                                                        cancel: true,
+                                                    },
+                                                    className: 'swal-wide',
+                                                    dangerMode: true,
+                                                    // allowOutsideClick: false,
+                                                    closeOnClickOutside: false
+
+                                                    
+                                                    
+                                                })
+                                                .then(function (isConfirm) {
+                                                    if (isConfirm) {
+                                                        form.submit();
+                                                    }
+                                                });
+                                                return false;
+                                            }
+                                        </script>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
+                        <!-- End Table with hoverable rows -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VALID ID -->
+        <!-- <button class="btn-edit d-none" id="btnModal" data-bs-toggle="modal" data-bs-target="#viewPic">Haha</button> -->
+
+        <div class="modal fade border-0" id="viewPic" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-content border-0 p-4">
+                    <div class="modal-header border-0">
+                        <h1 class="modal-title" id="exampleModalLabel">Valid ID</h1>
+                        <button type="button" class="ri-close-fill" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                        {% if list_reseller %}
+                        <div class="modal-body pt-2 mt-0">
+                            <img id="imgModal" src="" alt="Valid-ID" >
+                        </div>
+                        {% endif %}
+                        <div class="modal-footer border-0">
+                            <!-- <button type="submit" class="btn btn-primary" value="Add Product"><i class="ri-check-fill"></i>Add Product</button> -->
+                            <!-- <button type="submit" class="btn btn-primary me-2"><i class="ri-check-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Add</span></button>
+                            <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></button> -->
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View File Modal -->
+        <div class="modal fade border-0" id="viewFileModal" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                <div class="modal-content border-0 p-4">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- BUSINESS PERMIT -->
+        <button class="btn-edit d-none" id="btnModal1" data-bs-toggle="modal" data-bs-target="#viewBP">Haha</button>
+
+        <div class="modal fade border-0" id="viewBP" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-content border-0 p-4">
+                    <div class="modal-header border-0">
+                        <h1 class="modal-title" id="exampleModalLabel">Business Permit</h1>
+                        <button type="button" class="ri-close-fill" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                        <!-- {% if list_reseller %} -->
+                        <div class="modal-body pt-2 mt-0">
+                            <img id="imgModal1" src="" alt="Business Permit" >
+                        </div>
+                        <!-- {% endif %} -->
+                        <div class="modal-footer border-0">
+                            <!-- <button type="submit" class="btn btn-primary" value="Add Product"><i class="ri-check-fill"></i>Add Product</button> -->
+                            <!-- <button type="submit" class="btn btn-primary me-2"><i class="ri-check-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Add</span></button>
+                            <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></button> -->
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade border-0" id="archiveUser" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-archive modal-dialog-scrollable modal-dialog-centered ">
+                <div class="modal-content border-0 p-4">
+                    <div class="modal-header border-0">
+                        <h1 class="modal-title" id="exampleModalLabel">Archive</h1>
+                        <button type="button" class="ri-close-fill" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <!-- <form action="{% url 'admin_site:add_reseller' %}" method="POST"> -->
+                            <!-- {% csrf_token %} -->
+                            <div class="modal-body pt-2 mt-0">
+                                <p>Do you really want to <span>archive</span> this reseller?</p>
+                            </div>
+                            <div class="modal-footer border-0 d-flex justify-content-start">
+                                <!-- <button type="submit" class="btn btn-primary" value="Add Product"><i class="ri-check-fill"></i>Add Product</button> -->
+                                <button type="submit" class="btn btn-primary me-2"><i class="ri-check-line align-middle me-2 text-start" style="font-size:17px;"></i><span class="align-middle pe-1">Yes</span></button>
+                                <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal"><i class="ri-close-line align-middle me-2 text-start" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></button>
+                            </div>
+                    <!-- </form>     -->
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock template %}
+

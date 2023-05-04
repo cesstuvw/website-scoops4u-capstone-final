@@ -1,0 +1,519 @@
+{% extends 'admin_site/base.html' %}
+
+{% block title %}
+    PAGE SETTINGS
+{% endblock title %}
+
+{% block template %}
+
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+        {% if user.role == "admin"%}
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'admin_site:dashboard'%}">
+            <i class="ri-apps-2-line" style="font-size: 22px; font-weight: 100; margin-right: 20px"></i>
+            <span>Dashboard</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+        {% endif %}
+
+        {% if user.role == "staff"%}
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'staff_site:dashboard'%}">
+            <i class="ri-apps-2-line" style="font-size: 22px; font-weight: 100; margin-right: 20px"></i>
+            <span>Dashboard</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+        {% endif %}
+
+        {% if user.role == "reseller"%}
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'reseller_site:dashboard'%}">
+            <i class="ri-apps-2-line" style="font-size: 22px; font-weight: 100; margin-right: 20px"></i>
+            <span>Dashboard</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+        {% endif %}
+
+        {% if user.role == "rider"%}
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'rider_site:dashboard'%}">
+            <i class="ri-apps-2-line" style="font-size: 22px; font-weight: 100; margin-right: 20px"></i>
+            <span>Dashboard</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+        {% endif %}
+  
+        <li class="nav-heading pt-3">Management</li>
+        
+        {% if user.role == "admin"%}
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#users-nav" data-bs-toggle="collapse" href="#">
+            <i class="ri-user-line" style="font-size: 22px; font-weight: 100; margin-right: 20px"></i><span>User Accounts</span><i class="ri-arrow-down-s-line ms-auto" style="font-size: 20px; font-weight: 100;" ></i>
+            </a>
+        <ul id="users-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                <a href="{% url 'admin_site:user_list' %}">
+                    <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Users List</span>
+                </a>
+                </li>
+                <li>
+                <a href="{% url 'admin_site:list_reseller'%}">
+                    <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Resellers List</span>
+                </a>
+                </li>
+                <li>
+                <a href="{% url 'admin_site:list_inquiry'%}">
+                    <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Requests</span>
+                </a>
+                </li>
+            </ul>
+        </li><!-- End User Accounts Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{%url 'admin_site:list_product' %}">
+                <i class="ri-shopping-bag-2-line" style="font-size: 22px; font-weight: 100; margin-right: 20px"></i>
+                <span>Products</span>
+            </a>
+            </li><!-- End Products Page Nav -->
+    
+            <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#inventory-nav" data-bs-toggle="collapse" href="#">
+                <i class="ri-inbox-archive-line"style="font-size: 22px; font-weight: 100; margin-right: 20px"></i>
+                <span>Inventory</span><i class="ri-arrow-down-s-line ms-auto" style="font-size: 20px; font-weight: 100;" ></i>
+            </a>
+            <ul id="inventory-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{%url 'admin_site:inventory' %}">
+                            <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Add Stock</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'admin_site:view_inventory' %}">
+                        <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>View Stock</span>
+                    </a>
+                </li>
+            </ul>
+            </li><!-- End Inventory Page Nav -->
+    
+            <li class="nav-item">
+            <a class="nav-link collapsed " data-bs-target="#sales-nav" data-bs-toggle="collapse" href="#">
+                <i class="ri-shopping-cart-2-line" style="font-size: 22px; font-weight: 100; margin-right: 20px"></i><span>Order</span><i class="ri-arrow-down-s-line ms-auto" style="font-size: 20px; font-weight: 100;" ></i>
+            </a>
+            <ul id="sales-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{% url 'admin_site:transaction_orders' %}">
+                        <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Pending</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'admin_site:transaction_outshipping' %}">
+                        <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Out For Delivery</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'admin_site:transaction_completed' %}">
+                        <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Delivered</span>
+                    </a>
+                </li>
+            </ul>
+            </li><!-- End Sales Nav -->
+        {% endif %}
+    
+
+        {% if user.role == "staff"%}
+        <li class="nav-item">
+        <a class="nav-link collapsed" href="{%url 'admin_site:list_product' %}">
+            <i class="ri-shopping-bag-2-line" style="font-size: 22px; font-weight: 100; margin-right: 20px"></i>
+            <span>Products</span>
+        </a>
+        </li><!-- End Products Page Nav -->
+
+        <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#inventory-nav" data-bs-toggle="collapse" href="#">
+            <i class="ri-inbox-archive-line"style="font-size: 22px; font-weight: 100; margin-right: 20px"></i>
+            <span>Inventory</span><i class="ri-arrow-down-s-line ms-auto" style="font-size: 20px; font-weight: 100;" ></i>
+        </a>
+        <ul id="inventory-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+            <li>
+                <a href="{%url 'admin_site:inventory' %}">
+                        <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Add Stock</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'admin_site:view_inventory' %}">
+                    <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>View Stock</span>
+                </a>
+            </li>
+        </ul>
+        </li><!-- End Inventory Page Nav -->
+  
+        <li class="nav-item">
+        <a class="nav-link collapsed " data-bs-target="#sales-nav" data-bs-toggle="collapse" href="#">
+            <i class="ri-shopping-cart-2-line" style="font-size: 22px; font-weight: 100; margin-right: 20px"></i><span>Order</span><i class="ri-arrow-down-s-line ms-auto" style="font-size: 20px; font-weight: 100;" ></i>
+        </a>
+        <ul id="sales-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+            <li>
+                <a href="{% url 'admin_site:transaction_orders' %}">
+                    <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Pending</span>
+                </a>
+            </li>
+            <!-- <li>
+                <a href="{% url 'admin_site:transaction_outshipping' %}">
+                    <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Out For Delivery</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'admin_site:transaction_completed' %}">
+                    <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Delivered</span>
+                </a>
+            </li> -->
+        </ul>
+        </li><!-- End Sales Nav -->
+        {% endif %}
+
+        {% if user.role == "reseller"%}
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'reseller_site:transaction_orders'  %}">
+                <i class="ri-shopping-bag-2-line" style="font-size: 22px; font-weight: 100; margin-right: 20px"></i>
+                <span>Orders</span>
+            </a>
+            </li><!-- End Products Page Nav -->
+        {% endif %}
+
+        {% if user.role == "rider"%}
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'rider_site:transaction_orders'  %}">
+                <i class="ri-truck-line" style="font-size: 22px; font-weight: 100; margin-right: 20px"></i>
+                <span>Delivery</span>
+            </a>
+        </li><!-- End Products Page Nav -->
+        {% endif %}
+
+        {% if user.role == "admin"%}
+        <li class="nav-heading pt-3">Reports</li>
+        <li class="mb-act nav-item">
+            <a class="nav-link collapsed " data-bs-target="#reports-nav" data-bs-toggle="collapse" href="#">
+                <i class="ri-file-line" style="font-size: 22px; font-weight: 100; margin-right: 20px"></i><span>Reports</span><i class="ri-arrow-down-s-line ms-auto" style="font-size: 20px; font-weight: 100;" ></i>
+            </a>
+            <ul id="reports-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{% url 'admin_site:report_actlog' %}">
+                    <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Activity Log</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'admin_site:report_online_sales' %}">
+                    <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Online Sales</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'admin_site:report_pos_sales' %}">
+                    <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>POS Sales</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        {% endif %}
+
+        {% if user.role == "rider"%}
+        <li class="nav-heading pt-3">Reports</li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'rider_site:report_deliver'%}">
+                <i class="ri-file-line" style="font-size: 22px; font-weight: 100; margin-right: 20px"></i>
+                <span>Delivery Report</span>
+            </a>
+        </li><!-- End Reports Page Nav -->
+        {% endif %}
+  
+        <li class="nav-heading pt-3">Others</li>
+        
+        <li class="nav-item active-nav">
+            {% if user.role == "admin"%}
+            <a class="nav-link " data-bs-target="#settings-nav" data-bs-toggle="collapse" href="#">
+                <i class="ri-settings-3-line" style="font-size: 22px; font-weight: 100; margin-right: 20px"></i><span>Settings</span><i class="ri-arrow-down-s-line ms-auto" style="font-size: 20px; font-weight: 100;" ></i>
+            </a>
+            <ul id="settings-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+                <li>
+                <a href="{% url 'admin_site:settings_profile' %}">
+                    <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Edit Profile</span>
+                </a>
+                </li>
+                <li>
+                <a href="{% url 'admin_site:list_archive' %}">
+                        <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Archived Resellers</span>
+                </a>
+                </li>
+                <li>
+                <a href="{% url 'admin_site:settings_product' %}">
+                        <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Product Settings</span>
+                </a>
+                </li>
+                <li>
+                <a href="{% url 'admin_site:settings_page' %}"  class="active">
+                        <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Page Settings</span>
+                </a>
+                </li>
+                <!-- <li>
+                <a href="reports-admin/act-logged-out.php">
+                    <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Product Category</span>
+                </a>
+                </li> -->
+            </ul>
+            {% endif %}
+
+            
+            {% if user.role == "staff"%}
+            <a class="nav-link " data-bs-target="#settings-nav" data-bs-toggle="collapse" href="#">
+                <i class="ri-settings-3-line" style="font-size: 22px; font-weight: 100; margin-right: 20px"></i><span>Settings</span><i class="ri-arrow-down-s-line ms-auto" style="font-size: 20px; font-weight: 100;" ></i>
+            </a>
+            <ul id="settings-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+                <li>
+                <a href="{% url 'admin_site:settings_profile' %}" class="active">
+                    <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Edit Profile</span>
+                </a>
+                </li>
+                <!-- <li>
+                <a href="reports-admin/act-logged-out.php">
+                    <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Product Category</span>
+                </a>
+                </li> -->
+            </ul>
+            {% endif %}
+
+            {% if user.role == "reseller"%}
+            <a class="nav-link " data-bs-target="#settings-nav" data-bs-toggle="collapse" href="#">
+                <i class="ri-settings-3-line" style="font-size: 22px; font-weight: 100; margin-right: 20px"></i><span>Settings</span><i class="ri-arrow-down-s-line ms-auto" style="font-size: 20px; font-weight: 100;" ></i>
+            </a>
+            <ul id="settings-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+                <li>
+                <a href="{% url 'admin_site:settings_profile' %}" class="active">
+                    <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Edit Profile</span>
+                </a>
+                </li>
+                <!-- <li>
+                <a href="reports-admin/act-logged-out.php">
+                    <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Product Category</span>
+                </a>
+                </li> -->
+            </ul>
+            {% endif %}
+
+            {% if user.role == "rider"%}
+            <a class="nav-link collapsed" data-bs-target="#settings-nav" data-bs-toggle="collapse" href="#">
+                <i class="ri-settings-3-line" style="font-size: 22px; font-weight: 100; margin-right: 20px"></i><span>Settings</span><i class="ri-arrow-down-s-line ms-auto" style="font-size: 20px; font-weight: 100;" ></i>
+            </a>
+            <ul id="settings-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+                <li>
+                <a href="{% url 'admin_site:settings_profile' %}" class="active">
+                    <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Edit Profile</span>
+                </a>
+                </li>
+                <!-- <li>
+                <a href="reports-admin/act-logged-out.php">
+                    <i class="ri-checkbox-blank-circle-fill" style="margin-right: 15px" ></i><span>Product Category</span>
+                </a>
+                </li> -->
+            </ul>
+            {% endif %}
+        </li>
+
+        <li class="nav-item">
+            <a href="{% url 'admin_site:support' %}" class="nav-link collapsed">
+                <i class="ri-information-line" style="font-size: 22px; font-weight: 100; margin-right: 20px"></i><span>Support</span>
+            </a>
+        </li>
+    </ul>
+</aside><!-- End Sidebar-->
+
+<main id="main" class="main mt-5">
+    <div class="pagetitle">
+        <h1>Settings</h1>
+        <nav>
+            {% if user.role == "admin"%}
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'admin_site:dashboard'%}">Home</a></li>
+                <li class="breadcrumb-item">Settings</li>
+                <li class="breadcrumb-item active">Page Settings</li>
+            </ol>
+            {% endif %}
+        </nav>
+    </div><!-- End Page Title -->
+
+    {% for message in messages  %}
+        {% if 'success' in message.tags %}
+        <p class='alert alert-success mt-3'>{{message}}</p>
+        {% elif 'error' in message.tags %}
+        <p class='alert alert-danger mt-3'>{{message}}</p>
+        {% else %}
+        <p class='alert alert-info mt-3'>{{message}}</p>
+        {% endif %}
+    {% endfor %}
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body mt-3 mb-5">
+                        <div class="add-product mb-4">
+                            <h5 class="card-title feature">Add reviews</h5>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12 pb-3">
+                                {% if list_profile %}
+                                    {% for list in list_profile %}
+
+                                    <form action="{% url 'admin_site:add_profile' %}" method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                            <div class="row d-flex-justify-content-center align-items-center text-center">
+                                                <div class="col-lg-6">
+                                                    <div class="first-input">
+                                                        <label for="">First Name</label>
+                                                        <input type="text"  name="first" class="form-control"  required>
+                                                        
+                                                        <label for="">Middle Name</label>
+                                                        <input type="text"  name="middle" class="form-control" required>
+                                                        
+                                                        <label for="">Last Name</label>
+                                                        <input type="text"  name="last" class="form-control"  required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="first-input">
+                                                        <label for="">First Name</label>
+                                                        <input type="text"  name="first" class="form-control"  required>
+                                                        
+                                                        <label for="">Middle Name</label>
+                                                        <input type="text"  name="middle" class="form-control" required>
+                                                        
+                                                        <label for="">Last Name</label>
+                                                        <input type="text"  name="last" class="form-control"  required>
+                                                    </div>
+                                                    
+                                                    <button type="submit"  class="btn btn-profile-up">Save</button>
+                                                </div>
+                                            </div>
+                                    </form>
+
+
+                                    {% endfor %}
+                                    {% else %}
+                                    <form action="{% url 'admin_site:add_profile' %}" method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                            <div class="row d-flex-justify-content-center align-items-center text-center">
+                                                <div class="col-lg-6">
+                                                    <div class="first-input">
+                                                        <label for="">First Name</label>
+                                                        <input type="text"  name="first" class="form-control"  required>
+                                                        
+                                                        <label for="">Middle Name</label>
+                                                        <input type="text"  name="middle" class="form-control" required>
+                                                        
+                                                        <label for="">Last Name</label>
+                                                        <input type="text"  name="last" class="form-control"  required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="first-input">
+                                                        <label for="">First Name</label>
+                                                        <input type="text"  name="first" class="form-control"  required>
+                                                        
+                                                        <label for="">Middle Name</label>
+                                                        <input type="text"  name="middle" class="form-control" required>
+                                                        
+                                                        <label for="">Last Name</label>
+                                                        <input type="text"  name="last" class="form-control"  required>
+                                                    </div>
+                                                    
+                                                    <button type="submit"  class="btn btn-profile-up">Save</button>
+                                                </div>
+                                            </div>
+                                    </form>
+
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body change-password mt-3">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="col-lg-12">
+                            <div class="row d-flex flex-column justify-content-center align-items-center"">
+                                
+                                    <h3 class="mt-4 mb-4">Change Password</h3>
+                                    
+                                    <!-- <div class="col-lg-12 mb-3 old-ps">
+                                        <div class="row">
+                                            <div class="col-lg-2 mb-2">
+                                                <label class="label-profile " for="">Old Password</label>
+                                            </div>
+                                            <div class="col-lg-10">
+                                                <input type="text"  name="contact" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    
+                                    <div class="col-lg-12 mb-3 new-ps">
+                                        <div class="row">
+                                            <span>{{ form }}</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="col-lg-12 mb-3 new-ps">
+                                        <div class="row">
+                                            <div class="col-lg-2 mb-2">
+                                                <label class="label-profile" for="">New Password</label>
+                                            </div>
+                                            <div class="col-lg-10">
+                                                <input type="text"  name="Address" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-12 mb-3 new1-ps">
+                                        <div class="row">
+                                            <div class="col-lg-2 mb-2">
+                                                <label class="label-profile" for="">Re-type New Password</label>
+                                            </div>
+                                            <div class="col-lg-10">
+                                                <input type="text"  name="Address" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="col-lg-12 mt-2 text-end">
+                                        <button type="submit"  class="btn btn-profile">Save</button>
+                                    </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- <div class="input-group-append px-5">
+                        <h2>Change Password</h2>
+                        <form method="post">
+                          {% csrf_token %}
+                          {{ form }}
+                          <button type="submit">Save</button>
+                        </form>
+                      
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</main>
+
+
+{% endblock template %}
+    

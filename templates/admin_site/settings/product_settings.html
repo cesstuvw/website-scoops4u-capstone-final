@@ -1,0 +1,353 @@
+{% extends 'admin_site/base.html' %}
+
+{% block title %}
+    PRODUCT SETTINGS
+{% endblock title %}
+
+{% block template %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+
+
+<main id="main" class="main mt-5">
+    <div class="pagetitle">
+        <h1>Product Settings</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'admin_site:dashboard'%}">Home</a></li>
+                <li class="breadcrumb-item">User Accounts</li>
+                <li class="breadcrumb-item active">Users List</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    {% for message in messages  %}
+    {% if 'success' in message.tags %}
+    <p class='alert alert-success mt-3'>{{message}}</p>
+    {% elif 'error' in message.tags %}
+    <p class='alert alert-danger mt-3'>{{message}}</p>
+    {% else %}
+    <p class='alert alert-info mt-3'>{{message}}</p>
+    {% endif %}
+    {% endfor %}
+
+    <section class="section">
+        <div class="row">
+            <div id="btn-place bg-primary"></div>
+            <!-- flavor -->
+            <div class="col-lg-12 flavor-set">
+                <div class="card">
+                    <div  class="card-body mt-3">
+                        <div class="add-user res-d mb-4">
+                            <h5 class="card-title feature">Flavor</h5>
+                            <div class="show-entries">
+                                <div id="showEntriesFlavor"></div>
+                            </div>
+                            
+                            <div class="modal-add-fla">
+                                <a href="{% url 'admin_site:settings_addflavor' %}" class="btn btn-add " data-bs-toggle="modal" data-bs-target="#addFlavorModal"><i class="ri-add-line align-middle me-2 text-end" style="font-size:17px; font-weight: 500;"></i><span class="align-middle pe-1">Add a New Flavor</span></a>
+    
+                            </div>                            <!-- <a href="{% url 'admin_site:add_useraccount' %}" class="btn btn-add modal-add"><i class="ri-add-line align-middle me-2 text-end" style="font-size:17px; font-weight: 500;"></i><span class="align-middle pe-1">Add a New User</span></a> -->
+                            <!-- <a href="{% url 'admin_site:add_reseller' %}" class="btn btn-add" data-add="addRes" data-bs-toggle="modal" data-bs-target="#addReseller"><i class="ri-add-line align-middle me-2 text-end" style="font-size:17px; font-weight: 500;"></i><span class="align-middle pe-1">Add a New Reseller</span></a> -->
+                            <form class="search-tab"  method="GET"  class="text-end px-4">
+                                {% csrf_token %}
+                                <input type="text" id="tableMFlavor" class="form-control p-2 ps-3" name="search" placeholder="Search">
+                                <button class="btn btn-search btn-sm nope" type="submit"><i class="ri-search-line"></i></button>
+                            </form>  
+                        </div> 
+
+                        
+                        <!-- Table with hoverable rows -->
+                        <div class="table-responsive">
+                            <table id="tableFlavor" class="table table-hover ">
+                                <thead>
+                                <tr class="align-middle">
+                                    <th scope="col">#</th>
+                                    <th scope="col">Product Category</th>
+                                    <!-- <th scope="col">Product Unit</th> -->
+                                    <th class="sort-no" scope="col" >Action</th>
+                                </tr>
+                                </thead>
+                            
+                                <tbody id="tableRow">
+                                    {% for list in list_flavor %}
+                                    <tr class="align-middle">
+                                        <td class="num-row"></td>
+                                        <td>{{ list.settings_flavor }}</td>
+                                        <!-- <td>{{ list.settings_unit }}</td> -->
+                                        
+                                        <form method="POST" action="{% url 'admin_site:remove_flavor' list.id %}" onsubmit="return submitFormflavor(this);">
+                                            {% csrf_token %}
+                                        <td> 
+                                            <button type="submit" class="btn btn-archive"><i class="ri-delete-bin-fill"></i></button>
+                                        </td>
+                                        </form>
+
+                                        <script>
+                                            function submitFormflavor(form) {
+                                                var message = "Do you really want to <b>remove</b> this <b>flavor</b>?";
+                                                
+                                                swal({
+                                                    title: "Remove",
+                                                    // text: "Do you really want to <span>archive</span> this reseller?",
+                                                    content: {
+                                                        element: 'p',
+                                                        attributes: {
+                                                            innerHTML: message,
+                                                        }
+                                                    },
+                                                    
+                                                    // icon: "warning",
+                                                    buttons: {
+                                                        // confirm: "Yes",
+                                                        confirm: {
+                                                            text: "Yes",
+                                                        },
+                                                        cancel: true,
+                                                    },
+                                                    className: 'swal-wide',
+                                                    dangerMode: true,
+                                                    // allowOutsideClick: false,
+                                                    closeOnClickOutside: false
+                                                })
+                                                .then(function (isConfirm) {
+                                                    if (isConfirm) {
+                                                        form.submit();
+                                                    }
+                                                });
+                                                return false;
+                                            }
+                                        </script>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- End Table with hoverable rows -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- category -->
+            <div class="col-lg-12 category-set">
+                <div class="card">
+                    <div  class="card-body mt-3">
+                        <div class="add-user res-d mb-4">
+                            <h5 class="card-title feature">Category</h5>
+                            <div class="show-entries">
+                                <div id="showEntriesCat"></div>
+                            </div>
+                            
+                            <div class="modal-add-cat">
+                                <a href="{% url 'admin_site:settings_addcategory' %}" class="btn btn-add " data-bs-toggle="modal" data-bs-target="#addCategoryModal"><i class="ri-add-line align-middle me-2 text-end" style="font-size:17px; font-weight: 500;"></i><span class="align-middle pe-1">Add a New Category</span></a>
+    
+                            </div>                            <!-- <a href="{% url 'admin_site:add_useraccount' %}" class="btn btn-add modal-add"><i class="ri-add-line align-middle me-2 text-end" style="font-size:17px; font-weight: 500;"></i><span class="align-middle pe-1">Add a New User</span></a> -->
+                            <!-- <a href="{% url 'admin_site:add_reseller' %}" class="btn btn-add" data-add="addRes" data-bs-toggle="modal" data-bs-target="#addReseller"><i class="ri-add-line align-middle me-2 text-end" style="font-size:17px; font-weight: 500;"></i><span class="align-middle pe-1">Add a New Reseller</span></a> -->
+                            <form class="search-tab"  method="GET"  class="text-end px-4">
+                                {% csrf_token %}
+                                <input type="text" id="tableMCategory" class="form-control p-2 ps-3" name="search" placeholder="Search">
+                                <button class="btn btn-search btn-sm nope" type="submit"><i class="ri-search-line"></i></button>
+                            </form>  
+                        </div> 
+
+                        
+                        <!-- Table with hoverable rows -->
+                        <div class="table-responsive">
+                            <table id="tableCat" class="table table-hover ">
+                                <thead>
+                                <tr class="align-middle">
+                                    <th scope="col">#</th>
+                                    <th scope="col">Product Category</th>
+                                    <th class="sort-no" scope="col" >Action</th>
+                                </tr>
+                                </thead>
+                            
+                                <tbody id="tableRow">
+                                    {% for list in list_category %}
+                                    <tr class="align-middle">
+                                        <td class="num-row"></td>
+                                        <td>{{ list.settings_category }}</td>
+                                        
+                                        <form method="POST" action="{% url 'admin_site:remove_category' list.id %}" onsubmit="return submitFormcategory(this);">
+                                            {% csrf_token %}
+                                        <td> 
+                                            <button type="submit" class="btn btn-archive"><i class="ri-delete-bin-fill"></i></button>
+                                        </td>
+                                        </form>
+
+                                        <script>
+                                            function submitFormcategory(form) {
+                                                var message = "Do you really want to <b>remove</b> this <b>category</b>?";
+                                                
+                                                swal({
+                                                    title: "Remove",
+                                                    // text: "Do you really want to <span>archive</span> this reseller?",
+                                                    content: {
+                                                        element: 'p',
+                                                        attributes: {
+                                                            innerHTML: message,
+                                                        }
+                                                    },
+                                                    
+                                                    // icon: "warning",
+                                                    buttons: {
+                                                        // confirm: "Yes",
+                                                        confirm: {
+                                                            text: "Yes",
+                                                        },
+                                                        cancel: true,
+                                                    },
+                                                    className: 'swal-wide',
+                                                    dangerMode: true,
+                                                    // allowOutsideClick: false,
+                                                    closeOnClickOutside: false
+
+                                                    
+                                                    
+                                                })
+                                                .then(function (isConfirm) {
+                                                    if (isConfirm) {
+                                                        form.submit();
+                                                    }
+                                                });
+                                                return false;
+                                            }
+                                        </script>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- End Table with hoverable rows -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- unit -->
+            <div class="col-lg-12 unit-set">
+                <div class="card">
+                    <div  class="card-body mt-3">
+                        <div class="add-user res-d mb-4">
+                            <h5 class="card-title feature">Unit</h5>
+                            <div class="show-entries">
+                                <div id="showEntriesUnit"></div>
+                            </div>
+                            
+                            <div class="modal-add-unit">
+                                <a href="{% url 'admin_site:settings_addunit' %}" class="btn btn-add " data-bs-toggle="modal" data-bs-target="#addUnitModal"><i class="ri-add-line align-middle me-2 text-end" style="font-size:17px; font-weight: 500;"></i><span class="align-middle pe-1">Add a New Unit</span></a>
+    
+                            </div>                            <!-- <a href="{% url 'admin_site:add_useraccount' %}" class="btn btn-add modal-add"><i class="ri-add-line align-middle me-2 text-end" style="font-size:17px; font-weight: 500;"></i><span class="align-middle pe-1">Add a New User</span></a> -->
+                            <!-- <a href="{% url 'admin_site:add_reseller' %}" class="btn btn-add" data-add="addRes" data-bs-toggle="modal" data-bs-target="#addReseller"><i class="ri-add-line align-middle me-2 text-end" style="font-size:17px; font-weight: 500;"></i><span class="align-middle pe-1">Add a New Reseller</span></a> -->
+                            <form class="search-tab"  method="GET"  class="text-end px-4">
+                                {% csrf_token %}
+                                <input type="text" id="tableMUnit" class="form-control p-2 ps-3" name="search" placeholder="Search">
+                                <button class="btn btn-search btn-sm nope" type="submit"><i class="ri-search-line"></i></button>
+                            </form>  
+                        </div> 
+
+                        
+                        <!-- Table with hoverable rows -->
+                        <div class="table-responsive">
+                            <table id="tableUnit" class="table table-hover ">
+                                <thead>
+                                <tr class="align-middle">
+                                    <th scope="col">#</th>
+                                    <th scope="col">Product Unit</th>
+                                    <th class="sort-no" scope="col" >Action</th>
+                                </tr>
+                                </thead>
+                            
+                                <tbody id="tableRow">
+                                    {% for list in list_unit %}
+                                    <tr class="align-middle">
+                                        <td class="num-row"></td>
+                                        <td>{{ list.settings_unit }}</td>
+                                        
+                                        <form method="POST" action="{% url 'admin_site:remove_category' list.id %}" onsubmit="return submitFormunit(this);">
+                                            {% csrf_token %}
+                                        <td> 
+                                            <button type="submit" class="btn btn-archive"><i class="ri-delete-bin-fill"></i></button>
+                                        </td>
+                                        </form>
+
+                                        <script>
+                                            function submitFormunit(form) {
+                                                var message = "Do you really want to <b>remove</b> this <b>unit</b>?";
+                                                
+                                                swal({
+                                                    title: "Remove",
+                                                    // text: "Do you really want to <span>archive</span> this reseller?",
+                                                    content: {
+                                                        element: 'p',
+                                                        attributes: {
+                                                            innerHTML: message,
+                                                        }
+                                                    },
+                                                    
+                                                    // icon: "warning",
+                                                    buttons: {
+                                                        // confirm: "Yes",
+                                                        confirm: {
+                                                            text: "Yes",
+                                                        },
+                                                        cancel: true,
+                                                    },
+                                                    className: 'swal-wide',
+                                                    dangerMode: true,
+                                                    // allowOutsideClick: false,
+                                                    closeOnClickOutside: false
+
+                                                    
+                                                    
+                                                })
+                                                .then(function (isConfirm) {
+                                                    if (isConfirm) {
+                                                        form.submit();
+                                                    }
+                                                });
+                                                return false;
+                                            }
+                                        </script>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- End Table with hoverable rows -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- add category -->
+        <div class="modal fade border-0" id="addFlavorModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-content border-0 p-4">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade border-0" id="addCategoryModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-content border-0 p-4">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade border-0" id="addUnitModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-content border-0 p-4">
+                    
+                </div>
+            </div>
+        </div>
+    
+    </section>
+</main>
+
+
+{% endblock template %}
+
+ 

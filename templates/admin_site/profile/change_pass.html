@@ -1,0 +1,55 @@
+{% load static %}
+
+<div class="modal-header border-0">
+    <h1 class="modal-title" id="exampleModalLabel">Change Password</h1>
+    <button type="button" class="ri-close-fill" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<form  method="POST">
+    {% csrf_token %}
+
+    <div class="modal-body pt-2 mt-0">
+        <div class="row d-flex-justify-content-center align-items-center">
+            <div class="col-lg-12">
+                <div class="row d-flex flex-column justify-content-center align-items-center"">
+                    <div class="col-lg-12 new-ps">
+                        <!-- <div class="row">
+                            <div class="col-lg-6">
+
+                            </div>
+                            <span>{{ form.current_password }}</span>
+                            <span>{{ form.new_password }}</span>
+                        </div> -->
+
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <div class="col-lg-5">
+                                <label for="">Current Password</label>
+                            </div>
+                            <div class="col-lg-7">
+                                <span>{{ form.current_password }}</span>
+                                <!-- <input type="text" class="form-control" id="" aria-describedby="" required> -->
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <div class="col-lg-5">
+                                <label for="">New Password</label>
+                            </div>
+                            <div class="col-lg-7">
+                                <span>{{ form.new_password }}</span>
+                                <!-- <input type="text" class="form-control" id="" aria-describedby="" required> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer border-0">
+        <!-- <button type="submit" class="btn btn-primary" value="Add Product"><i class="ri-check-fill"></i>Add Product</button> -->
+        <button type="submit" id="submit" name="submit" class="btn btn-primary me-2"><i class="ri-arrow-up-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Update</span></button>
+        <a href="{% url 'admin_site:my_profile' %}" type="submit" id="close-modal" class="btn btn-secondary" data-bs-dismiss="modal" style="font-size: 15px; padding: 5px 13px;"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></a>
+        <!-- <button type="submit" id="close-modal" class="btn btn-secondary" data-bs-dismiss="modal"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></button> -->
+    </div>
+</form>

@@ -1,0 +1,352 @@
+{% extends 'admin_site/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<main id="main" class="main mt-5">
+
+    <div class="pagetitle">
+        
+        <nav>
+
+            {% if user.role == "admin"%}
+
+            <div class="row">
+                <div class="col-12">
+                    <h1>My Profile</h1>
+                    <ol class="breadcrumb mb-3 pb-1">
+                        <li class="breadcrumb-item"><a href="{% url 'admin_site:dashboard'%}">Home</a></li>
+                        <li class="breadcrumb-item active">My Profile</li>
+                    </ol>
+                </div>
+                
+            </div>
+            {% endif %}
+
+            {% if user.role == "si_staff"%}
+            <div class="row">
+                <div class="col-12">
+                    <h1>My Profile</h1>
+                    <ol class="breadcrumb mb-3 pb-1">
+                        <li class="breadcrumb-item"><a href="{% url 'staff_site:dashboard'%}">Home</a></li>
+                        <li class="breadcrumb-item active">My Profile</li>
+                    </ol>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if user.role == "reseller"%}
+            <div class="row">
+                <div class="col-12">
+                    <h1>My Profile</h1>
+                    <ol class="breadcrumb mb-3 pb-1">
+                        <li class="breadcrumb-item"><a href="{% url 'reseller_site:dashboard'%}">Home</a></li>
+                        <li class="breadcrumb-item active">My Profile</li>
+                    </ol>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if user.role == "delivery_staff"%}
+            <div class="row">
+                <div class="col-12">
+                    <h1>My Profile</h1>
+                    <ol class="breadcrumb mb-3 pb-1">
+                        <li class="breadcrumb-item"><a href="{% url 'rider_site:dashboard'%}">Home</a></li>
+                        <li class="breadcrumb-item active">My Profile</li>
+                    </ol>
+                </div>
+            </div>
+            {% endif %}
+        </nav>
+    </div><!-- End Page Title -->
+
+    {% for message in messages  %}
+    {% if 'success' in message.tags %}
+    <p class='alert alert-success mt-3'>{{message}}</p>
+    {% elif 'error' in message.tags %}
+    <p class='alert alert-danger mt-3'>{{message}}</p>
+    {% else %}
+    <p class='alert alert-info mt-3'>{{message}}</p>
+    {% endif %}
+    {% endfor %}
+
+    <section class="section">
+        <div class="empty-screen2 d-none modal-add-prod">
+            <img src="../../../../static/img/noresellers.svg" alt="haha">
+            <h5 class="pt-3">Complete your Profile</h5>
+            <!-- <img class="arrow-here"src="../../../../static/img/arrow.svg" alt="haha"> -->
+            <p data-bs-toggle="modal" data-bs-target="#addProductModal">Please provide all necessary information <a href="{% url 'admin_site:settings_profile' %}">here</a> in order to fully create your profile.
+            </p>
+        </div>
+
+        {% if current_profile %}
+        {% for list  in  current_profile %}
+        <div class="row">
+            <!-- left side -->
+            <div class="col-lg-12">
+                <div class="row">
+                    <!-- Online Sales Card -->
+                    <div class="col-lg-4">
+                        <div class="card info-card profile-card ">
+                            <div class="card-body profile-card-left d-flex align-items-center justify-content-center flex-column">
+                                <div class="profile-pic mb-4 my-5 pt-5">
+                                {% if list.profile_pic %}
+                                <img id="output" src="/media/{{ list.profile_pic}}" alt="Profile-pic" class="image-cropper">
+                                {% else %}
+                                <img src="{% static 'img/default_profile.jpg' %}" alt="Profile-pic" class="image-cropper">
+                                {% endif %}
+                                </div>
+                                <div class=" text-center pb-5">
+                                    <h6 class="profile-name"> {{ list.profile_fname }} {{list.profile_mname}} {{list.profile_lname}}</h6>
+                                    <h6 class="profile-name-title">Name</h6>
+                                </div>
+                                <div class=" text-center pb-3">
+                                    <!-- <button class="btn btn-edit"><i class="ri-edit-fill"></i></button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End Sales Card -->
+
+                    <!-- Profile Info -->
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-body pt-3">
+                                <!-- Bordered Tabs -->
+                                <ul class="nav nav-tabs nav-tabs-bordered">
+                    
+                                    <li class="nav-item">
+                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview"><span class="title-head-profile">Overview</span></button>
+                                    </li>
+                    
+                                    <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit"><span class="title-head-profile">Edit Profile</span></button>
+                                    </li>
+                    
+                                    <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password"><span class="title-head-profile">Change Password</span></button>
+                                    </li>
+                    
+                                </ul>
+                                <div class="tab-content pt-2">
+                    
+                                    <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                        
+                                    <h5 class="card-title main-title-overview">About</h5>
+                                    <p class="fst-italic">
+                                        {% if profile.profile_about %}
+                                            {{ profile.profile_about }}
+                                        {% elif list.profile_about %}
+                                            {{ list.profile_about }}
+                                        {% elif not list.profile_fname %}
+                                            {{ user.role|title }}
+                                        {% else %}
+                                            Hello! I'm {{ list.profile_fname }}.
+                                        {% endif %}
+
+                                    </p>
+                    
+                                    <h5 class="card-title title-overview main-title-overview">Profile Details</h5>
+                    
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label label-left">Full Name</div>
+                                        <div class="col-lg-9 col-md-8 right">{{ list.profile_fname }} {{list.profile_mname}} {{list.profile_lname}}</div>
+                                    </div>
+                    
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label label-left">Role</div>
+                                        <div class="col-lg-9 col-md-8 right">{{ user.role|title }}</div>
+                                    </div>
+                                        
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label label-left">Address</div>
+                                        <div class="col-lg-9 col-md-8 right">{{list.profile_address}}</div>
+                                    </div>
+                    
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label label-left">Contact No.</div>
+                                        <div class="col-lg-9 col-md-8 right">0{{list.profile_cnumber}}</div>
+                                    </div>
+                    
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label label-left">Email</div>
+                                        <div class="col-lg-9 col-md-8 right" id="desc-profile">{{list.profile_email}}</div>
+                                    </div>
+                    
+                                    </div>
+                    
+                                    <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                    
+                                    <!-- Profile Edit Form -->
+                                    <form action="{% url 'admin_site:update_profile' list.id %}" method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}                                    
+                                        <div class="row mb-3">
+                                        <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                                        <div class="col-md-8 col-lg-9 profile-settings">
+                                                <!-- {% if list.profile_pic %} -->
+                                                <!-- <img id="output" src="/media/{{ list.profile_pic}}" alt="Profile-pic" class="image-cropper">
+                                                {% else %}
+                                                <img id="output" src="{% static 'img/default_profile.jpg' %}" alt="Profile-pic" class="image-cropper">
+                                                {% endif %} -->
+                                                <img id="preview" src="{% if list.profile_pic %}/media/{{ list.profile_pic}}{% else %}{% static 'img/default_profile.jpg' %}{% endif %}" alt="Profile-pic" class="image-cropper">
+                                                <!-- <img id="output" src="{% static 'img/default_profile.jpg' %}" alt="Profile-pic" class="image-cropper"> -->
+
+                                            <div class="pt-2 edit-profile-settings">
+                                                <!-- <label for="file-upload" class="btn btn-print btn-upload custom-file-upload me-2">
+                                                    <i class="ri-upload-2-line"></i>
+                                                </label> -->
+                                                <label for="file-upload" class="btn btn-print btn-upload custom-file-upload me-2">
+                                                    <i class="ri-upload-2-line"></i>
+                                                </label>
+                                                <input id="file-upload" name="profile_pic" type="file" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
+
+                                                <!-- <input id="file-upload"  name="profile_pic" type="file" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])"/> -->
+                                            </div>
+                                        </div>
+                                        </div>
+                    
+                                        <div class="row mb-3">
+                                        <label for="first" class="col-md-4 col-lg-3 col-form-label">First Name</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="first" type="text" class="form-control" id="first" value="{{ list.profile_fname}}" required>
+                                        </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                        <label for="middle" class="col-md-4 col-lg-3 col-form-label">Middle Name</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="middle" type="text" class="form-control" id="middle" value="{{ list.profile_mname}}">
+                                        </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                        <label for="last" class="col-md-4 col-lg-3 col-form-label">Last Name</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="last" type="text" class="form-control" id="last" value="{{ list.profile_lname}}" required>
+                                        </div>
+                                        </div>
+                    
+                                        <div class="row mb-3">
+                                        <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <!-- {% if list.profile_about %}
+                                            <textarea name="about" class="form-control" id="about">{{ list.profile_about }}</textarea>
+                                            {% else %}
+                                            <textarea name="about" class="form-control" id="about">Hello! I'm {{ list.profile_fname}}.</textarea>
+                                            {% endif %} -->
+
+                                            <textarea name="about" class="form-control" cols="1" rows="2" id="about">{% spaceless %}
+                                                {% if profile.profile_about %}
+                                                    {{ profile.profile_about|striptags|truncatechars:255 }}
+                                                {% elif list.profile_about %}
+                                                    {{ list.profile_about|striptags|truncatechars:255 }}
+                                                {% elif not profile.profile_fname %}
+                                                    {{ user.role|title }}
+                                                {% else %}
+                                                    Hello! I'm {{ profile.profile_fname }}. 
+                                                {% endif %}
+                                            {% endspaceless %}</textarea>
+                                            
+                                            
+                                        </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                        <label for="Job" class="col-md-4 col-lg-3 col-form-label">Role</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="job" type="text" class="form-control" id="Job" value="{{user.role|title}}" readonly>
+                                        </div>
+                                        </div>
+                    
+                                        <div class="row mb-3">
+                                        <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="address" type="text" class="form-control" id="Address" value="{{ list.profile_address}}" required>
+                                        </div>
+                                        </div>
+                    
+                                        <div class="row mb-3">
+                                        <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Contact No.</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="contact_no" type="number" class="form-control" id="contact_no" min="0" value="{{ list.profile_cnumber}}" 
+                                            maxlength="11" 
+                                            oninput="this.value=this.value.slice(0,this.maxLength)"
+                                            required>
+                                        </div>
+                                        </div>
+                    
+                                        <div class="row mb-3">
+                                        <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="email" type="email" class="form-control" id="Email" value="{{ list.profile_email}}" required>
+                                        </div>
+                                        </div>
+                    
+                                        <div class="text-end mt-4">
+                                        <button type="submit" class="btn btn-primary btn-profile-upload">Save Changes</button>
+                                        </div>
+                                    </form><!-- End Profile Edit Form -->
+                    
+                                    </div>
+                    
+                                    <div class="tab-pane fade pt-3" id="profile-change-password">
+                                    <!-- Change Password Form -->
+                                    <form  method="POST">
+                                        {% csrf_token %}
+                                        <div class="row mb-3">
+                                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <!-- <input name="password" type="password" class="form-control" id="currentPassword"> -->
+                                            {{ form.current_password }}
+                                        </div>
+                                        </div>
+                    
+                                        <div class="row mb-3">
+                                        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <!-- <input name="newpassword" type="password" class="form-control" id="newPassword"> -->
+                                            {{ form.new_password }}
+                                        </div>
+                                        </div>
+                    
+                                        <div class="text-end">
+                                        <button type="submit" class="btn btn-profile-upload">Change Password</button>
+                                        </div>
+                                    </form><!-- End Change Password Form -->
+                    
+                                    </div>
+                    
+                                </div><!-- End Bordered Tabs -->
+                    
+                                </div>
+                        </div>
+
+                    </div>
+                    <!-- End Walk-in Sales Card -->
+            </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            
+    </section>
+</main>
+
+<div class="modal fade border-0"  id="addProductModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered  modal-xl">
+        <div class="modal-content border-0 p-4">
+            
+        </div>
+    </div>
+</div>
+
+<div class="modal fade border-0"  id="editProductModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content border-0 p-4">
+            
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+

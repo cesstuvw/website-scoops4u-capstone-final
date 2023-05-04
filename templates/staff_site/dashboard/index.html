@@ -1,0 +1,98 @@
+{% extends 'admin_site/base.html' %}
+{% block title %}
+DASHBOARD
+{% endblock title %}
+
+{% block content %}
+{% load humanize %}
+
+
+<main id="main" class="main mt-5">
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                {% if user.role == "admin"%}
+                <li class="breadcrumb-item"><a href="{% url 'admin_site:dashboard'%}">Home</a></li>
+                {% endif %}
+        
+                {% if user.role == "si_staff"%}
+                <li class="breadcrumb-item"><a href="{% url 'staff_site:dashboard'%}">Home</a></li>
+                {% endif %}
+
+                {% if user.role == "reseller"%}
+                <li class="breadcrumb-item"><a href="{% url 'reseller_site:dashboard'%}">Home</a></li>
+                {% endif %}
+        
+                {% if user.role == "delivery_staff"%}
+                <li class="breadcrumb-item"><a href="{% url 'rider_site:dashboard'%}">Home</a></li>
+                {% endif %}
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+                <!-- left side -->
+                <div class="col-lg-8">
+                    <div class="row">
+                        <!-- Walk-in Sales Card -->
+                        <div class="col-lg-6">
+                                <div class="card info-card walkin-card">
+                                    <div class="card-body dash mb-4">
+                                        <h5 class="card-title">Walk-in Sales
+                                            <span class="px-1">|</span> 
+                                            <span>Today</span>
+                                        </h5>
+                                        <div class="d-flex align-items-center">
+                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="ri-user-fill"></i>
+                                            </div>
+                                            <div class="transaction ps-3">
+                                                    <!-- <h6 class="transaction-input-pos d-none">Php 0.00</h6> -->
+                                                    <h6 class="">Php {{ transaction_pos_payment|default:"0.00"|floatformat:2|intcomma }}</h6>
+                                                    <!-- <input class="transaction-input-pos-main" type="text" value="Php {{ transaction_pos_payment|floatformat:2|intcomma  }}" step="0.01" min="0" readonly> -->
+                                                    <!-- <span class="text-danger small pt-1 fw-bold">12%</span>
+                                                    <span class="text-muted small pt-2 ps-1">decrease</span> -->
+                                                    <!-- <br> -->
+                                                    <span class="text-muted small pt-1 ">Made</span>
+                                                    <span class="text-muted small pt-2 ">Today</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div><!-- End Walk-in Sales Card -->
+
+                        <!-- Pending Orders Card -->
+                        <div class="col-lg-6">
+                                <div class="card info-card pending-card">
+                                    <div class="card-body dash mb-4">
+                                        <h5 class="card-title">Pending Orders
+                                            <span class="px-1"></span> 
+                                            <span></span></h5>
+                                            <!-- <span class="px-1">|</span> 
+                                            <span>Today</span></h5> -->
+                                        <div class="d-flex align-items-center">
+                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="ri-time-fill"></i>
+                                            </div>
+                                            <div class="ps-3">
+                                            <h6>{{ transaction_pending }}</h6>
+                                            <!-- <span class="text-success small pt-1 fw-bold">12%</span> 
+                                            <span class="text-muted small pt-2 ps-1">increase</span> -->
+                                            <span class="text-muted small pt-1 ">Orders</span>
+                                            <!-- <span class="text-muted small pt-2">Today</span> -->
+                                            <!-- <span class="text-muted small pt-1 ">Made</span>
+                                            <span class="text-muted small pt-2">Today</span> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div><!-- End Pending Orders Trans Card -->
+                    </div>
+                </div>
+        </div>
+    </section>
+</main><!-- End #main -->
+{% endblock content %}

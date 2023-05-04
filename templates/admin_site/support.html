@@ -1,0 +1,117 @@
+{% extends 'admin_site/base.html' %}
+
+{% block title %}
+    SUPPORT
+{% endblock title %}
+
+{% block content %}
+
+
+<main id="main" class="main mt-5">
+    <div class="pagetitle">
+        <h1>Support</h1>
+        <nav>
+            <ol class="breadcrumb">
+                {% if user.role == "admin"%}
+                <li class="breadcrumb-item"><a href="{% url 'admin_site:dashboard'%}">Home</a></li>
+                {% endif %}
+        
+                {% if user.role == "si_staff"%}
+                <li class="breadcrumb-item"><a href="{% url 'staff_site:dashboard'%}">Home</a></li>
+                {% endif %}
+
+                {% if user.role == "reseller"%}
+                <li class="breadcrumb-item"><a href="{% url 'reseller_site:dashboard'%}">Home</a></li>
+                {% endif %}
+        
+                {% if user.role == "delivery_staff"%}
+                <li class="breadcrumb-item"><a href="{% url 'rider_site:dashboard'%}">Home</a></li>
+                {% endif %}
+                
+                <!-- <li class="breadcrumb-item">Settings</li> -->
+                <li class="breadcrumb-item active">Support</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body mt-3">
+                        <div class="add-user">
+                            <h5 class="card-title feature">About</h5>
+                        </div> 
+                        <div class="about-support mb-1" style="text-align: justify;">
+                            <p>Scoops 4 U's newly developed system aims to streamline their business processes, providing efficient management of various aspects of their operations. One of the key features of the system is the management of their team, consisting of the owner, staff, riders, and resellers. </p>
+                            <p>Another significant aspect of the system is its ability to manage sales and inventory, which includes the point of sale (POS) system. This feature will allow for efficient and accurate tracking of sales transactions and inventory levels. With the POS system, transactions can be completed quickly and smoothly, providing a seamless experience for customers. Inventory tracking will ensure that stock levels are well-managed, allowing for timely restocking and efficient management of resources.</p>
+                            <p>To gain insights into their business performance, Scoops 4 U's new system will generate detailed reports on activity logs, trail tracks, online sales, and walk-in sales (from the POS). These reports will provide valuable information that can be used to optimize their operations and enhance the overall customer experience.</p>
+                            <p>The system also includes a settings section for easy customization and adjustment of a few key parameters.</p>
+                            <p>In summary, Scoops 4 U's new system is designed to optimize their business processes, providing efficient management of their team, sales, and inventory. The system generates detailed reports to provide valuable insights into business performance and includes a settings section for easy customization and adjustment. With these features, Scoops 4 U will be able to enhance their operations, improve their customer experience, and drive business growth.</p>
+                        </div>
+                        <div class="about-support about-support-footer d-flex justify-content-center align-items-end flex-column">
+                            <p>2022</p>
+                            <p>BlueBird</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body mt-3">
+                        <div class="add-user">
+                            <h5 class="card-title feature">Management</h5>
+                        </div> 
+                        <div class="about-support mb-1 " style="text-align: justify;">
+                            <p>The management section of the system comprises several key features, including user account management, product management, inventory management, and sales or order management. These features will allow for efficient management of team members, products, inventory, and sales transactions. </p>
+                        </div>
+                        <div class="about-support about-support-footer d-flex justify-content-center align-items-end flex-column">
+                            <p>2022</p>
+                            <p>BlueBird</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body mt-3">
+                                <div class="add-user">
+                                    <h5 class="card-title feature">Reports</h5>
+                                </div> 
+                                <div class="about-support mb-1" style="text-align: justify;">
+                                    <p>The reports section of the system includes inputs from activity logs, online sales, and POS sales, providing comprehensive insights into the business's performance. The report section features data filtering capabilities, allowing for effective browsing of the table to view specific data. Moreover, the system offers exporting options to Excel and PDF formats, as well as printing, providing flexibility in sharing and presenting data. With these features, Scoops 4 U can easily monitor their business performance.</p>
+                                </div>
+                                <div class="about-support about-support-footer d-flex justify-content-center align-items-end flex-column">
+                                    <p>2022</p>
+                                    <p>BlueBird</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body mt-3">
+                                <div class="add-user">
+                                    <h5 class="card-title feature">Settings</h5>
+                                </div> 
+                                <div class="about-support mb-1" style="text-align: justify;">
+                                    <p>The settings section of the system grants the admin the ability to access and modify certain features of the system, such as editing their own profile, retrieving archived resellers, and adding new categories for products. The admin has full control over these features to ensure the system operates according to their needs. On the other hand, other end-users can only access the editing of their own profile, ensuring that only authorized individuals can modify critical system features. .</p>
+                                </div>
+                                <div class="about-support about-support-footer d-flex justify-content-center align-items-end flex-column">
+                                    <p>2022</p>
+                                    <p>BlueBird</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock content %}

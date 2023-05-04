@@ -1,0 +1,98 @@
+{% load humanize %}
+
+<div class="modal-header product-dpos pos-header border-0 pt-4">
+    <h1 class="modal-title" id="exampleModalLabel">All Products</h1>
+    <div class="show-entries">
+        <div id="showEntries"></div>
+    </div>
+
+    <!-- <button type="button" class="ri-close-fill" data-bs-dismiss="modal" aria-label="Close"></button> -->
+    <form class="search-tab" action="{% url 'admin_site:search_product' %}" method="GET"  class="text-end px-4">
+        {% csrf_token %}
+        <input type="text" id="tableM" class="form-control p-2 ps-3" name="search" placeholder="Search">
+        <button class="btn btn-search btn-sm nope" type="submit"><i class="ri-search-line"></i></button>
+
+        <!-- <button class="btn btn-search btn-sm" type="submit"><i class="ri-search-line"></i></button> -->
+    </form>  
+</div>
+
+<div class="modal-body pt-2 mt-0">
+    {% for message in messages %}
+    <p class="alert alert-{{ message.tags }} mt-3">{{ message }}</p>
+    {% endfor %}
+    
+    {% if list_products %}     
+    <div class="table-responsive">
+        <table id="tableMain" class="table table-hover">
+            <thead>
+                <tr class="align-middle">
+                    <th scope="col">#</th>
+                    <th scope="col">Product code </th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Unit</th>
+                    <!-- <th scope="col">Reseller Price</th> -->
+        
+                    {% if user.role == "admin" %}
+                    <th scope="col">POS Price</th>
+                    {% elif user.role == "staff" %}
+                    <th scope="col">POS Price</th>
+                    {% endif %}
+                    <th scope="col">Available Stock</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody id="tableRow">
+                {% for list in list_products %}
+                <tr class="align-middle product-code">
+                    <td class="num-row"></td>
+                    <td>{{ list.product_code }}</td>
+                    <td><span>{{ list.product_name }}</span></td>
+                    <td>{{ list.product_category }}</td>
+                    <td>{{ list.product_unit }}</td>
+                    <!-- <td>{{ list.product_ResellerPrice }}</td> -->
+                    
+                    {% if user.role == "admin" %}
+                    <td>Php {{ list.product_price|floatformat:2|intcomma  }}</td>
+                    {% elif user.role == "staff" %}
+                    <td>Php {{ list.product_price|floatformat:2|intcomma }}</td>
+                        
+                    {% endif %}
+                        
+                
+        
+                    <td>{{ list.product_stock }}</td>
+                    
+                    <!-- <td class="badge-status text-capitalize">{{ list.product_status }}</td> -->
+                    {% if list.product_status == "available" %}
+                    <td><span class="badge rounded-pill bg-primary">{{ list.product_status }}</span></td>
+                    {% else %}
+                    <td><span class="badge rounded-pill bg-danger">{{ list.product_status }}</span></td>
+                    {% endif %}
+        
+                <form action="{% url 'admin_site:cart_products' list.id %}" method="POST">
+                    {% csrf_token %}
+                <td><input type="number" name="quantity" class="form-control" style="text-align:right;" placeholder="0" required></td>
+                <td><button class="btn btn-edit" type="submit" name="cart"><i class="ri-shopping-cart-2-fill"></i></button></td>
+                <input type="hidden" name="stock" value="{{ list.product_stock }}">
+                <input type="hidden" name="product_code" value="{{ list.product_code }}">
+                <input type="hidden" name="product_category" value="{{ list.product_category }}">
+                <input type="hidden" name="product_name" value="{{ list.product_name}}">
+                <input type="hidden" name="product_unit" value="{{ list.product_unit }}">
+                <input type="hidden" name="product_reseller_price" value="{{ list.product_ResellerPrice }}">
+                <input type="hidden" name="product_price" value="{{ list.product_price }}">
+                </form>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %} 
+</div>
+
+<div class="modal-footer border-0 pos-footer d-flex justify-content-center">
+    <!-- <button type="submit" class="btn btn-primary" value="Add Product"><i class="ri-check-fill"></i>Add Product</button> -->
+    <button type="button" class="ri-close-fill" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>

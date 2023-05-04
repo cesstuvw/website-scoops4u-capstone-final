@@ -1,0 +1,10 @@
+{
+    "liveServer.settings.port": 5501,
+    "grammarly.selectors": [
+        {
+            "language": "python",
+            "scheme": "file",
+            "pattern": "admin_site/views.py"
+        }
+    ]
+}

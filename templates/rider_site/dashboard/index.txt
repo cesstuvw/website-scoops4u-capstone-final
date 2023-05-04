@@ -1,0 +1,22 @@
+{% extends 'admin_site/base.html' %}
+
+
+{% block content %}
+{% for message in messages %}
+
+<p class="alert alert-success mt-3">{{ message }}</p>
+{% endfor %}
+ 
+    <div style="font-weight: bolder;" >
+    <label for="">Pending</label>
+    <input type="text" style="font-weight: bolder;" value="{{ list_pending }}"  class="form-control" disabled>
+    <br>
+    <label for="">Completed</label>
+    <input type="text" style="font-weight: bolder;" value="{{ list_complete}}"  class="form-control" disabled>
+    <br>
+    </div>
+
+    
+{% endblock content %}
+    
+

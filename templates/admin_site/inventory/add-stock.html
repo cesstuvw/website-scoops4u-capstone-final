@@ -1,0 +1,196 @@
+{% extends 'admin_site/base.html' %}
+
+{% block title %}
+    INVENTORY
+{% endblock title %}
+
+{% block content %}
+
+
+<main id="main" class="main mt-5">
+    <div class="pagetitle">
+        <h1>Add Stock</h1>
+        <nav>
+            {% if user.role == "admin"%}
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'admin_site:dashboard'%}">Home</a></li>
+                <li class="breadcrumb-item">Inventory</li>
+                <li class="breadcrumb-item active">Add Stock</li>
+            </ol>
+            {% endif %}
+
+            {% if user.role == "si_staff"%}
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'staff_site:dashboard'%}">Home</a></li>
+                <li class="breadcrumb-item">Inventory</li>
+                <li class="breadcrumb-item active">Add Stock</li>
+            </ol>
+            {% endif %}
+        </nav>
+    </div><!-- End Page Title -->
+
+    {% for message in messages  %}
+    {% if 'success' in message.tags %}
+    <p class='alert alert-success mt-3'>{{message}}</p>
+    {% elif 'error' in message.tags %}
+    <p class='alert alert-danger mt-3'>{{message}}</p>
+    {% else %}
+    <p class='alert alert-info mt-3'>{{message}}</p>
+    {% endif %}
+    {% endfor %}
+
+    <div class="alert alert-info alert-dismissible" id="dont-include" role="alert">
+        Please check the <span style="font-weight: 900;">Product Settings</span> section under the <span style="font-weight: 900;">Settings</span> menu to add the flavors, categories, and units you will need when adding a new product.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    
+    <section class="section">
+        <div class="empty-screenAdd d-none modal-add-prod-empty">
+            <img src="../../../../static/img/nostocks.svg" alt="">
+            <h5>No Products means No Stocks</h5>
+            <p>There are currently no records of products added on the system. 
+                <a href="{% url 'admin_site:add_product' %}" data-bs-toggle="modal" data-bs-target="#addProductEmpty">Add</a> Here so you'll be able to update their stocks.
+                <!-- <div class="modal-add-res">
+                </div> -->
+            </p>
+        </div>
+
+        <!-- ADD PRODUCT -->
+        <div class="modal fade border-0"  id="addProductEmpty">
+            <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-content border-0 p-4">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div id="addStoID" class="row d-none">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body mt-3">
+                        <div class="add-product product-d mb-4">
+                            <h5 class="card-title feature">All Products</h5>
+                            <div class="show-entries">
+                                <div id="showEntries"></div>
+                            </div>
+                            <!-- <a href="{% url 'admin_site:add_reseller' %}" class="btn btn-add" data-bs-toggle="modal" data-bs-target="#addReseller"><i class="ri-add-line align-middle me-2 text-end" style="font-size:17px; font-weight: 500;"></i><span class="align-middle pe-1">Add New Stock</span></a> -->
+                            <form class="search-tab" action="" method="GET"  class="text-end px-4">
+                                {% csrf_token %}
+                                <input type="text" id="tableM" class="form-control p-2 ps-3" name="search" placeholder="Search">
+                                <button class="btn btn-search btn-sm nope" type="submit"><i class="ri-search-line"></i></button>
+                            </form>  
+                        </div> 
+
+                        <!-- not used yet -->
+                        <div class="modal fade border-0" id="addReseller" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered ">
+                                <div class="modal-content border-0 p-4">
+                                    <div class="modal-header border-0">
+                                        <h1 class="modal-title" id="exampleModalLabel">New Reseller</h1>
+                                        <button type="button" class="ri-close-fill" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <form action="{% url 'admin_site:add_reseller' %}" method="POST">
+                                            {% csrf_token %}
+                                            <div class="modal-body pt-2 mt-0">
+                                                    <label for="first name">First Name</label>
+                                                    <input type="text" placeholder="" name="fname" class="form-control" required>
+    
+                                                    <label for="middle name">Middle Name</label>
+                                                    <input type="text" placeholder="" name="mname" class="form-control" required>
+    
+                                                    <label for="last name">Last Name</label>
+                                                    <input type="text" placeholder="" name="lname" class="form-control" required>
+
+                                                    <!-- this should be sex not gender -->
+                                                    <label for="sex">Sex</label>
+                                                    <select name="gender" class="form-control" id="gender" required >
+                                                        <option ></option>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
+                                                    </select>
+
+                                                    <label for="contact">Contact No.</label>
+                                                    <input type="number" placeholder="" name="cnum" min="0" class="form-control" required>
+    
+                                                    <label for="address">Address</label>
+                                                    <input type="text" placeholder="" name="address" class="form-control" required>
+                                                    <!-- <textarea type="text" placeholder="" name="address" class="form-control" required></textarea> -->
+
+                                                    <label for="last name">Email</label>
+                                                    <input type="email" placeholder="" name="email" class="form-control" required>
+    
+                                                    <label for="valid-ID">Valid ID</label>
+                                                    <input type="file" placeholder="" name="valid-ID" accept=".jpg, .jpeg, .png, .pdf" class="form-control custom" required>
+                                                    
+                                                    <label for="bus-Permit">Business Permit</label>
+                                                    <input type="file" placeholder="" name="Business-permit" accept=".jpg, .jpeg, .png, .pdf" class="form-control custom" required>
+                                                <!-- </form> -->
+                                            </div>
+                                            <div class="modal-footer border-0">
+                                                <!-- <button type="submit" class="btn btn-primary" value="Add Product"><i class="ri-check-fill"></i>Add Product</button> -->
+                                                <button type="submit" class="btn btn-primary me-2"><i class="ri-check-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Add</span></button>
+                                                <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></button>
+                                            </div>
+                                    </form>    
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Table with hoverable rows -->
+                        {% if list_products %}
+                            <div class="table-responsive add-stock-t">
+                                <table id="tableAdd" class="table table-hover">
+                                    <thead>
+                                        <tr class="align-middle">
+                                            <th scope="col">#</th>
+                                            <th scope="col">Product Code</th>
+                                            <th scope="col">Product Name</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">Expiry Date</th>
+                                            <th scope="col" >Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>  
+                                        {% for list in list_products %}   
+                                        <tr class="align-middle">
+                                            <td class="num-row"></td>
+                                            <td class="modal-view-product">
+                                                <a href="{% url 'admin_site:view_product' list.id %}"  data-bs-toggle="modal" data-bs-target="#viewProductModal" class="text-decoration-none">{{ list.product_code }}</a>
+                                            </td>
+                                            <td style="text-transform: capitalize;">{{ list.product_name }}</td>
+                                            <form action="{% url 'admin_site:update_inventory'  list.id %}" method="POST">
+                                                {% csrf_token %}
+                                                <!-- <td><input type="number" name="batch_no" class="form-control" placeholder="Batch Number" required></td> -->
+                                                <td><input type="number" name="quantity" class="form-control" style="text-align:right;" placeholder="0" required></td>
+                                        
+                                                <td><input type="date" class="form-control" name="expdate"  required></td>
+                                                <td><button type="submit" class="btn btn-edit align-middle" data-toggle="tooltip" data-placement="top" title="Add Stock"><i class="ri-add-circle-fill"></i></button></td>
+                                                <input type="hidden" value="{{ list.product_stock }}" name="stock" >
+                                                <input type="hidden" value="{{ list.product_code }}" name="product_code">
+                                                <input type="hidden" value="{{ list.product_name }}" name="product_name">
+                                            </form>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            {% endif %}
+                        <!-- End Table with hoverable rows -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- VIEW PRODUCT -->
+<div class="modal fade border-0"  id="viewProductModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content border-0 p-4">
+            
+        </div>
+    </div>
+</div>
+{% endblock content %}
+    

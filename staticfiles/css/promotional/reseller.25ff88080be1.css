@@ -1,0 +1,582 @@
+/* Font */
+@font-face {
+    font-family: P-Thin;
+    src: url("../../font/Poppins-Thin.9ec263601ee3.ttf");
+}
+
+@font-face {
+    font-family: P-Light;
+    src: url("../../font/Poppins-Light.fcc40ae9a542.ttf");
+}
+
+@font-face {
+    font-family: P-ExtraLight;
+    src: url("../../font/Poppins-ExtraLight.6f8391bbdaea.ttf");
+}
+
+@font-face {
+    font-family: P-Mono;
+    src: url("../../font/Poppins-Regular.093ee89be9ed.ttf");
+}
+
+@font-face {
+    font-family: P-Medium;
+    src: url("../../font/Poppins-Medium.bf59c687bc6d.ttf");  
+}
+
+@font-face {
+    font-family: P-Bold;
+    src: url("../../font/Poppins-Bold.08c20a487911.ttf");
+}
+
+@font-face {
+    font-family: P-SemiBold;
+    src: url("../../font/Poppins-SemiBold.6f1520d10720.ttf");
+}
+
+@font-face {
+    font-family: P-ExtraBold;
+    src: url("../../font/Poppins-ExtraBold.d45bdbc2d4a9.ttf");
+}
+
+@font-face {
+    font-family: P-Black;
+    src: url("../../font/Poppins-Black.14d00dab1f68.ttf");
+}
+
+::-webkit-scrollbar {
+    display: none; 
+}
+
+:root{
+    /* general */
+    --primary-c-black: #151515;
+    --primary-c-white: #F9F9F9;
+    --primary-c-white-text: #FFF;
+    --primary-c-grey-text: #9AAAC7;
+    --primary-c-blue: #001BDE;
+    --primary-c-l-blue: #BBC2F2;
+    --primary-c-d-blue: #0B2E8A;
+    --primary-c-dark-blue: #254070;
+
+    /* colors */
+    --c-grey: #565656;
+    --c-d-purple: #99A2E1;
+    --c-l-purple: #e1e3f37a;
+
+    --c-dark-pink: #E288B8;
+    --c-light-pink: #FFAED9;
+    --c-lighter-pink: #FCD7EB;
+    --c-light-peach: #F6D7DD;
+
+    /* bg */
+    --bg-c-gray-blue: #F2F5FD;
+    --bg-c-gray: #E4E9F4;
+
+    /* grid */
+    --grid-column: 4;
+    --section-spacing: 5.6rem 2rem;
+    /* --section-spacing: 25rem 2rem; */
+    /* --section-spacing: 25rem 2rem; */
+    --container-width: 126rem;
+
+    /* font */
+    --sec-text-size: 7rem;
+    --btn-text-size: 1.5625rem;
+    --gen-font-size: 2.5rem;
+    --store-text-size: 1.25rem;
+    --gen-text-transform: lowercase;
+    --main-font: P-ExtraLight;
+}
+
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 62.5%;
+}
+
+body{
+    font-family: var(--main-font);
+    font-size: var(--gen-font-size);
+    color:var(--primary-c-blue);
+}
+
+/* img{
+    display: block;
+    max-width: 10%;
+} */
+
+a{
+    text-decoration: none;
+    display: inline-block;
+}
+
+ul li{
+    list-style: none;
+}
+
+ul{
+    padding-left: 0;
+}
+
+/* header */
+.header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 85vh;
+    background-color: var(--primary-c-l-blue);
+}
+
+.header-container{
+    height: 100%;
+    margin-top: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+}
+
+.header-container h1,
+.header-container span{
+    font-family: P-ExtraBold;
+    font-size: 7rem;
+    line-height: 85%;
+    min-height: 16vh !important;
+}
+
+.header-container span{
+    font-family: P-Thin !important;
+}
+
+.title-main{
+    font-family: P-ExtraBold !important;
+}
+
+.header-container p{
+    font-family: P-ExtraLight;
+    color: var(--primary-c-blue);
+    font-size: 2rem;
+    width: 85%;
+    line-height: 119%;
+}
+
+.logo-display img{
+    width: 85%;
+    /* margin-bottom: 2rem; */
+}
+
+.line-2{
+    display: none;
+}
+
+#typing {
+    white-space: pre;
+}
+
+.typed-cursor {
+    opacity: 1;
+    -webkit-animation: blink 0.7s infinite;
+    -moz-animation: blink 0.7s infinite;
+    animation: blink 0.7s infinite;
+}
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+@-webkit-keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+@-moz-keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+span.title-main{
+    font-family: P-ExtraBold !important;
+}
+
+/* request form */
+.request-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.form-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 5rem;
+}
+
+.request-title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 2rem;
+    text-align: center;
+}
+
+.request-title h1{
+    font-size: 2.5rem;
+    font-family: P-ExtraBold;
+}
+
+.request-title p{
+    font-size: 1.9rem;
+    line-height: 105%;
+}
+
+.main-request label{
+    font-family: P-Medium;
+    font-size: 1.9rem;
+    /* display: flex;
+    align-items: center; */
+}
+
+.main-request .col-md-3 label,
+.main-request .contact label{
+    display: flex;
+    align-items: center !important;
+}
+
+.main-request input,
+.main-request select,
+.main-request textarea{
+    border-color: var(--c-d-purple) !important;
+    font-family: P-Mono;
+    color: var(--primary-c-blue);
+    /* padding: 0.8rem; */
+    font-size: 1.9rem;
+}
+
+textarea {
+    resize: none;
+}
+
+.btn-send{
+    background-color: var(--primary-c-blue) !important;
+    color: var(--primary-c-white-text);
+    font-family: P-SemiBold;
+    font-size: 1.7rem;
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.btn-send:hover{
+    background-color: var(--primary-c-white) !important;
+    color: var(--primary-c-blue) !important;
+}
+
+.main-request{
+    padding-bottom: 5rem;
+}
+
+/* remove on small to large screens */
+.main-request .contact{
+    margin-top: 1rem;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.checkbox-label label{
+    font-family: P-Light;
+    font-size: 1.4rem;
+    font-style: italic;
+}
+
+.checkbox-label span{
+    font-family: P-Bold;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.agreement{
+    display: flex;
+    justify-content: flex-start !important;
+    align-items: start !important;
+}
+
+.agreement input{
+    display: flex;
+    justify-content: center;
+    align-self: flex-start !important;
+
+    /* remove on small to large device */
+    margin-top: 0.4rem !important;
+}
+
+/* modal */
+.ri-close-fill{
+    border: none;
+    background-color: transparent;
+    font-size: 2.3rem;
+    color: var(--primary-c-blue) !important;
+    display: flex;
+    justify-content: center;
+    align-self: flex-start !important;
+}
+
+.modal{
+    padding: 1rem;
+}
+
+.modal-backdrop {
+    background-color: #8a9ec7 !important;
+}
+
+.modal-title{
+    font-size: 1.9rem !important;
+    /* width: 50%; */
+    font-family: P-Bold;
+}
+
+.modal-body{
+    color: var(--primary-c-d-blue);
+    font-size: 1.7rem;
+    text-align: justify;
+}
+
+.modal-body span{
+    font-family: P-Medium;
+}
+
+.modal-body .bullet{
+    font-family: P-SemiBold;
+}
+
+.modal-split p{
+    margin-bottom: 2rem;
+}
+
+.address{
+    display: flex;
+    justify-content: flex-start;
+    text-align: left !important;
+    line-height: 125% !important
+}
+
+.modal-footer button{
+    font-size: 1.7rem !important;
+}
+
+.modal-footer .btn-primary{
+    border: none;
+    background: none;
+    color: var(--primary-c-blue);
+    font-size: 1.7rem !important;
+    font-family: P-Mono;
+}
+
+.ri-arrow-right-s-line,
+.ri-close-line,
+.ri-arrow-left-s-line{
+    font-size: 2rem !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.custom::-webkit-file-upload-button{
+    background-color: var(--primary-c-blue);
+    color: var(--primary-c-white-text);
+    /* padding: 10px; */
+    /* font-size: 14px; */
+    font-family: P-Medium;
+}
+
+.btn-container{
+    min-height: 8vh !important;
+    /* background-color: #001BDE !important; */
+}
+
+/* footer smiley */
+.smiley{
+    padding: 5rem;
+    padding-top: 0rem;
+}
+
+.smiley img{
+    width: 50%;
+}
+
+/* --------------MEDIA QUERIES---------------- */
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .header{
+        min-height: 55vh;
+    }
+
+    .header-container h1,
+    .header-container span{
+        font-size: 7rem;
+        min-height: 10vh;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
+
+    .line-2{
+        display: block;
+    }
+
+    .main-display .line-1{
+        display: none;
+    }
+
+    .header-container p{
+        width: 65%;
+    }
+
+    .form-container{
+        padding: 0rem 8rem;
+    }
+
+    .main-request .contact{
+        margin-top: 0;
+    }
+
+    .main-request .contact label{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center !important;
+    }
+
+    .checkbox-label label{
+        display: flex;
+        align-self: center !important;
+        margin-left: -1rem !important;
+    }
+
+    .agreement{
+        display: flex;
+        justify-content: center;
+        align-content: center !important;
+    }
+    
+    .smiley{
+        padding: 5rem;
+        padding-top: 9rem;
+        margin-top: -9rem;
+        padding-bottom: 15rem;
+    }
+    
+    .smiley img{
+        width: 80%;
+    }
+
+    .main-request .row{
+        margin-bottom: 2.5rem !important;
+    }
+
+    .request-title{
+        padding-top: 10rem;
+        padding-bottom: 3rem;
+    }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .header{
+        min-height: 65vh;
+    }
+
+    /* .header-container p{
+        width: 30%;
+    } */
+
+    .header-container p{
+        /* margin-top: 1rem; */
+        width: 30%;
+    }
+
+    .form-container{
+        padding: 0rem 17rem;
+    }
+
+    .checkbox-label label{
+        margin-left: -3.5rem !important;
+    }
+    
+    .btn-send{
+        width: 50%;
+    }
+
+    .smiley img{
+        width: 65%;
+    }
+
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .header{
+        min-height: 75vh;
+    }
+
+    .header-container h1,
+    .header-container span{
+        font-size: 11rem;
+        min-height: 15vh;
+    }
+
+    .header-container p{
+        font-size: 2.5rem;
+        width: 35%;
+    }
+
+    .request-title h1{
+        font-size: 3rem;
+    }
+
+    .request-title p{
+        font-size: 2rem;
+    }
+
+    .main-request label{
+        font-size: 2rem;
+    }
+
+    .checkbox-label label{
+        font-size: 1.5rem;
+        margin-left: -1rem !important;
+    }
+
+    .main-request input,
+    .main-request textarea{
+        font-size: 2rem;
+    }
+
+    .btn-send{
+        font-size: 1.8rem;
+    }
+
+    .form-container{
+        padding: 2rem 30rem;
+    }
+
+
+
+}

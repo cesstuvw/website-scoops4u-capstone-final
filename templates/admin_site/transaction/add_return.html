@@ -1,0 +1,41 @@
+<div class="modal-header border-0">
+    <h1 class="modal-title" id="exampleModalLabel">{% block modal-title %} Return Product {% endblock modal-title %}</h1>
+    <button type="button" class="ri-close-fill" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<!-- {% for message in  messages %}
+<p class="alert alert-success  mt-1">{{ message }}</p>
+{% endfor %} -->
+<form action="{% url 'admin_site:add_returnproduct' %}" method="POST">
+        {% csrf_token %}
+        <div class="modal-body pt-2 mt-0">
+
+                <label for="pcode">Product Code</label>
+                <select name="pcode" id="" class="form-control form-select" required>
+                    <option value=""></option>
+                    {% for list in product   %}
+                    <option value="{{ list.product_code }}">{{ list.product_code }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="qty">Quantity</label>
+                <input type="number" placeholder="" name="qty" min="0" class="form-control" required>
+                
+                <label for="name">Full Name</label>
+                <input type="text" placeholder="" name="reseller_name" class="form-control" required>
+
+
+                <label for="reason">Reason</label>
+                <textarea name="reason" id="reason" cols="5" rows="5" class="form-control" required></textarea>
+
+                <label for="date">Request Return Date</label>
+                <input type="date" name="date" class="form-control" required>
+
+            <!-- </form> -->
+        </div>
+        <div class="modal-footer border-0">
+            <!-- <button type="submit" class="btn btn-primary" value="Add Product"><i class="ri-check-fill"></i>Add Product</button> -->
+            <button type="submit" class="btn btn-primary me-2"><i class="ri-check-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Return</span></button>
+            <a href="{% url 'admin_site:list_product' %}" type="submit" id="close-modal" class="btn btn-secondary" data-bs-dismiss="modal" style="font-size: 15px; padding: 5px 13px;"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></a>
+            <!-- <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></button> -->
+        </div>
+</form> 

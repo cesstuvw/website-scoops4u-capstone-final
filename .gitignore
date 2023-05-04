@@ -1,0 +1,10 @@
+*.pyc
+env/
+.idea/
+.DS_Store
+/media/
+env/
+/.venv/
+identifier.sqlite
+runserver.sh
+db.sqlite3

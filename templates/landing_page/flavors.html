@@ -1,0 +1,200 @@
+{% extends 'landing_page/base.html' %}
+{% load static %}
+
+
+{% block title %}
+<title>FLAVORS - SCOOPS 4 U</title>
+{% endblock %}
+
+{% block content %}
+<!-- Main CSS -->
+<link href="{% static '/css/promotional/flavors.css' %}" rel="stylesheet">
+
+<section class="header">
+    <div class="container header-container">
+        <div class="col-12 col-lg-12 header-top">
+            <div class="row">
+                <div class="col-12 col-lg-12 mb-4 d-flex justify-content-center align-items-center">
+                    <div class="row">
+                        <div class="col-3 classic data-bs-toggle="tooltip" data-bs-placement="bottom" title="Classic"></div>
+                        <div class="col-3 special data-bs-toggle="tooltip" data-bs-placement="bottom" title="Special"></div>
+                        <div class="col-3 deluxe data-bs-toggle="tooltip" data-bs-placement="bottom" title="Deluxe"></div>
+                        <div class="col-3 low-fat data-bs-toggle="tooltip" data-bs-placement="bottom"  data-bs-custom-class="custom-tooltip" title="Low-Fat"></div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-12 my-5 main-display d-flex justify-content-center align-items-center">
+                    <h1 class="line-1"><span class="display-4" id="typing"></span></h1>
+                    <h1 class="line-2"><span class="display-4" id="typed"></span></h1>
+                </div>
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                    <p>Here are the various types of flavors that you’ll enjoy.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="list-flavors">
+    <div class="container list-flavors-container">
+        <div class="col-12 col-lg-12 col-md-12">
+            <div class="row">
+                <div class="col-12 col-lg-6  col-md-6 category-main cla">
+                    <div class="row flex text-start">
+                        <div class="col flavor-icon">
+                            <div class="classic"></div>
+                        </div>
+                        <div class="col-12 category-title">Classic</div>
+                        <div class="col-12">
+                            <ul class="category-flavors list-unstyled">
+                                <li>Chocolate</li>
+                                <li>Strawberry</li>
+                                <li>Vanilla</li>
+                                <li>Coffee</li>
+                                <li>Mocha</li>
+                                <li>Orange</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="special-cat col-12 col-lg-6 col-md-6 category-main spe">
+                    <div class="row flex-column text-end">
+                        <div class="col-12 flavor-icon text-end">
+                            <div class="special"></div>
+                        </div>
+                        <div class="col-12 category-title">Special</div>
+                        <div class="col-12">
+                            <ul class="category-flavors list-unstyled">
+                                <li>Cheese</li>
+                                <li>Chocolate Chips</li>
+                                <li>Cookies and Cream</li>
+                                <li>Mango Royale</li>
+                                <li>Mint Choco Chip</li>
+                                <li>Pistachio</li>
+                                <li>Rocky Road</li>
+                                <li>Ube Delight</li>
+                                <li>Double Dutch</li>
+                                <li>Dark Chocolate</li>
+                                <li>Salted Caramel</li>
+                                <li>Bubble Gum Mallows</li>
+                                <li>Coffee Almond Fudge</li>
+                                <li>Choco Chip Cookie Dough</li>
+                                <li>Midnight Cookies and Cream</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 col-md-6 category-main deluxe-main del">
+                    <div class="row flex text-start">
+                        <div class="col flavor-icon">
+                            <div class="deluxe"></div>
+                        </div>
+                        <div class="col-12 category-title">Deluxe</div>
+                        <div class="col-12">
+                            <ul class="category-flavors list-unstyled">
+                                <li>Avocado</li>
+                                <li>Cheesecake</li>
+                                <li>Green Tea</li>
+                                <li>Sesame Tea</li>
+                                <li>Strawberry Fields</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="low-fat-cat col-12 col-lg-6 col-md-6 category-main ng">
+                    <div class="row flex-column text-end">
+                        <div class="col-12 flavor-icon text-end">
+                            <div class="special"></div>
+                        </div>
+                        <div class="col-12 category-title">No Sugar
+                            <h3 class="col category-title">(Low Fat)</h3>
+                        </div>
+                        <div class="col-12">
+                            <ul class="category-flavors list-unstyled">
+                                <li>Vanilla</li>
+                                <li>Chocolate</li>
+                                <li>Strawberry</li>
+                                <li>Buko Pandan</li>
+                                <li>Chocolate Cashew</li>
+                                <li>Mango</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="sizes">
+    <div class="container container-sizes">
+        <div class="col-12 col-lg-12 sizes-top">
+            <div class="row">
+                <div class="col-12 col-lg-12">
+                    <h2 class="line-1-available"><span class="display-3" id="typed1"></span></h2>
+                </div>
+                <div class="col-12 col-lg-12 sizes-list">
+                    <ul class="list-unstyled">
+                        <li>Cups <span>110mL</span></li>
+                        <li>Pint <span>473mL</span></li>
+                        <li>Half Gallon <span>1.9L</span></li>
+                        <li>One Gallon <span>3.8L</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="desc">
+    <div class="container desc-container">
+        <div class="col-12">
+            <div class="row flex-column">
+                <div class="col-12 statement">
+                    <p>The <span>availability of flavors</span> and their corresponding <span>prices</span> vary and depend on the <span>sizes</span> given above.</p>
+                </div>
+                <div class="col-12 smiley">
+                    <img src="../../static/img/logo-page.svg" alt="smiley logo">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<script>
+$(document).ready(function() {
+    var options = {
+        strings: ["<span class='title-main'>our \n flavors</span>"],
+        typeSpeed: 80,
+        // fadeOut: true,
+        backSpeed: 80,
+        loop: false,
+        startDelay: 300,
+    }
+
+    var options1 = {
+        strings: ["<span class='title-main'>our flavors</span>"],
+        typeSpeed: 80,
+        // fadeOut: true,
+        backSpeed: 80,
+        loop: true,
+    }
+
+    var options2 = {
+        strings: ["<span class='title-category'>available sizes</span>"],
+        typeSpeed: 80,
+        // fadeOut: true,
+        backSpeed: 80,
+        loop: true,
+    }
+    var typed = new Typed("#typing", options);
+    var typed1 = new Typed("#typed", options1);
+    var typed2 = new Typed("#typed1", options2);
+});
+</script>
+
+
+{% endblock content %}  

@@ -1,0 +1,377 @@
+{% extends 'admin_site/base.html' %}
+
+{% block title %}
+DASHBOARD
+{% endblock title %}
+
+{% block content %}
+{% load humanize %}
+
+
+
+
+<main id="main" class="main mt-5">
+     <div class="pagetitle">
+          <h1>Dashboard</h1>
+          <nav>
+               <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_site:dashboard'%}">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+               </ol>
+          </nav>
+     </div><!-- End Page Title -->
+
+     <section class="section dashboard">
+          <div class="row">
+               <!-- left side -->
+               <div class="col-lg-8">
+                    <div class="row">
+                         <!-- Online Sales Card -->
+                         <div class="col-lg-6">
+                              <div class="card info-card osales-card ">
+                                   <!-- <div class="filter">
+                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="ri-more-fill"></i></a>
+                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                             <li class="dropdown-header text-start">
+                                                  <h6>Filter</h6>
+                                             </li>
+
+                                             <li><a class="dropdown-item" href="#">Today</a></li>
+                                             <li><a class="dropdown-item" href="#">This Month</a></li>
+                                             <li><a class="dropdown-item" href="#">This Year</a></li>
+                                        </ul>
+                                   </div> -->
+
+                                   <div class="card-body dash mb-4">
+                                        <h5 class="card-title">Online Sales 
+                                             <span class="px-1">|</span> 
+                                             <span>Today</span>
+                                        </h5>
+                                        <div class="d-flex align-items-center">
+                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="background-color: #E1E3F3">
+                                                  <i class="ri-shopping-cart-2-fill"></i>
+                                             </div>
+                                             <div class="ps-3">
+                                                  <!-- <input step="0.01" min="0" value="&#8369;">{{ transaction_OnlineSales }}> -->
+                                                  <!-- <h6 class="transaction-input d-none">Php 0.00</h6> -->
+                                                  <!-- <input class="transaction-input-main" type="text" value="Php {{ transaction_OnlineSales|floatformat:2|intcomma }}" step="0.01" min="0" readonly> -->
+                                                  <h6 class="" >Php {{ transaction_OnlineSales|default:"0.00"|floatformat:2|intcomma }}</h6>
+                                                  <!-- <br> -->
+                                                  <span class="text-muted small pt-1 ">Made</span>
+                                                  <span class="text-muted small pt-2">Today</span>
+                                                  <!-- <span class="text-muted small pt-2 fw-bold">Today</span> -->
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div><!-- End Sales Card -->
+
+                         <!-- Walk-in Sales Card -->
+                         <div class="col-lg-6">
+                              <div class="card info-card walkin-card">
+                                   <!-- <div class="filter">
+                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="ri-more-fill"></i></a>
+                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                             <li class="dropdown-header text-start">
+                                                  <h6>Filter</h6>
+                                             </li>
+
+                                             <li><a class="dropdown-item" href="#">Today</a></li>
+                                             <li><a class="dropdown-item" href="#">This Month</a></li>
+                                             <li><a class="dropdown-item" href="#">This Year</a></li>
+                                        </ul>
+                                   </div> -->
+
+                                   <div class="card-body dash mb-4">
+                                        <h5 class="card-title">Walk-in Sales
+                                             <span class="px-1">|</span> 
+                                             <span>Today</span>
+                                        </h5>
+                                        <div class="d-flex align-items-center">
+                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                             <i class="ri-user-fill"></i>
+                                             </div>
+                                             <div class="transaction ps-3">
+                                                  <!-- <h6 class="transaction-input-pos d-none">Php 0.00</h6> -->
+                                                  <h6 class="">Php {{ transaction_pos_payment|default:"0.00"|floatformat:2|intcomma }}</h6>
+                                                  <!-- <input class="transaction-input-pos-main" type="text" value="Php {{ transaction_pos_payment|floatformat:2|intcomma  }}" step="0.01" min="0" readonly> -->
+                                                  <!-- <span class="text-danger small pt-1 fw-bold">12%</span>
+                                                  <span class="text-muted small pt-2 ps-1">decrease</span> -->
+                                                  <!-- <br> -->
+                                                  <span class="text-muted small pt-1 ">Made</span>
+                                                  <span class="text-muted small pt-2 ">Today</span>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div><!-- End Walk-in Sales Card -->
+
+                         <!-- Overall Trans Card -->
+                         <!-- <div class="col-xxl-6 col-xl-12">
+                              <div class="card info-card overall-card">
+
+                                   <div class="card-body dash mb-4">
+                                        <h5 class="card-title">Overall Transaction
+                                             <span class="px-1">|</span> 
+                                             <span>Today</span></h5>
+                                        <div class="d-flex align-items-center">
+                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                  <i class="ri-numbers-fill"></i>
+                                                  </div>
+                                                  <div class="ps-3">
+                                                  <h6>{{ transaction_count }}</h6>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div> -->
+                         <!-- </div>End Overall Trans Card -->
+
+                         <!-- Completed Card -->
+                         <!-- <div class="col-xxl-6 col-xl-12">
+                              <div class="card info-card completed-card">
+
+
+                                   <div class="card-body dash mb-4">
+                                        <h5 class="card-title">Completed Orders
+                                             <span class="px-1">|</span> 
+                                             <span>Today</span></h5>
+                                        <div class="d-flex align-items-center">
+                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                  <i class="ri-check-fill"></i>
+                                             </div>
+                                             <div class="ps-3">
+                                                  <h6>{{ transaction_completed }}</h6>
+
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div> -->
+                         <!-- </div>End Completed Card -->
+
+                         <!-- Pending Orders Card -->
+                         <div class="col-lg-6">
+                              <div class="card info-card pending-card">
+                                   <!-- <div class="filter">
+                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="ri-more-fill"></i></a>
+                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                             <li class="dropdown-header text-start">
+                                                  <h6>Filter</h6>
+                                             </li>
+
+                                             <li><a class="dropdown-item" href="#">Today</a></li>
+                                             <li><a class="dropdown-item" href="#">This Month</a></li>
+                                             <li><a class="dropdown-item" href="#">This Year</a></li>
+                                        </ul>
+                                   </div> -->
+
+                                   <div class="card-body dash mb-4">
+                                        <h5 class="card-title">Pending Orders
+                                             <span class="px-1"></span> 
+                                             <span></span></h5>
+                                             <!-- <span class="px-1">|</span> 
+                                             <span>Today</span></h5> -->
+                                        <div class="d-flex align-items-center">
+                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                             <i class="ri-time-fill"></i>
+                                             </div>
+                                             <div class="ps-3">
+                                             <h6>{{ transaction_pending }}</h6>
+                                             <!-- <span class="text-success small pt-1 fw-bold">12%</span> 
+                                             <span class="text-muted small pt-2 ps-1">increase</span> -->
+                                             <span class="text-muted small pt-1 ">Orders</span>
+                                             <!-- <span class="text-muted small pt-1 ">Made</span> -->
+                                             <!-- <span class="text-muted small pt-2">Today</span> -->
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div><!-- End Pending Orders Trans Card -->
+
+                         <!-- Shipping Card -->
+                         <div class="col-lg-6">
+                              <div class="card info-card shipping-card">
+                                   <!-- <div class="filter">
+                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="ri-more-fill"></i></a>
+                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                             <li class="dropdown-header text-start">
+                                                  <h6>Filter</h6>
+                                             </li>
+
+                                             <li><a class="dropdown-item" href="#">Today</a></li>
+                                             <li><a class="dropdown-item" href="#">This Month</a></li>
+                                             <li><a class="dropdown-item" href="#">This Year</a></li>
+                                        </ul>
+                                   </div> -->
+
+                                   <div class="card-body dash mb-4">
+                                        <h5 class="card-title">Out for Delivery
+                                             <span class="px-1"></span> 
+                                             <span></span></h5>
+                                             <!-- <span class="px-1">|</span> 
+                                             <span>Today</span></h5> -->
+                                        <div class="d-flex align-items-center">
+                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                  <i class="ri-map-pin-time-fill"></i>
+                                             </div>
+                                             <div class="ps-3">
+                                                  <h6>{{ transaction_shipped }}</h6>
+                                                  <!-- <span class="text-success small pt-1 fw-bold">12%</span> 
+                                                  <span class="text-muted small pt-2 ps-1">increase</span> -->
+                                                  <span class="text-muted small pt-1 ">Orders</span>
+                                                  <!-- <span class="text-muted small pt-1 ">Made</span> -->
+                                                  <!-- <span class="text-muted small pt-2">Today</span> -->
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div><!-- End Shipping Card -->
+
+                         <!-- Shipping Card -->
+                         <div class="col-lg-6">
+                              <div class="card info-card shipping-card">
+                                   <!-- <div class="filter">
+                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="ri-more-fill"></i></a>
+                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                             <li class="dropdown-header text-start">
+                                                  <h6>Filter</h6>
+                                             </li>
+
+                                             <li><a class="dropdown-item" href="#">Today</a></li>
+                                             <li><a class="dropdown-item" href="#">This Month</a></li>
+                                             <li><a class="dropdown-item" href="#">This Year</a></li>
+                                        </ul>
+                                   </div> -->
+
+                                   <div class="card-body dash mb-4">
+                                        <h5 class="card-title">User Accounts
+                                             <span class="px-1"></span> 
+                                             <span></span></h5>
+                                             <!-- <span class="px-1">|</span> 
+                                             <span>Today</span></h5> -->
+                                        <div class="d-flex align-items-center">
+                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="background-color: #E1E3F3">
+                                                  <i class="ri-user-5-fill" style="color: #001BDE;"></i>
+                                             </div>
+                                             <div class="ps-3">
+                                                  <h6 class="" >{{ users }} </h6>
+                                                  <!-- <span class="text-success small pt-1 fw-bold">12%</span> 
+                                                  <span class="text-muted small pt-2 ps-1">increase</span> -->
+                                                  <span class="text-muted small pt-1 ">Registered</span>
+                                                  <!-- <span class="text-muted small pt-1 ">Made</span> -->
+                                                  <!-- <span class="text-muted small pt-2">Today</span> -->
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div><!-- End Shipping Card -->
+
+                         <!-- Shipping Card -->
+                         <div class="col-lg-6">
+                              <div class="card info-card shipping-card">
+                                   <!-- <div class="filter">
+                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="ri-more-fill"></i></a>
+                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                             <li class="dropdown-header text-start">
+                                                  <h6>Filter</h6>
+                                             </li>
+
+                                             <li><a class="dropdown-item" href="#">Today</a></li>
+                                             <li><a class="dropdown-item" href="#">This Month</a></li>
+                                             <li><a class="dropdown-item" href="#">This Year</a></li>
+                                        </ul>
+                                   </div> -->
+
+                                   <div class="card-body dash mb-4">
+                                        <h5 class="card-title">Resellers
+                                             <span class="px-1"></span> 
+                                             <span></span></h5>
+                                             <!-- <span class="px-1">|</span> 
+                                             <span>Today</span></h5> -->
+                                        <div class="d-flex align-items-center">
+                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="background-color: #FBD9C2">
+                                                  <i class="ri-user-fill" style="color: #FF771D;"></i>
+                                             </div>
+                                             <div class="ps-3">
+                                                  <h6 class="" >{{ list_reseller }} </h6>
+                                                  <!-- <span class="text-success small pt-1 fw-bold">12%</span> 
+                                                  <span class="text-muted small pt-2 ps-1">increase</span> -->
+                                                  <span class="text-muted small pt-1 ">Active Resellers</span>
+                                                  <!-- <span class="text-muted small pt-1 ">Made</span> -->
+                                                  <!-- <span class="text-muted small pt-2">Today</span> -->
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div><!-- End Shipping Card -->
+                    </div>
+               </div><!-- End Left side columns -->
+
+
+               <!-- Right side column -->
+               <div class="col-lg-4">
+                    <div class="row">
+                         <!-- Recent Activity -->
+                         <div class="col-12">
+                              <div class="card info-card">
+                                   <div class="card-body dash">
+                                        <h5 class="card-title pt-3">Recent Activity</h5>
+                                        <div class="activity pt-3 pb-3 ps-2 pe-2" style="width: 100%; overflow-x: auto;">
+                                             {% if list_reports %}  
+                                             {% for list in list_reports %}   
+                                             <div class="activity-item d-flex">
+                                                  <div class=" date">{{ list.date_time|date:"m/d/Y" }}
+                                                       <div>
+                                                            <span class="time">{{ list.date_time|date:"h:i A" }}</span>
+                                                       </div>
+                                                  </div>
+                                                  <div class="activite-label"></div>
+                                                  <i class='ri-checkbox-blank-circle-fill mt-2  activity-badge align-self-start'></i>
+                                                  <div class="activity-content">
+                                                       <div><span class="username">{{ list.user_name }}</span></div>
+                                                       <div>{{ list.activity }}</div>
+                                                  </div>
+                                             </div><!-- End activity item-->
+                                             {% endfor %}
+                                             {% endif %}
+                                        </div>
+                                   </div>
+                              </div><!-- End Recent Activity -->
+                         </div>
+
+                        
+                    </div>
+               </div>
+
+               
+               
+
+          </div>
+     </section>
+</main><!-- End #main -->
+
+     <!-- <br>
+     <div class="fw-bolder">
+     <label for="">Online Sales</label>
+     <input type="text" style="font-weight: bolder;" value="{{ transaction_OnlineSales }}"  class="form-control" readonly>
+     <br>
+     <label for="">Walk-in Sales</label>
+     <input type="text" style="font-weight: bolder;" value="{{ transaction_pos_payment }}"  class="form-control" readonly>
+     <br>
+     <label for="">Overall Transaction</label>
+     <input type="text" style="font-weight: bolder;" value="{{ transaction_count }}"  class="form-control" disabled>
+     <br>
+     <label for="">Pending Orders</label>
+     <input type="text" style="font-weight: bolder;" value="{{ transaction_pending }}"  class="form-control" disabled>
+     <br>
+     <label for="">Out for Shipping  </label>
+     <input type="text" style="font-weight: bolder;" value="{{ transaction_shipped }}"  class="form-control" disabled>
+     <br>
+     <label for="">Completed Orders</label>
+     <input type="text" style="font-weight: bolder;" value="{{ transaction_completed }}"  class="form-control" disabled>
+     <br>
+     <label for="">Declined Orders</label>
+     <input type="text" style="font-weight: bolder;" value="{{ transaction_decline }}"  class="form-control" disabled>
+     </div> -->
+
+
+{% endblock content %}

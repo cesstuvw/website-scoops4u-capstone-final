@@ -1,0 +1,44 @@
+<div class="modal-header border-0">
+    <h1 class="modal-title" id="exampleModalLabel">Edit User</h1>
+    <button type="button" class="ri-close-fill" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<form action="{% url 'admin_site:update_user_account' list_users.id %}" method="POST">
+    {% csrf_token %}
+    <div class="modal-body pt-2 mt-0">
+        <label for="username">Username</label>
+        <input type="text" value="{{ list_users.username }}" name="username" class="form-control" required>
+
+        <label for="email">Email</label>
+        <input type="text" value="{{ list_users.email }}" placeholder="Email" name="email" class="form-control" required>
+
+        <label for="">Role</label>
+        <select name="role" class="form-control" id="role" required >
+            <option value="admin"{% if list_users.role == 'admin' %}selected{% endif %}>admin</option>
+            <option value="si_staff"{% if list_users.role == 'si_staff' %}selected{% endif %}>si staff</option>
+            <option value="reseller"{% if list_users.role == 'reseller' %}selected{% endif %}>reseller</option>
+            <option value="delivery_staff"{% if list_users.role == 'delivery_staff' %}selected{% endif %}>delivery staff</option>
+        </select>
+
+        <label >Status </label>
+        <select name="status" class="form-control" id="status" required >
+            <option value="active"{% if list_users.status == 'active' %}selected{% endif %}>active</option>
+            <option value="inactive"{% if list_users.status == 'inactive' %}selected{% endif %}>inactive</option>
+        </select>
+    </div>
+
+    <div class="modal-footer border-0">
+        <!-- <button type="submit" class="btn btn-primary" value="Add Product"><i class="ri-check-fill"></i>Add Product</button> -->
+        <button type="submit" id="submit" name="submit" class="btn btn-primary me-2"><i class="ri-arrow-up-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Update</span></button>
+
+        <a href="{% url 'admin_site:user_list' %}" type="submit" id="close-modal" class="btn btn-secondary" data-bs-dismiss="modal" style="font-size: 15px; padding: 5px 13px;"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></a>
+
+        <!-- <a href="{% url 'admin_site:user_list' %}" type=""id="close-modal"class="btn btn-secondary" data-bs-dismiss="modal"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></a> -->
+        <!-- <button type="submit" id="close-modal" class="btn btn-secondary" data-bs-dismiss="modal"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></button> -->
+    </div>
+</form>
+
+
+<script>
+    $('.modal-body select').addClass('form-select');
+</script>

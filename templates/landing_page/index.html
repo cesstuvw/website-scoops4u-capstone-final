@@ -1,0 +1,444 @@
+
+{% extends 'landing_page/base.html' %}
+{% load static %}
+
+{% block title %}
+<title>SCOOPS 4 U</title>
+{% endblock %}
+
+{% block content %}
+<!-- Main CSS -->
+<link href="{% static '/css/promotional/home.css' %}" rel="stylesheet">
+
+<!-- ====================== START HERO ================================ -->
+<section class="hero">
+        <div class="container hero-container">
+                <div class="col-12 col-lg-12 col-md-12 d-flex happy-scoops">
+                        <div class="row flex-column">
+                                <div class="col-12 col-lg-12 col-md-12">
+                                        <h1 class="title primary-title">happy scoops, happy u</h1>
+                                </div>
+                                <div class="col-12 col-lg-12 col-md-12">
+                                        <p class="desc"><a href="#bestFlavors"><span class="bg">see</span></a> our <span>best</span> ice cream <span>flavors</span></p>
+                                </div>
+                        </div>
+                </div>
+        </div>
+</section>
+<!-- ====================== END HERO ================================ -->
+
+
+<!-- ====================== START BEST FLAVORS ================================ -->
+<section class="best-flavors" id="bestFlavors">
+        <div class="container flavor-container">
+                <div class="col-12 col-lg-12">
+                        <div class="row best-flavors-wrapper">
+                                <div class="col-12 col-lg-6 col-md-12 best-left">
+                                        <h1 class="title-flavors">best flavors</h1>
+                                        <p class="desc-flavors">Here are our <span>best</span> ice cream <span> <a href="{% url 'landing_page:flavors' %}">flavors</a> </span>:</p>
+                                        <h2 class="spec-flavor">Vanilla</h2>
+                                        <div class="arrows">
+                                                <button class="previous" onclick="prev()"><i class="ri-arrow-left-circle-fill"></i></button>
+                                                <button class="next"><i onclick="next()" class="ri-arrow-right-circle-line"></i></button>
+                                        </div>
+
+                                        <div class="col-12 category">
+                                                <div class="row">
+                                                        <div class="col-3 classic" title-custom="Classic"></div>
+                                                        <div class="col-3 special" title-custom="Special"></div>
+                                                        <div class="col-3 deluxe" title-custom="Deluxe"></div>
+                                                        <div class="col-3 low-fat" title-custom="Low-Fat"></div>
+                                                </div>
+                                        </div>
+                                </div>
+                
+                                <div class="col-12 col-lg-6  col-md-12 img-main">
+                                        <img class="slider-img" src="{% static '../../static/img/vanilla.png'%}" alt="">
+                                        <!-- <div class="light-pink d-flex justify-content-center align-items-center">
+                                                <div class="dark-pink"></div>
+                                        </div> -->
+                                </div>
+                        </div>
+                </div>
+        </div>
+</section>
+<!-- ====================== END BEST FLAVORS ================================ -->
+
+<!-- ====================== START TAGLINE ================================ -->
+<section class="tagline" id="tagline">
+        <div class="container tagline-container">
+                <div class="col-12 col-lg-12">
+                        <div class="row">
+                                <div class="col-12 col-lg-6 img-tagline">
+                                        <img src="{% static './../static/img/tagline-photo.jpg'%}" alt="">
+                                </div>
+
+                                <div class="col-12 col-lg-6 d-flex justify-content-center align-items-center tagline-text">
+                                        <div class="tagline-text">
+                                                <i class="ri-double-quotes-l"></i>
+                                                <h2 class="mb-5">Happy <span>scoops</span> for everyone!</h2>
+                                                <a href="{% url 'landing_page:about' %}" class="btn btn-about">about us</a>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+        </div>
+</section>
+<!-- ====================== END TAGLINE ================================ -->
+
+<!-- ====================== START RESELLER ================================ -->
+<section class="reseller" id="reseller">
+        <div class="container reseller-container">
+                <div class="col-12 col-lg-12 reseller-top">
+                        <div class="row flex-column">
+                                <div class="col reseller-title-main">
+                                        <div class="reseller-title ">
+                                                <h1 class="title my-3">happy scoops</h1>
+                                        </div>
+                                </div>
+
+                                <div class="col reseller-text">
+                                        <p class="my-5"><span>Ice cream</span> tastes better when shared with <span>loved ones.</span></p>
+                                </div>
+
+                                <div class="col">
+                                        <a href="{% url 'landing_page:reseller' %}" class="btn btn-reseller my-3">be a reseller</a>
+                                </div>
+                        </div>
+                </div>
+        </div>
+
+</section>
+<!-- ====================== END RESELLER ================================ -->
+
+
+<!-- ====================== START ADDRESS ================================ -->
+<section class="address" id="address">
+        <div class="container address-container">
+                <div class="col-12 col-lg-12">
+                        <div class="row flex-row">
+                                <div class="col-12 col-lg-3 icon icon-address">
+                                        <i class="ri-store-2-fill"></i>
+                                </div>
+                        
+                                <div class="col-12 col-lg-6 middle-address">
+                                        <div class="address-main">
+                                                <h1 class="title">Visit us at our physical store.</h1>
+                                                <div class="ellipse "></div>
+                                        </div>
+                                </div>
+                        
+                                <div class="col-12 col-lg-3 address-store">
+                                        <p class="">#12 Filipinas Avenue <br> <span class="p1">Brgy. Dulumbayan, </span> <br> <span class="p2">Teresa, Rizal</span></p>
+                                        <div class="line-address"></div>
+                                </div>
+                        </div>
+                </div>
+
+        </div>
+</section>
+<!-- ====================== END ADDRESS ================================ -->
+
+<!-- ====================== START STORE ================================ -->
+<section class="store" id="store">
+        <div class="container-fluid store-container">
+                <div class="col-12 col-lg-12">
+                        <div class="row">
+                                <div class="col-12 col-lg-6 store-main d-flex justify-content-center align-items-center flex-column">
+                                        <h1 class="title">Our Resellers</h1>
+                                        <p>store locations</p>
+                                        <!-- <button class="btn btn-view mt-5" data-bs-toggle="modal" data-bs-target="#reviewModal">View All</button> -->
+                                </div>
+                                
+                                <div class="col-12 col-lg-6">
+                                        <div class="row flex-column ">
+<!-- 
+                                                <form method="post">
+                                                        {% csrf_token %}
+                                                        {% for store in stores %}
+                                                        <div class="col-lg-3 store-main-1 w-100 ">
+                                                                <div class="row store-right highlighted-right">
+                                                                        <div class="col-4 col-md-6 col-lg-5 icon-ri d-flex justify-content-center align-items-center">
+                                                                                <i class="ri-store-3-line"></i>
+                                                                        </div>
+                                                                        <div class="col-8 col-md-6 col-lg-7  d-flex justify-content-center align-items-center flex-column text-start">
+                                                                                name of the store
+                                                                                <h1 id="name_store" name="name_store" class="store-name">{{ settings_data.name_store }}</h1>
+                                                                                address of the store
+                                                                                <p id="address_store" name="address_store" class="store-desc">{{ settings_data.address_store }}</p>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                        
+                                                        <div class="col-lg-3 store-main-2 w-100">
+                                                                <div class="row store-right highlighted-right">
+                                                                        <div class="col-4 col-md-6  col-lg-5 icon-ri d-flex justify-content-center align-items-center">
+                                                                                <i class="ri-store-3-line"></i>
+                                                                        </div>
+                                                                        <div class="col-8 col-md-6 col-lg-7 d-flex justify-content-center align-items-center flex-column text-start">
+                                                                                <h1 id="name_store" name="name_store" class="store-name">ss</h1>
+                                                                                <p id="address_store" name="address_store" class="store-desc">sss</p>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                        {% endfor %}
+                                                </form>
+                                                 -->
+                                                <div class="col-lg-3 store-main-1 w-100 ">
+                                                        <div class="row store-right">
+                                                                <div class="col-4 col-md-6 col-lg-5 icon-ri d-flex justify-content-center align-items-center">
+                                                                        <i class="ri-store-3-line"></i>
+                                                                </div>
+                                                                <div class="col-8 col-md-6 col-lg-7  d-flex justify-content-center align-items-center flex-column text-start">
+                                                                        <!-- name of the store -->
+                                                                        <h1 class="store-name">E&G Store</h1>
+                                                                        <!-- address of the store -->
+                                                                        <p class="store-desc">754 Manila E Rd, Morong, Rizal</p>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                                
+                                                <div class="col-lg-3 store-main-2 w-100">
+                                                        <div class="row store-right">
+                                                                <div class="col-4 col-md-6  col-lg-5 icon-ri d-flex justify-content-center align-items-center">
+                                                                        <i class="ri-store-3-line"></i>
+                                                                </div>
+                                                                <div class="col-8 col-md-6 col-lg-7 d-flex justify-content-center align-items-center flex-column text-start">
+                                                                        <h1 class="store-name">Scoopers</h1>
+                                                                        <p class="store-desc">496 Mabini St. Pililla, Rizal</p>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                
+                                </div>
+                                <!-- <div class="col-12 see-more">
+                                        <h1>see more</h1>
+                                </div> -->
+
+                                
+
+                               
+                        </div>
+                </div>
+                
+
+        </div>
+</section>
+<!-- ====================== END STORE ================================ -->
+
+<!-- ====================== START FEEDBACKS ================================ -->
+<section class="feedbacks" id="feedbacks">
+        <div class="container feedbacks-container">
+                <div class="col-12 col-lg-12 ">
+                        <div class="py-3 feedbacks-title">Customer Feedback</div>
+                        <div class="row feedbacks-main">
+                                <!-- <div class="col-12 col-lg-4 fb-box">
+                                        <div class="fb-pic">
+                                                <i class="ri-user-smile-line"></i>
+                                        </div>
+                                        name
+                                        {% for review in reviews %}
+                                        <h2 class="fb-name my-2">
+                                                
+                                        </h2>
+                                        ratings
+                                        <div class="fb-star">
+                                                
+                                        </div>
+                                        review
+                                        <p class="fb-desc"></p>
+                                        {% endfor %}
+                                </div> -->
+                                <div class="col-12 col-lg-4 fb-box">
+                                        <div class="fb-pic">
+                                                <i class="ri-user-smile-line"></i>
+                                        </div>
+                                        <h2 class="fb-name my-2">Rafael G*****</h2>
+                                        <div class="fb-star">
+                                                <img src="./../static/img/star.svg" alt="">
+                                                <img src="./../static/img/star.svg" alt="">
+                                                <img src="./../static/img/star.svg" alt="">
+                                                <img src="./../static/img/star.svg" alt="">
+                                                <img src="./../static/img/star.svg" alt="" class="no-shade">
+                                        </div>
+                                        <p class="fb-desc">Scoops 4 U is a great place to grab a cup or gallon of Big Scoop ice cream. The selection is fantastic, and the staff is always friendly and helpful. The prices are reasonable, and the quality of the ice cream is top-notch. I love supporting local businesses, and this one is definitely worth a visit.</p>
+                                </div>
+                                <div class="col-12 col-lg-4 fb-box">
+                                        <div class="fb-pic">
+                                                <i class="ri-user-smile-line"></i>
+                                        </div>
+                                        <h2 class="fb-name my-2">Camille Ann L****</h2>
+                                        <div class="fb-star">
+                                                <img src="./../static/img/star.svg" alt="">
+                                                <img src="./../static/img/star.svg" alt="">
+                                                <img src="./../static/img/star.svg" alt="">
+                                                <img src="./../static/img/star.svg" alt="">
+                                                <img src="./../static/img/star.svg" alt="" class="no-shade">
+                                        </div>
+                                        <p class="fb-desc">I recently visited Scoops 4 U and was impressed with their selection of Big Scoop ice cream. While they currently sell it by the cup or gallon, I heard that they are planning to offer it by the scoop soon. I'm excited to come back and try some new flavors and toppings! The staff is always friendly and helpful, and the quality of the ice cream is top-notch.</p>
+                                </div>
+                                <div class="col-12 col-lg-4  fb-box">
+                                        <div class="fb-pic">
+                                                <i class="ri-user-smile-line"></i>
+                                        </div>
+                                        <h2 class="fb-name my-2">Sofia Go***</h2>
+                                        <div class="fb-star">
+                                                <img src="./../static/img/star.svg" alt="">
+                                                <img src="./../static/img/star.svg" alt="">
+                                                <img src="./../static/img/star.svg" alt="">
+                                                <img src="./../static/img/star.svg" alt="">
+                                                <img src="./../static/img/star_4.svg" alt="" class="no-shade">
+                                        </div>
+                                        <p class="fb-desc">Scoops 4 U is an awesome new spot in the neighborhood! The ice cream is seriously delicious, and it's great that they offer cups. Highly recommend checking it out!</p>
+                                </div>
+                        </div>
+                        <div class="py-3 pt-2 feedbacks-button">
+                                <button class="btn btn-review" data-bs-toggle="modal" data-bs-target="#reviewModal">Leave us a review</button>
+                        </div>
+                </div>
+        </div>
+</section>
+
+<!-- Modal -->
+<div class="modal fade border-0" id="reviewModal"  tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content border-0 p-4">
+                        <div class="modal-header border-0">
+                                <h5 class="modal-title" id="staticBackdropLabel">Leave a Review</h5>
+                                <button type="button" class="ri-close-fill" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body mt-3 ">
+                                <div class="col main-question">
+                                        <form  method="post">
+                                                {% csrf_token %}
+                                                <div class="row d-flex justify-content-center align-items-center mb-3">
+                                                        <div class="col-12 col-md-3 ">
+                                                        <label for="">First Name</label>
+                                                        </div>
+                                                        <div class="col-12 col-md-9">
+                                                        <span>{{form.first_name}}</span>
+                                                        <!-- <input type="text" class="form-control" id="" aria-describedby="" required> -->
+                                                        </div>
+                                                </div>
+                        
+                                                <div class="row d-flex justify-content-center align-items-center mb-3">
+                                                        <div class="col-12 col-md-3">
+                                                        <label for="">Last Name</label>
+                                                        </div>
+                                                        <div class="col-12 col-md-9">
+                                                        <span>{{form.last_name}}</span>
+                                                        <!-- <input type="text" class="form-control" id="" aria-describedby="" required> -->
+                                                        </div>
+                                                </div>
+                        
+                                                <div class="row d-flex justify-content-center align-items-center mb-3">
+                                                        <div class="col-12 col-md-3">
+                                                        <label for="">Email</label>
+                                                        </div>
+                                                        <div class="col-12 col-md-9">
+                                                        <span>{{form.email_address}}</span>
+                                                        <!-- <input type="email" class="form-control" id="" aria-describedby="emailHelp" required>                           -->
+                                                        </div>
+                                                </div>
+
+                                                <div class="row d-flex justify-content-center align-items-center mb-3">
+                                                        <div class="col-12 col-md-3">
+                                                        <label for="">Rate</label>
+                                                        </div>
+                                                        <div class="col-12 col-md-9">
+                                                        <span>{{form.star_rating}}</span>
+                                                        <!-- <input type="email" class="form-control" id="" aria-describedby="emailHelp" required>                           -->
+                                                        </div>
+                                                </div>
+                        
+                                                <div class="row d-flex justify-content-center mb-3">
+                                                        <div class="col-12 col-md-3">
+                                                        <label for="">Comment</label>
+                                                        </div>
+                                                        <div class="col-12 col-md-9">
+                                                        <span class="mb-1">{{form.review}}</span>
+                                                        <!-- <textarea class="form-control mb-1" id="" rows="4" required></textarea>  -->
+                                                        <button type="submit" class="btn btn-send w-100">Send Review</button> 
+                                                        </div>
+                                                </div>
+                                                </form>
+                                        </div>
+                                
+                        </div>
+                        <div class="modal-footer border-0">
+                                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Next</button> -->
+                        </div>
+                </div>
+        </div>
+</div>
+
+
+{% for messsage in messages  %}
+        {% if 'success' in message.tags %}
+                <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                <script>
+                var m = "{{messsage}}"
+                swal({
+
+                title: m,
+                text: "Thank you for your review.",
+                icon: "success",
+                timer: 3000,
+                // content: {
+                // element: 'h1',
+                // attributes: {
+                // innerHTML: m,
+                // }
+                // },
+
+                // icon: "warning",
+                buttons: false,
+                className: 'swal-wide',
+                // dangerMode: true,
+                // allowOutsideClick: false,
+                })
+                </script>
+                <!-- <p class='alert alert-success mt-3'>{{messsage}}</p> -->
+                {% else %}
+                <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                <script>
+                var m = "{{messsage}}"
+                swal({
+
+                // title: "Archive",
+                // text: "Do you really want to <span>archive</span> this reseller?",
+                // icon: "error",
+                timer: 3000,
+                content: {
+                element: 'h1',
+                attributes: {
+                innerHTML: m,
+                }
+                },
+
+                // icon: "warning",
+                buttons: false,
+                className: 'swal-wide',
+                // dangerMode: true,
+                // allowOutsideClick: false,
+                })
+                </script>
+        <!-- <p class='alert alert-success mt-3'>{{messsage}}</p> -->
+        {% endif %}
+
+
+{% endfor %}
+<!-- ====================== END FEEDBACKS ================================ -->
+
+
+<!-- SCRIPT BEST-FLAVORS -->
+<!-- <script src="{% static '/css/assets/js/scrollreveal.min.js' %}" alt=""></script> -->
+
+<!-- <script src="{% static '/js/landing_page.js'%}"></script>
+<script src="{% static '/js/landing_page.js'%}"></script> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+{% endblock content %}  

@@ -1,0 +1,357 @@
+/* Font */
+@font-face {
+    font-family: P-Thin;
+    src: url("../font/Poppins-Thin.9ec263601ee3.ttf");
+}
+
+@font-face {
+font-family: P-Light;
+src: url("../font/Poppins-Light.fcc40ae9a542.ttf");
+}
+
+@font-face {
+font-family: P-ExtraLight;
+src: url("../font/Poppins-ExtraLight.6f8391bbdaea.ttf");
+}
+
+@font-face {
+font-family: P-Mono;
+src: url("../font/Poppins-Regular.093ee89be9ed.ttf");
+}
+
+@font-face {
+font-family: P-Medium;
+src: url("../font/Poppins-Medium.bf59c687bc6d.ttf");  
+}
+
+@font-face {
+font-family: P-Bold;
+src: url("../font/Poppins-Bold.08c20a487911.ttf");
+}
+
+@font-face {
+font-family: P-SemiBold;
+src: url("../font/Poppins-SemiBold.6f1520d10720.ttf");
+}
+
+@font-face {
+font-family: P-ExtraBold;
+src: url("../font/Poppins-ExtraBold.d45bdbc2d4a9.ttf");
+}
+
+@font-face {
+font-family: P-Black;
+src: url("../font/Poppins-Black.14d00dab1f68.ttf");
+}
+
+html {
+scroll-behavior: smooth;
+height: 100%;
+}
+
+
+/* ::-webkit-scrollbar {
+background-color: transparent;
+width: 0.5em;
+}
+
+::-webkit-scrollbar-track {
+background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+background-color: var(--primary-c-blue);
+} */
+
+
+::-webkit-scrollbar {
+display: none; 
+}
+
+:root{
+/* general */
+--primary-c-black: #151515;
+--primary-c-white: #F9F9F9;
+--primary-c-white-text: #FFF;
+--primary-c-grey-text: #9AAAC7;
+--primary-c-blue: #001BDE;
+--primary-c-l-blue: #BBC2F2;
+--primary-c-d-blue: #0B2E8A;
+--primary-c-dark-blue: #254070;
+
+/* colors */
+--c-grey: #565656;
+--c-d-purple: #99A2E1;
+--c-l-purple: #e1e3f37a;
+
+--c-dark-pink: #E288B8;
+--c-light-pink: #FFAED9;
+--c-lighter-pink: #FCD7EB;
+--c-light-peach: #F6D7DD;
+
+/* bg */
+--bg-c-gray-blue: #F2F5FD;
+--bg-c-gray: #E4E9F4;
+
+}
+
+*{
+margin: 0;
+padding: 0;
+text-decoration: none !important;
+}
+
+body {
+font-family: P-ExtraLight;
+height: 100%;
+}
+
+.navbar{
+    display: none;
+}
+
+/* footer{
+    display: none;
+} */
+
+/* <!-- ================== START SIGN IN ==================== -->*/
+.signin{
+    min-height: 100vh;
+    background-color: var(--primary-c-blue);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.header{
+    color: var(--primary-c-white-text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.header .logo-header,
+.header h1{
+    display: none;
+}
+
+.header .name-header{
+    margin: 2rem;
+}
+
+.door{
+    background-color: var(--primary-c-white);
+    border-top-left-radius: 900px;
+    border-top-right-radius: 900px;
+    min-height: 85vh;
+    /* padding-top: 125px; */
+    color: var(--primary-c-blue) !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5.5rem;
+    padding-bottom: 0rem;
+}
+
+.door h1{
+    font-family: P-ExtraBold;
+    text-transform: lowercase;
+    font-size: 4.5rem;
+    text-align: center;
+    /* margin-bottom: 1rem; */
+    padding-bottom: 2rem;
+    margin-top: -0.4rem;
+}
+
+.door p{
+    font-size: 2rem;
+    line-height: 108%;
+    text-align: center;
+    color: var(--primary-c-black);
+}
+
+.door span{
+    font-family: P-SemiBold;
+}
+
+.title-main{
+    margin-top: 8.8rem;
+    margin-bottom: 3rem;
+}
+
+.form-control{
+    border: 2px solid var(--c-d-purple);
+    border-radius: 95px;
+}
+
+::placeholder {
+    font-family: P-Medium !important;
+    color: var(--primary-c-grey-text) !important;
+}
+
+input{
+    font-size: 1.6rem !important;
+    padding: 0.6rem 2rem !important;
+    color: var(--primary-c-blue) !important;
+    font-family: P-Medium;
+}
+
+.pass{
+    position: relative;
+}
+
+.pass i{
+    position: absolute;
+    bottom: 0.4rem;
+    right: 2rem;
+    font-size: 2rem !important;
+}
+
+form{
+    padding: 0rem 1.5rem;
+    margin-top: 2.2rem;
+}
+
+.signin-btn{
+    background-color: var(--primary-c-blue);
+    border: 2px solid var(--primary-c-blue);
+    border-radius: 95px;
+    color: var(--primary-c-white-text);
+    font-family: P-ExtraBold;
+    width: 100%;
+    font-size: 1.5rem;
+    padding: 0.7rem;
+} 
+
+.forgot p{
+    font-size: 1.25rem;
+    line-height: 121%;
+    font-family: P-Mono;
+    color: var(--primary-c-grey-text);
+}
+
+.forgot a{
+    color: var(--primary-c-blue);
+    font-family: P-Mono;
+}
+
+/* <!-- ================== END SIGN IN ==================== -->*/
+/* --------------MEDIA QUERIES---------------- */
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .door{
+        padding: 0rem 10rem;
+    }
+
+    .title-main{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .title-main p{
+        width: 75%;
+    }
+
+    .forgot{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .forgot p{
+        width: 50%;
+    }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .header{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .header-main{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .header .logo-header,
+    .header h1{
+        display: block;
+    }
+
+    .logo-header{
+        margin-top: 18rem;
+        margin-bottom: 5rem;
+    }
+
+    .header-main span{
+        font-family: P-SemiBold;
+    }
+
+    .header-main a{
+        display: flex;
+        /* align-self: flex-end !important; */
+        justify-self: flex-end !important;
+    }
+
+    .header-main{
+        width: 45%;
+    }
+
+    .one {
+        order: 2;
+    }
+
+    .two {
+        order: 1;
+    }
+
+    .door{
+        min-height: 95vh;
+        padding: 0 0 !important;
+    }
+    
+    .form-main{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0rem !important;
+
+    }
+
+    form{
+        width: 60% !important;
+    }
+
+    
+    .title-main p{
+        width: 45%;
+    }
+
+    .title-main{
+        margin-top: 15rem;
+    }
+
+    .line-1{
+        min-height: 8vh;
+        margin-bottom: 15rem;
+    }
+
+    .header-main-title{
+        font-family: P-ExtraLight !important;
+    }
+
+
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    
+}

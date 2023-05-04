@@ -1,0 +1,63 @@
+{%  extends 'landing_page/base.html' %} 
+    {% load static %}
+        {% block content%}
+        <form action="{% url 'admin_site:process_inquiry' %}" method="POST" enctype="multipart/form-data" class="text-center">
+            {% csrf_token %}
+
+            <h1 >Inquiry form</h1>
+            {% for messsage in messages  %}
+             <p class='alert alert-success mt-3'>{{messsage}}</p>
+            {% endfor %}
+                
+        
+        
+            <input type="text"class="form-control" name="fname" placeholder="Enter your Name" required>
+            <br>
+        
+            <input type="text" class="form-control" name="mname" placeholder="Enter your Middle Name" required>
+            <br>
+        
+            <input type="text"class="form-control" name="lname"  placeholder="Enter your Last Name" required>
+            <br>
+        
+            <select name="gender" class="form-control" id="gender" required>
+                <option></option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+            <br>
+        
+            <input type="text" class="form-control" name="cnum" placeholder="Enter your Number" required>
+             
+            <br>
+            <textarea name="address" class="form-control" placeholder="Enter your address" required></textarea>
+            <br>
+    
+            <input type="email" class="form-control"name="email" placeholder="Enter your Email" required>
+            <br>
+    
+            
+          
+            <label for="">Valid ID</label>
+            <input type="File" class="form-control" name="valid-ID" accept=".jpg, .jpeg, .png" required>
+            <br>
+            
+            <label for="">Business Permit</label>
+
+            <input type="File" class="form-control" id="file" name="business_permit" accept=".jpg, .jpeg, .png" required>
+            <hr>
+            <br>
+            <br>
+            <input type="checkbox" id="checkbox">
+            <i>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cupiditate soluta odio quibusdam debitis fugiat tempore consequatur facilis nobis expedita sit, accusantium suscipit earum, quisquam voluptatem quidem fugit saepe incidunt iste.</i>
+            <i>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, exercitationem, vitae recusandae quibusdam cupiditate facere omnis ratione repellendus nulla impedit sunt aspernatur blanditiis quasi ducimus asperiores ut similique deserunt culpa.</i>
+            <br>
+            <br>
+            <div style="display: none;" id="btn_submit">
+            <button class="btn btn-primary"  type="submit" name="submit"   >Submit</button>
+            </div>
+            </form>
+            <br>
+    <script src="{% static 'js/registration.js' %}"></script>
+{% endblock %}
+

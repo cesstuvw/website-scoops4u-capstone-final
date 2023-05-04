@@ -1,0 +1,129 @@
+{% load humanize %}
+<script>
+     // for orders (pending, ofd, delivered)
+     $(document).ready(function () {
+        var tableOrDet = $('#tableOrDet').DataTable({
+        "paging": false,
+        "lengthChange": true,
+        "ordering": false,
+
+        initComplete: (settings, json)=>{
+            $('.dataTables_length').appendTo('#showEntries');
+        },
+
+        "oLanguage": {
+            // &nbsp; is a blank text ---- used for spacing
+            "sLengthMenu": "_MENU_ &nbsp;&nbsp;Entries per page",
+        },
+
+        columnDefs: [
+            {
+                searchable: false,
+                orderable: false,
+                targets: 0, 
+            },
+        ],
+        order: [[1, 'asc']],
+       
+    
+        
+    });
+
+    // for row numbers
+    tableOrDet.on('order.dt search.dt', function () {
+        let i = 1;
+
+        tableOrDet.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
+            this.data(i++);
+        });
+    }).draw();
+     });
+
+    // $('.modal-message').on('click', 'a', function(e){
+    //     e.preventDefault();
+    //     $('#modalMessage').modal('show').find('.modal-content').load($(this).attr('href'));
+    // });
+    
+    
+</script>
+
+<div class="modal-header border-0 position-relative">
+    <div class="flex-column">
+        <h1 class="modal-title" id="exampleModalLabel">Order Details</h1>
+        <h6>Transaction No. <br> <span class="trans-no">{{ list_transaction.transaction_no }}</span></h6>
+    </div>
+    <button type="button" class="ri-close-fill close-d" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+{% if list_orderitem %}
+
+<div class="modal-body pt-2 mt-0">    
+
+    <div class="info-det">
+        <div class="row">
+            <div class="col-lg-2 pe-3">
+                <div class="col mb-5">
+                    <p class="details text-start">Reseller Info</p>
+                    <p class="details-i">Reseller Name <br><span>{{ list_transaction.transaction_fname }} {{ list_transaction.transaction_lname }}</span></p>
+                    <p class="details-i">Reseller Contact <br><span>0{{ list_transaction.transaction_contactno }}</span></p>
+                    <p class="details-i">Delivery Address <br><span>{{ list_transaction.transaction_address }}</span></p>
+                </div>
+
+                <div class="col">
+                    <p class="details text-start">Shipping Details</p>
+                    <p class="details-i">Delivery Address <br><span>{{ list_transaction.transaction_address }}</span></p>
+                    <p class="details-i">Reseller Contact <br><span>{{ list_transaction.transaction_contactno }}</span></p>
+                    <p class="details-i">Delivery Option <br><span>{{ list_transaction.transaction_doption }}</span></p>
+                    {% if list_transaction.transaction_doption == "pickup" %}
+                    <p class="details-i">Preferred Date <br><span class="pre-date">{{ list_transaction.transaction_preferred_date }}</span></p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-10 px-5">
+                <div class="table-responsive">
+                    <table id="tableOrDet" class="table table-hover">
+                    
+                        <p class="details">Items</p>
+                        <thead>
+                            <tr class="align-middle">
+                                <th scope="col">#</th>
+                                <th scope="col">Product Category</th>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Product Unit</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableRow">
+                            {% for list in list_orderitem %}
+                            <tr class="align-middle">
+                                <td class="num-row"></td>
+                                <td style="text-transform: capitalize;">{{ list.OrderItem_category }}</td>
+                                <td style="text-transform: capitalize">{{ list.OrderItem_name }}</td>
+                                <td>{{ list.OrderItem_unit}}</td>
+                                <td>{{ list.OrderItem_quantity}}</td>
+                                <td>Php {{ list.OrderItem_amount|floatformat:2|intcomma }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            
+                <div class="text-end px-5 py-3 border-det">
+                    <label style="font-weight: bolder;" > Grand Total: Php    {{ list_total|floatformat:2|intcomma }} </label>
+                    <!-- <label style="font-weight: bolder;" > Transaction No:  {{ list_transaction.transaction_no}}   </label> -->
+                </div>
+            </div>
+        </div>
+    </div>
+   
+
+    
+
+</div>
+
+{% endif %} 
+<div class="modal-footer border-0 col">
+    <!-- <button type="submit" class="btn btn-primary ms-auto me-2"><i class="ri-check-fill align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Delivered</span></button> -->
+    
+    <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Close</span></button>
+</div>

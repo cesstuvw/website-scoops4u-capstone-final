@@ -1,0 +1,55 @@
+<div class="modal-header border-0">
+    <h1 class="modal-title" id="exampleModalLabel">Edit Reseller</h1>
+    <button type="button" class="ri-close-fill" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<form action="{% url 'admin_site:update_reseller' list_reseller.id %}" method="POST">
+    {% csrf_token %}
+
+    <div class="modal-body pt-2 mt-0">
+        <label for="first name">First Name</label>
+        <input type="text" placeholder="" name="fname" class="form-control" value="{{ list_reseller.reseller_fname }}" required>
+
+        <label for="middle name">Middle Name</label>
+        <input type="text" placeholder="" name="mname" class="form-control" value="{{ list_reseller.reseller_mname }}" required>
+
+        <label for="last name">Last Name</label>
+        <input type="text" placeholder="" name="lname" class="form-control" value="{{ list_reseller.reseller_lname }}" required>
+
+        <!-- this should be sex not gender -->
+        <label>Sex</label>
+        <select name="gender" class="form-control form-select" id="gender" required >
+            <option value="Male"{% if list_reseller.reseller_gender == 'Male' %}selected{% endif %}>Male</option>
+            <option value="Female"{% if list_reseller.reseller_gender == 'Female' %}selected{% endif %}>Female</option>
+        </select>
+
+        <label for="contact">Contact No.</label>
+        <input type="text" class="form-control" name="cnumber" placeholder="Edit Number" value="{{ list_reseller.reseller_contact}}" required>
+       
+
+        <label for="address">Address</label>
+        <input type="text" placeholder="" name="address" class="form-control" value="{{ list_reseller.reseller_address}}" required>
+
+        <label for="last name" class="d-none">Email</label>
+        <input type="email" placeholder="" name="email" class="form-control" value="{{ list_reseller.reseller_email }}" required>
+
+        <label for="valid-ID" class="d-none">Valid ID</label>
+        <input type="file" placeholder="" name="valid-ID" accept=".jpg, .jpeg, .png, .pdf" class="form-control custom d-none" disabled>
+        
+        <label for="Business-permit" class="d-none" >Business Permit</label>
+        <input type="file" placeholder="" name="Business-permit" accept=".jpg, .jpeg, .png, .pdf" class="form-control custom d-none" disabled >
+    </div>
+
+    <div class="modal-footer border-0">
+        <!-- <button type="submit" class="btn btn-primary" value="Add Product"><i class="ri-check-fill"></i>Add Product</button> -->
+        <button type="submit" name="submit" class="btn btn-primary me-2"><i class="ri-arrow-up-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Update</span></button>
+        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></button> -->
+        <a href="{% url 'admin_site:list_reseller' %}" type="submit" id="close-modal" class="btn btn-secondary" data-bs-dismiss="modal" style="font-size: 15px; padding: 5px 13px;"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></a>
+
+        <!-- <button  class="btn btn-secondary" data-bs-dismiss="modal"><i class="ri-close-line align-middle me-2 text-end" style="font-size:17px;"></i><span class="align-middle pe-1">Cancel</span></button> -->
+    </div>
+</form>
+
+<script>
+    $('.modal-body select').addClass('form-select');
+</script>

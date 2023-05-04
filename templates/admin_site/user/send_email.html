@@ -1,0 +1,230 @@
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <title>Document</title> -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" >
+
+
+    <!-- Vendors -->
+    <!-- <link href="../../static/css/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="{% static '/css/assets/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{% static '/css/assets/simple-datatables/style.css'%}" rel="stylesheet">
+    <link href="{% static '/css/assets/remixicon/remixicon.css'%}" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/autofill/2.5.3/css/autoFill.dataTables.min.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/autofill/2.5.3/js/dataTables.autoFill.min.js"></script>
+    
+
+    <link href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/b-2.3.6/b-colvis-2.3.6/b-html5-2.3.6/b-print-2.3.6/date-1.4.0/sp-2.1.2/datatables.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/b-2.3.6/b-colvis-2.3.6/b-html5-2.3.6/b-print-2.3.6/date-1.4.0/sp-2.1.2/datatables.min.js"></script>
+
+    <!-- Main CSS -->
+    <!-- <link href="../../static/css/sandi.css" rel="stylesheet"> -->
+    <link href="{% static '/css/sandi.css'%}" rel="stylesheet">
+
+    <title>
+        {% block title %}
+            ADD A NEW USER - SCOOPS 4 U
+        {% endblock title %}
+    </title>
+
+    <link rel="icon" href="{% static '/img/icon.ico'%}">
+</head>
+<body>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <header id="header" class="header fixed-top d-flex align-items-center">
+
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="{% url 'admin_site:dashboard'%}" class="logo d-flex align-items-center">
+                <img src="{% static '/img/logo-header.svg'%}" alt="">
+                <span class="d-none d-lg-block">SCOOPS 4 U</span>
+            </a>
+    
+            
+            </div><!-- End Logo -->
+            
+            <div class="search-bar mx-auto d-none">
+            <form class="search-form d-flex align-items-center" method="POST" action="#">
+                <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+                <button type="submit" title="Search"><i class="ri-search-line"></i></button>
+            </form>
+            </div><!-- End Search Bar -->
+            
+            <div class="POS POS-header d-none">
+                <a class="" href="{%url 'admin_site:pos' %}">POS</a>
+            </div>
+            <!-- End POS -->
+            
+            <nav class="header-nav ms-auto">
+                <ul class="d-flex align-items-center">
+                    <li class="nav-item d-block d-lg-none">
+                        <a class="nav-link nav-icon search-bar-toggle " href="#">
+                            <i class="ri-search-line"></i>
+                        </a>
+                    </li><!-- End Search Icon-->
+                
+                    <li class="nav-item dropdown pe-3">
+                
+                        <a class="nav-link nav-profile d-flex align-items-center me-3" href="#" data-bs-toggle="dropdown">
+                            <!-- <i alt="Profile" class="ri-checkbox-blank-circle-fill"></i> -->
+                            <span class="d-none d-md-block dropdown-toggle ps-2" style="text-transform: capitalize;">
+                            <!-- {{ user }} -->
+                            </span>
+                        </a><!-- End Profile Image Icon -->
+                    
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile p-2">
+                    
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center justify-content-center" href="{% url 'admin_site:my_profile' %}">
+                                    <i class="ri-user-line"></i>              
+                                    <span>My Profile</span>
+                                </a>
+                            </li>
+                    
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center justify-content-center" href="{%  url 'landing_page:logout' %}">
+                                    <i class="ri-logout-box-r-line"></i>              
+                                    <span>Sign Out</span>
+                                </a>
+                            </li>
+                
+                        </ul><!-- End Profile Dropdown Items -->  
+                    </li><!-- End Profile Nav -->
+            
+                </ul>
+            </nav><!-- End Icons Navigation -->
+
+            
+        
+    </header><!-- End Header -->
+
+    <main id="main-add" class="main main-add">
+        <section class="section">
+        <div class="container container-section col-lg-12">
+            <div class="col-lg-12">
+            <div class="row flex-column d-flex justify-content-center align-items-center">
+                <div class="col-lg-7 col-md-12">
+                    <div class="card">
+                    <form  method="post">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="add-product mb-2 mt-3">
+                                <h5 class="card-title feature" style="text-align: left;">Send them Email</h5>
+                            </div> 
+
+                            <div class="row flex-column register-col">
+                            <div class="col-12 col-main">
+                                <!-- <div class="row">
+                                    <div class="col-2">
+                                        <label for="username">Subject</label>
+                                    </div>
+                                    <div class="col-10">
+                                        <input type="text" name="title_email" class="form-control" placeholder="Title of the Email" required>
+                                    </div>
+                                </div> -->
+                                <!-- <input type="text" name="name" class="form-control" placeholder="Subject" required> -->
+                                <!-- <span>{{ form.username }}</span> -->
+                               
+                            </div>
+
+                            <div class="col-12 col-main">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <label for="email">Recipient</label>
+                                    </div>
+                                    <div class="col-10">
+                                        <!-- <span>{{ form.email}}</span> -->
+                                        <input type="email" name="email" class="form-control" value="{{ user.email }}"  readonly>
+                                    </div>
+                                </div>
+
+                                <!-- <label for="email">Recipient</label> -->
+                                <!-- <input type="email" name="email" class="form-control"placeholder="Recipient"  required> -->
+                            </div>
+                            
+                            <div class="col-12 col-main">
+                                <!-- <label for="password">Password</label>
+                                <span>{{ form.password1 }}</span> -->
+                                <textarea  name="message"  cols="30" rows="15" class="form-control editable" required>
+Dear {{ user.role|title }},
+
+We are pleased to inform you that you can now access our products and services. We offer a wide range of high-quality products that are designed to meet the needs of our customers.
+                                    
+To access our products and services, please find your login details below:
+                                    
+Username: {{ user.username }}
+Password:   
+                                    
+To ensure the security of your account, we recommend changing your password within 24 hours.
+Please keep your login details safe and secure, as you will need them every time you access your account.
+                                    
+If you have any questions or concerns, please do not hesitate to contact our support team. We are always here to help you in any way we can.
+                                    
+Thank you for choosing to work with us. We value your business and look forward to a long and fruitful partnership.
+                                    
+Best regards,
+Owner
+SCOOPS 4 U 
+
+                                </textarea>
+                            </div>
+
+                            
+                            </div>
+                            <div class="add-product mt-4 mb-2 col-12 d-flex align-items-center justify-content-end">
+                            <button type="submit" class="btn btn-register-send">Send</button>
+                            <!-- <input   value="Register" class="btn btn-pill text-white w-100 btn-primary"> -->
+                            </div> 
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <script>
+        $('.editable').each(function(){
+            this.contentEditable = true;
+        });
+    </script>
+    
+    
+    <!-- Vendors -->
+    <!-- <script src="../../static/css/assets/apexcharts/apexcharts.min.js"></script> -->
+    <script src="{% static '/css/assets/apexcharts/apexcharts.min.js' %}" alt=""></script>
+
+    <!-- <script src="../../static/css/assets/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+    <script src="{% static '/css/assets/bootstrap/js/bootstrap.bundle.min.js' %}" alt=""></script>
+
+    <!-- <script src="../../static/css/assets/simple-datatables/simple-datatables.js"></script> -->
+    <script src="{% static '/css/assets/simple-datatables/simple-datatables.js' %}" alt=""></script>
+
+    <!-- Template Main JS File -->
+    <!-- <script src="../../static/css/assets/js/main.js"></script> -->
+    <script src="{% static '/css/assets/js/main.js' %}" alt=""></script>
+    <script src="{% static '/js/modal.js' %}" alt=""></script>
+    <script src="{% static '/js/status.js' %}" alt=""></script>
+    <script src="{% static '/js/messages.js' %}" alt=""></script>
+    <script src="{% static '/js/dashboard.js' %}" alt=""></script>
+    <script src="{% static '/js/pos.js' %}"></script>
+    <script src="{% static '/js/table.js' %}" alt=""></script>
+</body>
+</html>

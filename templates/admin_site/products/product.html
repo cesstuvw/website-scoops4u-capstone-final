@@ -1,0 +1,211 @@
+
+
+{% extends 'admin_site/base.html' %}
+
+
+{% block title %}
+    PRODUCTS
+{% endblock title %}
+
+{% block content %}
+{% load humanize %}
+
+<main id="main" class="main mt-5">
+    <div class="pagetitle">
+        <h1>Products</h1>
+        <nav>
+            {% if user.role == "admin"%}
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'admin_site:dashboard'%}">Home</a></li>
+                <li class="breadcrumb-item active">Products</li>
+            </ol>
+            {% endif %}
+
+            {% if user.role == "si_staff"%}
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'staff_site:dashboard'%}">Home</a></li>
+                <li class="breadcrumb-item active">Products</li>
+            </ol>
+            {% endif %}
+
+        </nav>
+    </div><!-- End Page Title -->
+
+    {% for message in messages  %}
+    {% if 'success' in message.tags %}
+    <p class='alert alert-success mt-3'>{{message}}</p>
+    {% elif 'error' in message.tags %}
+    <p class='alert alert-danger mt-3'>{{message}}</p>
+    {% else %}
+    <p class='alert alert-info mt-3'>{{message}}</p>
+    {% endif %}
+    {% endfor %}
+
+    <div class="alert alert-info alert-dismissible" id="dont-include" role="alert">
+        Please check the <span style="font-weight: 900;">Product Settings</span> section under the <span style="font-weight: 900;">Settings</span> menu to add the flavors, categories, and units you will need when adding a new product.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+
+
+    
+
+    <section class="section ">
+        <div class="empty-screenProL d-none modal-add-prod-empty">
+            <img src="../../../../static/img/noproducts.svg" alt="">
+            <h5>No Products</h5>
+            <p>There are currently no records of products added on the system. 
+                <a href="{% url 'admin_site:add_product' %}" data-bs-toggle="modal" data-bs-target="#addProductEmpty">Add</a> Now.
+                <!-- <div class="modal-add-res">
+                </div> -->
+            </p>
+        </div>
+
+        <!-- ADD PRODUCT -->
+        <div class="modal fade border-0"  id="addProductEmpty">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content border-0 p-4">
+                
+            </div>
+        </div>
+        </div>
+
+
+        <div id="proListID" class="row d-none">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body mt-3">
+                        <div class="add-product product-d mb-4">
+                            <h5 class="card-title feature">All Products</h5>
+                            <div class="show-entries">
+                                <div id="showEntries"></div>
+                            </div>
+                            <div class="modal-add-prod">
+                                <a href="{% url 'admin_site:add_product' %}" class="btn btn-add-product" data-bs-toggle="modal" data-bs-target="#addProductModal"><i class="ri-add-line align-middle me-2 text-end" style="font-size:17px; font-weight: 500;"></i><span class="align-middle pe-1">Add a New Product</span></a>
+                            </div>
+                            <form class="search-tab" action="" method="GET"  class="text-end px-4">
+                                {% csrf_token %}
+                                <input type="text" id="tableM" class="form-control p-2 ps-3" name="search" placeholder="Search">
+                                <button class="btn btn-search btn-sm nope" type="submit"><i class="ri-search-line"></i></button>
+                            </form>  
+                        </div> 
+                        
+                        <!-- Table with hoverable rows -->
+                        <div class="table-responsive">
+                            <table id="tableMainProL" class="table table-hover">
+                                <thead>
+                                <tr class="align-middle">
+                                    <th scope="col">#</th>
+                                    <th scope="col">Product Code</th>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Flavor</th>
+                                    <th scope="col">Product Category</th>
+                                    <th scope="col">Unit</th>
+                                    <th scope="col">Reseller Price</th>
+                                    <th scope="col" >POS Price</th>
+                                    <th scope="col" >Available Stock</th>
+                                    <th scope="col" >Status</th>
+                                    <th scope="col" class="sort-no">Action</th>
+                                </tr>
+                                </thead>
+                                {% if list_products %}
+                                
+                                <tbody id="tableRow">
+                                    {% for list in list_products %}
+                                    <tr class="align-middle">
+                                        <td class="num-row"></td>
+                                        <td class="modal-view-product">
+                                            <a href="{% url 'admin_site:view_product' list.id %}" data-bs-toggle="modal" data-bs-target="#viewProductModal" class="text-decoration-none"><span >{{ list.product_code }}</span></a>
+                                        </td>
+                                        <td style="text-transform: capitalize;">{{ list.product_name }}</td>
+                                        <td style="text-transform: capitalize;">{{ list.product_flavor }}</td>
+                                        <td style="text-transform: capitalize;">{{ list.product_category }}</td>
+                                        <td>{{ list.product_unit }}</td>
+                                        <td>Php {{ list.product_ResellerPrice|floatformat:2|intcomma }}</td>
+                                        <td>Php {{ list.product_price|floatformat:2|intcomma }}</td>
+                                        <td class="stock-status">{{ list.product_stock }}</td>
+                                        
+
+                                        <!-- <td><span class="badge badge-stat-prod rounded-pill bg-primary">{{ list.product_status }}</span></td> -->
+
+                                        {% if list.product_status == "available" %}
+                                        <td><span class="badge status rounded-pill bg-primary">{{ list.product_status }}</span></td>
+                                        {% elif list.product_status == "low stock" %}
+                                        <td><span class="badge status rounded-pill bg-pending">{{ list.product_status }}</span></td>
+                                        {% else %}
+                                        <td><span class="badge status rounded-pill bg-danger">{{ list.product_status }}</span></td>
+                                        {% endif %}
+                                        <td>
+                                            <form class="action"  method="POST">
+                                                <a href="{% url 'admin_site:edit_product' list.id %}"class="btn btn-edit modal-edit" data-toggle="tooltip" data-placement="top" title="Edit"><i class="ri-edit-fill"></i></a>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                
+                                {% endif %}
+                            </table>
+                        </div>
+                        <!-- End Table with hoverable rows -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ADD PRODUCT -->
+    <div class="modal fade border-0"  id="addProductModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content border-0 p-4">
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW PRODUCT -->
+    <div class="modal fade border-0"  id="viewProductModal" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg moda">
+            <div class="modal-content border-0 p-4">
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- EDIT PRODUCT -->
+    <div class="modal fade border-0" id="editProduct" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content border-0 p-4">
+                
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+        // product status
+    //     $('.badge-stat-prod').filter(function () {
+    //     return $(this).text() == 'available';
+    // }).removeClass('bg-danger')
+    //     .addClass('bg-primary')
+
+    // $('.badge-stat-prod').filter(function () {
+    //     return $(this).text() == 'not available';
+    // }).addClass('bg-danger')
+    //     .removeClass('bg-primary')
+
+        // var stockNo = '{{ list.product_stock }}'
+
+        // if (!(stockNo > 0)){
+        //     $('badge-stat-prod').val('available');
+        //     $('badge-stat-prod').removeClass('bg-danger');
+        //     $('badge-stat-prod').addClass('bg-primary');
+        // }
+        // else{
+        //     $('badge-stat-prod').val('not available');
+        //     $('badge-stat-prod').addClass('bg-danger');
+        //     $('badge-stat-prod').removeClass('bg-primary');
+        // }
+</script>
+{% endblock content %}
+    

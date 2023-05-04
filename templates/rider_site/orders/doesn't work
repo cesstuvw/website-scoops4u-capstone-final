@@ -1,0 +1,185 @@
+{% extends 'admin_site/base.html' %}
+
+{% block title %}
+    DELIVERY
+{% endblock title %}
+
+
+{% block content %}
+{% load humanize %}
+
+
+  <main id="main" class="main mt-5">
+    <div class="pagetitle">
+        <h1>Delivery</h1>
+        <nav>
+            {% if user.role == "delivery_staff"%}
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'rider_site:dashboard'%}">Home</a></li>
+                <!-- <li class="breadcrumb-item">Inventory</li> -->
+                <li class="breadcrumb-item active">Delivery</li>
+            </ol>
+            {% endif %}
+        </nav>
+    </div><!-- End Page Title -->
+
+    
+    <section class="section">
+        
+        {% for message in messages %}
+        <p class="alert alert-success mt-3">{{ message }}</p>
+        {% endfor %}
+
+    <div class="empty-screenOrDel d-none">
+        <img src="../../../../static/img/nopackages.svg" alt="">
+        <h5>No Packages to Deliver</h5>
+        <p>There are currently no packages to deliver to resellers.</p>
+    </div>
+
+    <div id="ordersID" class="row d-none">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body mt-3">
+                    <div class="add-product order-d mb-4">
+                        <h5 class="card-title feature">Orders</h5>
+                        <div class="show-entries">
+                            <div id="showEntries"></div>
+                        </div>
+                        <!-- <div class="modal-add-prod">
+                            <a href="{% url 'admin_site:add_product' %}" class="btn btn-add-product" data-bs-toggle="modal" data-bs-target="#addProductModal"><i class="ri-add-line align-middle me-2 text-end" style="font-size:17px; font-weight: 500;"></i><span class="align-middle pe-1">Add a New Product</span></a>
+                        </div> -->
+                        <form class="search-tab" action="{% url 'admin_site:search_transaction' %}" method="GET"  class="text-end px-4">
+                            {% csrf_token %}
+                            <input type="text" id="tableM" class="form-control p-2 ps-3" name="search" placeholder="Search">
+                            <button class="btn btn-search btn-sm nope" type="submit"><i class="ri-search-line"></i></button>
+                        </form>  
+                    </div> 
+
+                    {% if list_transaction %} 
+                    <!-- <form action="{% url 'admin_site:search_transaction' %}" method="GET" class="my-3 ">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="search" placeholder="search" required>
+                            <div class="input-group-append">
+                                <button class="btn btn-success" type="submit">Search</button>
+                                
+                            </div>
+                        </div>
+                    </form> -->
+
+
+                    <div class="table-responsive">
+                        <table id="tableOrderDe" class="table table-hover d-none" >
+                            <thead>
+                                <tr class="align-middle">
+                                    <th scope="col">#</th>
+                                    <th scope="col">Order Date</th>
+                                    <th scope="col">Transaction Number</th>
+                                    <th scope="col">Total Price</th>
+                                    <th scope="col" class="sort-no">Status</th>
+                                    <th scope="col" class="sort-no">Action</th>
+                                </tr>
+                            </thead>
+                            
+                        
+                            <tbody id="tableRow">
+                                {% for list in list_transaction %}
+                                <tr class="align-middle">
+                                    <td class="num-row"></td>
+                                    <td>{{ list.created_at}}</td>
+                                    <td>{{ list.transaction_no }}</td>
+                                    <td>Php {{ list.transaction_totalprice|floatformat:2|intcomma}}</td>
+                                    <td><span class="badge badge-stat-res rounded-pill bg-out">{{ list.transaction_orderstatus }}</span></td>
+                                    <td class="modal-view-order">
+                                        <a href="{% url 'rider_site:transaction_view' list.id %}" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#viewOrderModal" 
+                                            class="text-decoration-none">
+                                            <i class="ri-eye-fill btn-edit"></i>
+                                        </a>
+                                    </td>
+                                    <!-- <form action="{% url 'admin_site:transaction_view' list.id  %}" method="GET" >
+                                        {% csrf_token %}
+                                            
+                                            <td><input type="submit" class="btn btn-light" value="View"></td>
+                                    </form> -->
+                        
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- End Table with hoverable rows -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- VIEW ORDER -->
+    <div class="modal fade border-0"  id="viewOrderModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen modal-dialog-scrollable">
+            <div class="modal-content border-0 p-4">
+                
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+     // tables for transactions
+    var tableOrDe = $('#tableOrderDe').DataTable({
+        "fnDrawCallback": function(oSettings) {
+            if (oSettings._iDisplayLength > oSettings.fnRecordsDisplay()) {
+                $(oSettings.nTableWrapper).find('.dataTables_paginate').hide();
+            } else {
+                $(oSettings.nTableWrapper).find('.dataTables_paginate').show();
+            }
+        },
+        
+        "lengthChange": true,
+
+        initComplete: (settings, json)=>{
+            $('.dataTables_length').appendTo('#showEntries');
+        },
+
+        "oLanguage": {
+            // &nbsp; is a blank text ---- used for spacing
+            "sLengthMenu": "_MENU_ &nbsp;&nbsp;Entries per page",
+            "oPaginate": {
+                sNext: '<i class="ri-arrow-right-s-line"></i>',
+                sPrevious: '<i class="ri-arrow-left-s-line"></i>',
+                // sFirst: '<i class="ri-arrow-left-s-fill"></i>',
+                // sLast: '<i class="ri-arrow-right-s-fill"></i>'
+            }
+        },
+
+        columnDefs: [
+            {
+                searchable: false,
+                orderable: false,
+                targets: 0, 
+            },
+        ],
+        // order: [[1, 'asc']],
+        order: [] 
+    });
+
+    // for row numbers
+    tableOrDe.on('order.dt search.dt', function () {
+        let i = 1;
+
+        tableOrDe.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
+            this.data(i++);
+        });
+    }).draw();
+
+    // for most tables search bar
+    $('#tableM').keyup(function(){
+        tableOrDe.search($(this).val()).draw();
+    });  
+
+</script>
+{% endblock content %}

@@ -1,0 +1,63 @@
+{% extends 'admin_site/base.html' %}
+
+{% load static %}
+{% block content %}
+
+   <form action="{% url 'admin_site:receipt_process' %}" method="POST" class="text-end">
+      
+        <button class="btn btn-success" id="btn-receipt">Cancel</button>
+    </form>
+   
+
+
+
+<div class="hedear pt-5">
+    <h1 class="text-center">Scoops4u Dulumbayan</h1>
+    <p class="pos_number">POS: {{ user }}</p>
+</div>
+<hr>
+
+
+{% for list in list_pos %}
+
+<div>
+    <p class="product" style="font-weight: bolder;">{{ list.pos_name }}</p>
+    <p class="price">{{ list.pos_amount }}</p>
+    <p>{{ list.pos_quantity }} X {{ list.pos_price }}</p>
+</div>
+{% endfor %}
+
+<hr>
+
+
+{% for list in pos_payment %}
+<div class="total">
+    <h3 class="text-center">Total Amount</h3>
+
+    <label for="" style="font-weight: bolder;"> total amount</label>
+    <p class="total_price">{{ sum_amount }} </p>
+    <br>
+    <label for="" style="font-weight: bolder;"> cash</label>
+    <p class="cash">{{ list.pos_cash }}</p>
+    <br>
+    <label for="" style="font-weight: bolder;">Change</label>
+    <p class="Change">{{ list.pos_change }}</p>
+    <input type="hidden"  name="payment_id" id="payment_id" value="{{ list.id }}">
+</div>
+{% endfor %}
+<hr>
+
+
+<br>
+<br>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+    integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+<script src="{% static 'js/receipt.js' %}"></script>
+
+
+{% endblock content %}
+    
