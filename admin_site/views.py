@@ -36,7 +36,7 @@ def dashboard_admin(request):
     transaction_shipped = Transaction.objects.filter(transaction_orderstatus = "Out for Delivery").count()
     transaction_decline = Transaction.objects.filter(transaction_orderstatus = "Decline").count()
     list_reseller = Reseller.objects.filter(reseller_status = "active").count()
-    list_reports = Activity_log.objects.all().order_by('-id')[:15]
+    list_reports = Activity_log.objects.all().order_by('-id')[:10]
     current_profile = Profile.objects.filter(list_user = request.user)
     list_profile = Profile.objects.filter(list_user = request.user)
     users = User.objects.count()
